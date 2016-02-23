@@ -22,13 +22,14 @@
     <script src="app.js"></script>
     <script src="config.js"></script>
     <script src="views/main/main.controller.js"></script>
+    <script src="views/header/header.controller.js"></script>
 </head>
 
 <body ng-controller="MainController">
 
     <div ng-include="'views/header/header.view.html'"></div>
     <div ng-include="'views/sidebar/sidebar.view.html'"></div>
-    <div ng-view> </div>
+    <div ng-view></div>
 
 </body>
 </html>

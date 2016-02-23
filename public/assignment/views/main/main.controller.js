@@ -7,5 +7,3 @@
         $scope.location = "MainController";
     }
 })();
-
-
