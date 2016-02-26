@@ -42,14 +42,12 @@
             }];
 
         function findUserByCredentials(username, password, callback) {
-            var userFound = null;
-
-            _.forEach(users, function(user) {
-                if (user.username === username && user.password === password) {
-                    userFound = user;
-                }
+            var userFound = _.find(users, {
+                username: username,
+                password: password
             });
-            callback(userFound);
+
+            callback(userFound ? userFound : null);
         }
 
         function findAllUsers(callback) {
@@ -59,6 +57,7 @@
         function createUser(user, callback) {
             user._id = (new Date).getTime();
             users[users.length] = user;
+
             callback(user);
         }
 
@@ -66,14 +65,18 @@
             _.remove(users, function(user) {
                 return user._id === userId;
             });
+
             callback(users);
         }
 
         function updateUser(userId, user, callback) {
-            deleteUserById(userId, function(){
-                _(users).add(user);
-                callback(user);
+            var userToUpdate = _.find(users, {
+                _id : userId
             });
+
+            _.extend(userToUpdate, user);
+
+            callback(userToUpdate);
         }
 
         return {

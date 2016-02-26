@@ -8,7 +8,7 @@
         // Event Handler Declaration
         $scope.register = register;
 
-        // Event Handler Declaration
+        // Event Handler Implementation
         function register(username, password, email) {
             UserService.createUser({
                 username: username,
