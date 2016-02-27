@@ -1,3 +1,5 @@
+'use strict';
+
 (function (){
     angular
         .module('FormBuilderApp')
@@ -12,6 +14,7 @@
             FormService.findAllFormsForUser($rootScope.user._id, function(forms){
                 $scope.userforms = forms;
                 delete $scope.selectedForm;
+                delete $scope.selectedFormIndex;
             });
         }
 
