@@ -23,7 +23,9 @@
 
         //Event Handler Implementation
         function addForm(form) {
-            FormService.createFormForUser($rootScope.user._id, form, showAllFormsForUser);
+            if (form.title) {
+                FormService.createFormForUser($rootScope.user._id, form, showAllFormsForUser);
+            }
         }
 
         function updateForm(form) {
