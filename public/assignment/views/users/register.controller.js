@@ -9,11 +9,11 @@
         $scope.register = register;
 
         // Event Handler Implementation
-        function register(username, password, email) {
+        function register(user) {
             UserService.createUser({
-                username: username,
-                password: password,
-                email: email
+                username: user.username,
+                password: user.password,
+                email: user.email
             }, function(user) {
                 $rootScope.user = user;
                 $location.path('/profile');

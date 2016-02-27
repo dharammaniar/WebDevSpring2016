@@ -9,10 +9,10 @@
         $scope.login = login;
 
         // Event Handler Implementation
-        function login(username, password) {
+        function login(user) {
             UserService.findUserByCredentials(
-                username,
-                password,
+                user.username,
+                user.password,
                 function(loggedInUser) {
                     $rootScope.user = loggedInUser;
                     $location.path('/profile');

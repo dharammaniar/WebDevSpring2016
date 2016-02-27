@@ -7,21 +7,15 @@
 
         // Event Handler Declaration
         $scope.update = update;
+        $scope.showSuccessAlert = false;
 
         // Event Handler Implementation
-        function update(username, password, firstName, lastName, email) {
+        function update(user) {
             UserService.updateUser(
-                $rootScope.user._id,
-                {
-                    username: username,
-                    password: password,
-                    firstName: firstName,
-                    lastName: lastName,
-                    email: email
-                },
-                function(updatedUser) {
+                $rootScope.user._id, user, function(updatedUser) {
                     $rootScope.user = updatedUser;
                     $location.path('/profile');
+                    $scope.showSuccessAlert = true;
                 }
             )
         }
