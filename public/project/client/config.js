@@ -27,8 +27,9 @@
                     templateUrl: "views/follows/follows.view.html",
                     controller: 'FollowsController'
                 })
-                .when("/fields", {
-                    templateUrl: "views/forms/fields.view.html"
+                .when("/comments", {
+                    templateUrl: "views/comments/comments.view.html",
+                    controller: 'CommentController'
                 })
                 .otherwise({
                     redirectsTo: "/"
