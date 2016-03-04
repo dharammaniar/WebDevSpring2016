@@ -23,9 +23,9 @@
                 .when("/admin", {
                     templateUrl: "views/admin/admin.view.html"
                 })
-                .when("/forms", {
-                    templateUrl: "views/forms/forms.view.html",
-                    controller: 'FormController'
+                .when("/follows", {
+                    templateUrl: "views/follows/follows.view.html",
+                    controller: 'FollowsController'
                 })
                 .when("/fields", {
                     templateUrl: "views/forms/fields.view.html"

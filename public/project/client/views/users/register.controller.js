@@ -12,11 +12,7 @@
 
         // Event Handler Implementation
         function register(user) {
-            UserService.createUser({
-                username: user.username,
-                password: user.password,
-                email: user.email
-            }, function(user) {
+            UserService.createUser(user, function(user) {
                 $rootScope.user = user;
                 $location.path('/profile');
             });
