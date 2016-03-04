@@ -3,6 +3,7 @@
         <li ng-class="{'active' : $location.url() == '/'}"><a href="#/">Home</a></li>
         <li ng-show="user" ng-class="{'active' : $location.url() == '/profile'}"><a href="#/profile">Profile</a></li>
         <li ng-show="user.role.indexOf('admin') >= 0" ng-class="{'active' : $location.url() == '/admin'}"><a href="#/admin">Admin</a></li>
+        <li ng-show="user" ng-class="{'active' : $location.url() == '/portfolio'}"><a href="#/portfolio">Portfolio</a></li>
         <li ng-show="user" ng-class="{'active' : $location.url() == '/follows'}"><a href="#/follows">Follows</a></li>
         <li ng-show="user" ng-class="{'active' : $location.url() == '/comments'}"><a href="#/comments">Comments</a></li>
     </ul>
