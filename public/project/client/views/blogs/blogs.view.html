@@ -1,0 +1,50 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1 class="page-header">Blogs</h1>
+    <div class="row col-xs-12">
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <tr>
+                <th>
+                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span> Title
+                </th>
+                <th>
+                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span> Description
+                </th>
+                <th>
+                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span> DateCreated
+                </th>
+                <th>
+                    <span class="glyphicon glyphicon-triangle-bottom" aria-hidden="true"></span> Actions
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    <input type="text" ng-model="selectedBlog.title" placeholder="Title" class="form-control"/>
+                </td>
+                <td>
+                    <input type="text" ng-model="selectedBlog.description" placeholder="Description" class="form-control"/>
+                </td>
+                <td> {{selectedBlog.dateCreated}} </td>
+                <td>
+                    <div class="nowrap">
+                        <button ng-click="addBlog(selectedBlog)" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                        <button ng-click="updateBlog(selectedBlog)" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+
+                    </div>
+                </td>
+            </tr>
+            <tr ng-repeat="currentBlog in userBlogs" ng-class="{'success' : $index === selectedBlogIndex}">
+                <td> {{currentBlog.title}} </td>
+                <td> {{currentBlog.description}} </td>
+                <td> {{currentBlog.dateCreated}} </td>
+                <td>
+                    <div class="nowrap">
+                        <button ng-click="deleteBlog(currentBlog)" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        <button ng-click="selectBlog($index)" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    </div>
+</div>

@@ -24,6 +24,10 @@
                     templateUrl: "views/portfolio/portfolio.view.html",
                     controller: 'PortfolioController'
                 })
+                .when("/blogs", {
+                    templateUrl: "views/blogs/blogs.view.html",
+                    controller: 'BlogController'
+                })
                 .when("/follows", {
                     templateUrl: "views/follows/follows.view.html",
                     controller: 'FollowsController'
