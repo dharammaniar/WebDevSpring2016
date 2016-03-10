@@ -1,6 +1,35 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <h1 class="page-header">Welcome !</h1>
-    <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Duis vulputate commodo lectus, ac blandit elit tincidunt id. Sed rhoncus, tortor sed eleifend tristique, tortor mauris molestie elit, et lacinia ipsum quam nec dui. Quisque nec mauris sit amet elit iaculis pretium sit amet quis magna. Aenean velit odio, elementum in tempus ut, vehicula eu diam. Pellentesque rhoncus aliquam mattis. Ut vulputate eros sed felis sodales nec vulputate justo hendrerit. Vivamus varius pretium ligula, a aliquam odio euismod sit amet. Quisque laoreet sem sit amet orci ullamcorper at ultricies metus viverra. Pellentesque arcu mauris, malesuada quis ornare accumsan, blandit sed diam.
-    </p>
+    <form>
+        <input type="search" name="search" placeholder="Enter Stock Name" class="form-control">
+    </form>
+    <br>
+    <table class="table">
+        <tr>
+            <td><h1>NASDAQ</h1></td>
+            <td><h1>{{indexValue}}</h1></td>
+            <td><h1>{{difference}}</h1></td>
+            <td><h1>{{percentage}}</h1></td>
+        </tr>
+    </table>
+    <hr>
+    <div class="row">
+        <div class="col-xs-6">
+            <h2>News</h2>
+            <table class="table">
+                <tr ng-repeat="each in news">
+                    <td>
+                        <a href="{{each.url}}" target="_blank"> <div ng-bind-html="deliberatelyTrustDangerousSnippet(each.title)"></div></a>
+                        <!--{{each.content}}-->
+                        <div ng-bind-html="deliberatelyTrustDangerousSnippet(each.content)"></div>
+                    </td>
+                    <td valign="middle">
+                        <img src="{{each.imageUrl}}" width="200" class="img-rounded">
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-xs-6">
+            <div id="nasdaqContainer" class="left-border"></div>
+        </div>
+    </div>
 </div>

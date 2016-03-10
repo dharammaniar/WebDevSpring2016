@@ -1,3 +1,7 @@
 .nowrap {
     white-space: nowrap;
 }
+
+.left-border {
+    border-left: 1px dashed #333;
+}
