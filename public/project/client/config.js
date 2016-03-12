@@ -9,6 +9,14 @@
                     templateUrl: "views/home/home.view.html",
                     controller: 'HomeController'
                 })
+                .when("/stock/:code", {
+                    templateUrl: "views/stock/stock.view.html",
+                    controller: 'StockController'
+                })
+                .when("/searchResults", {
+                    templateUrl: "views/search/searchResult.view.html",
+                    controller: 'SearchResultController'
+                })
                 .when("/register", {
                     templateUrl: "views/users/register.view.html",
                     controller: 'RegisterController'

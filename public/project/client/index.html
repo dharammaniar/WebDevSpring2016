@@ -13,6 +13,7 @@
     <!-- CSS Files -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" crossorigin="anonymous">
     <link href="css/dashboard.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
     <!-- JS Files -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.0-beta.0/angular.js"></script>
@@ -31,11 +32,15 @@
     <script src="services/comment.service.client.js"></script>
     <script src="services/portfolio.service.client.js"></script>
     <script src="services/blog.service.client.js"></script>
+    <script src="services/stocks.service.client.js"></script>
     <!-- Controllers -->
     <script src="views/main/main.controller.js"></script>
     <script src="views/home/home.contoller.js"></script>
     <script src="views/header/header.controller.js"></script>
     <script src="views/sidebar/sidebar.controller.js"></script>
+    <script src="views/search/search.controller.js"></script>
+    <script src="views/search/searchResults.contoller.js"></script>
+    <script src="views/stock/stock.contoller.js"></script>
     <script src="views/users/register.controller.js"></script>
     <script src="views/users/profile.controller.js"></script>
     <script src="views/users/login.controller.js"></script>
@@ -49,6 +54,7 @@
 
     <div ng-include="'views/header/header.view.html'"></div>
     <div ng-include="'views/sidebar/sidebar.view.html'"></div>
+    <div ng-include="'views/search/search.view.html'"></div>
     <div ng-view></div>
 
 </body>
