@@ -13,7 +13,7 @@ module.exports = function(_, app) {
         }
         allUsers.push(user);
 
-        return allUsers;
+        return user;
     }
 
     function findAll() {
@@ -21,15 +21,15 @@ module.exports = function(_, app) {
     }
 
     function findById(id) {
-        return _.find(allUsers, {
-            '_id': id
+        return _.find(allUsers, function(user) {
+            return user._id == id;
         });
     }
 
     function update(id, user) {
 
-        var index = _.findIndex(allUsers, {
-            '_id': id
+        var index = _.findIndex(allUsers, function(user) {
+            return user._id == id;
         }),
             userToUpdate = allUsers[index];
 

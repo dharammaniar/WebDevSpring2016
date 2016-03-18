@@ -7,6 +7,8 @@ var http = require('https');
 var bodyParser = require('body-parser');
 var multer = require('multer');
 
+var uuid = require('node-uuid');
+
 var _  = require('lodash');
 app.use(express.static(__dirname + '/public'));
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
@@ -46,7 +48,8 @@ app.get('/api/news', function(req, res){
 var userModel = require('./public/assignment/server/models/user.model.js')(_, app);
 var formModel = require('./public/assignment/server/models/form.model.js')(_, app);
 
-require('./public/assignment/server/services/user.service.server.js')(_, app, userModel);
+require('./public/assignment/server/services/user.service.server.js')(_, app, userModel, uuid);
+require('./public/assignment/server/services/form.service.server.js')(_, app, formModel, uuid);
 
 app.listen(port, ipaddress);
 

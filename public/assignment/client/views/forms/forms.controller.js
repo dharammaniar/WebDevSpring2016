@@ -11,11 +11,12 @@
         showAllFormsForUser();
 
         function showAllFormsForUser() {
-            FormService.findAllFormsForUser($rootScope.user._id, function(forms){
-                $scope.userforms = forms;
-                delete $scope.selectedForm;
-                delete $scope.selectedFormIndex;
-            });
+            FormService.findAllFormsForUser($rootScope.user._id)
+                .then(function successCallback(forms){
+                    $scope.userforms = forms.data;
+                    delete $scope.selectedForm;
+                    delete $scope.selectedFormIndex;
+                });
         }
 
         // Event Handler Declaration
@@ -27,16 +28,25 @@
         //Event Handler Implementation
         function addForm(form) {
             if (form.title) {
-                FormService.createFormForUser($rootScope.user._id, form, showAllFormsForUser);
+                FormService.createFormForUser($rootScope.user._id, form)
+                    .then(function successCallback() {
+                        showAllFormsForUser();
+                    });
             }
         }
 
         function updateForm(form) {
-            FormService.updateFormById($scope.selectedForm._id, form, showAllFormsForUser);
+            FormService.updateFormById($scope.selectedForm._id, form)
+                .then(function successCallback() {
+                    showAllFormsForUser();
+                });
         }
 
         function deleteForm(form) {
-            FormService.deleteFormById(form._id, showAllFormsForUser);
+            FormService.deleteFormById(form._id)
+                .then(function successCallback() {
+                    showAllFormsForUser();
+                });
         }
 
         function selectForm(index) {

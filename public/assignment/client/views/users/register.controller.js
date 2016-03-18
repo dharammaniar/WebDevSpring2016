@@ -16,8 +16,8 @@
                 username: user.username,
                 password: user.password,
                 email: user.email
-            }, function(user) {
-                $rootScope.user = user;
+            }).then(function successCallback(response) {
+                $rootScope.user = response.data;
                 $location.path('/profile');
             });
         }

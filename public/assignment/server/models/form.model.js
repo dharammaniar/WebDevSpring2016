@@ -47,8 +47,8 @@ module.exports = function(_, app) {
     }
 
     function findFormByUserId(userId) {
-        var form = _.find(allForms, {
-            userId: userId
+        var form = _.filter(allForms, function(form) {
+            return form.userId == userId;
         });
 
         return form ? form : null;

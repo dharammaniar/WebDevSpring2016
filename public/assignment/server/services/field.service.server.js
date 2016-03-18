@@ -3,29 +3,28 @@
  */
 'use strict';
 
-module.exports = function(_, app, model) {
+module.exports = function(_, app, model, uuid) {
 
     app.get('/api/assignment/form/:formId/field', function (req, res) {
-        var form = model.findById(req.param.formId);
+        var form = model.findById(req.params.formId);
         res.json(form ? form.fields : null);
     });
 
     app.get('/api/assignment/form/:formId/field/:fieldId', function (req, res) {
-        var form = model.findFieldByFormIdAndFieldId(req.param.formId, req.param.fieldId);
+        var form = model.findFieldByFormIdAndFieldId(req.params.formId, req.params.fieldId);
         res.json(form);
     });
 
     app.delete('/api/assignment/form/:formId/field/:fieldId', function (req, res) {
-        var form = model.deleteFieldByFormIdAndFieldId(req.param.formId, req.param.fieldId);
+        var form = model.deleteFieldByFormIdAndFieldId(req.params.formId, req.params.fieldId);
         res.json(form);
     });
 
     app.post('/api/assignment/form/:formId/field', function (req, res) {
         var newField = req.body;
-        // TODO Replace with node-uuid
-        newField._id = 'uuid';
+        newField._id = uuid.v4();
         console.log(newField);
-        var form = model.createFieldInForm(req.param.formId, newField);
+        var form = model.createFieldInForm(req.params.formId, newField);
         res.json(form);
     });
 

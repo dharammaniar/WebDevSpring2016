@@ -14,12 +14,11 @@
         function login(user) {
             UserService.findUserByCredentials(
                 user.username,
-                user.password,
-                function(loggedInUser) {
-                    $rootScope.user = loggedInUser;
-                    $location.path('/profile');
-                }
-            )
+                user.password
+            ).then(function successCallback(response) {
+                $rootScope.user = response.data;
+                $location.path('/profile');
+            });
         }
     }
 }());

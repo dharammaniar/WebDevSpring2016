@@ -5,59 +5,22 @@
         .module('FormBuilderApp')
         .factory('FormService', FormService);
 
-    function FormService() {
-        var forms = [
-            {
-                "_id": "000",
-                "title": "Contacts",
-                "userId": 123
-            },
-            {
-                "_id": "010",
-                "title": "ToDo",
-                "userId": 123
-            },
-            {
-                "_id": "020",
-                "title": "CDs",
-                "userId": 234
-            }
-        ];
+    function FormService($http) {
 
-        function createFormForUser(userId, form, callback) {
-            _.extend(form, {
-                _id: (new Date).getTime(),
-                userId: userId
-            });
-            forms[forms.length] = form;
-
-            callback(form);
+        function createFormForUser(userId, form) {
+            return $http.post('/api/assignment/user/' + userId + '/form', form);
         }
 
-        function findAllFormsForUser(userId, callback) {
-            var formsFound = _.filter(forms, {
-                userId: userId
-            });
-
-            callback(formsFound);
+        function findAllFormsForUser(userId) {
+            return $http.get('/api/assignment/user/' + userId + '/form');
         }
 
-        function deleteFormById(formId, callback) {
-            _.remove(forms, function(form) {
-                return form._id === formId;
-            });
-
-            callback(forms);
+        function deleteFormById(formId) {
+            return $http.delete('/api/assignment/form/' + formId);
         }
 
-        function updateFormById(formId, newForm, callback) {
-            var formToUpdate = _.find(forms, {
-                _id: formId
-            });
-
-            _.extend(formToUpdate, newForm);
-
-            callback(formToUpdate);
+        function updateFormById(formId, newForm) {
+            return $http.put('/api/assignment/form/' + formId, newForm);
         }
 
         return {

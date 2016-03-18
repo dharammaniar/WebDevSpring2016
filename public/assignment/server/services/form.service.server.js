@@ -3,15 +3,15 @@
  */
 'use strict';
 
-module.exports = function(_, app, model) {
+module.exports = function(_, app, model, uuid) {
 
     app.get('/api/assignment/user/:userId/form', function (req, res) {
-        var form = model.findFormByUserId(req.param.userId);
+        var form = model.findFormByUserId(req.params.userId);
         res.json(form);
     });
 
     app.get('/api/assignment/form/:formId', function (req, res) {
-        var form = model.findById(req.param.formId);
+        var form = model.findById(req.params.formId);
         res.json(form);
     });
 
@@ -22,9 +22,8 @@ module.exports = function(_, app, model) {
 
     app.post('/api/assignment/user/:userId/form', function (req, res) {
         var newForm = req.body;
-        newForm.userId = req.param.userId;
-        // TODO Replace with node-uuid
-        newForm._id = 'uuid';
+        newForm.userId = req.params.userId;
+        newForm._id = uuid.v4();
         console.log(newForm);
         var allForms = model.create(newForm);
         res.json(allForms);
