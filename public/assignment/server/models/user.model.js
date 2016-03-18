@@ -7,50 +7,70 @@ module.exports = function(_, app) {
 
     var allUsers = require('./user.mock.json');
 
-    app.get('/api/user', function (req, res) {
-        res.json(allUsers);
-    });
+    function create(user) {
+        if (!user) {
+            return;
+        }
+        allUsers.push(user);
 
-    app.get('/api/user/:id', function (req, res) {
-        var index = req.params.id;
-        console.log(index);
-        res.json(allUsers[index]);
-    });
+        return allUsers;
+    }
 
-    app.delete('/api/user/:id', function (req, res) {
-        var index = req.params.id;
-        allUsers.splice(index, 1);
-        res.json(allUsers);
-    });
+    function findAll() {
+        return allUsers;
+    }
 
-    app.post('/api/user', function (req, res) {
-        var newUser = req.body;
-        console.log(newUser);
-        allUsers.push(newUser);
-        res.json(allUsers);
-    });
-
-    app.put('/api/user/:id', function (req, res) {
-        var index = req.params.id;
-        allUsers[index] = req.body;
-        res.json(allUsers);
-    });
-
-    app.get('/api/user/username/:username', function (req, res) {
-        var username = req.params.username;
-        var user = _.find(allUsers, {
-             "username": username
+    function findById(id) {
+        return _.find(allUsers, {
+            '_id': id
         });
-        res.json(user ? user : null);
-    });
+    }
 
-    app.get('/api/user/credential/', function (req, res) {
-        var credential = req.body;
-        console.log(credential);
-        var user = _.find(allUsers, {
-            "username": credential.username,
-            "password": credential.password
+    function update(id, user) {
+
+        var index = _.findIndex(allUsers, {
+            '_id': id
+        }),
+            userToUpdate = allUsers[index];
+
+        _.extend(userToUpdate, user);
+
+        allUsers[index] = userToUpdate;
+        return userToUpdate;
+    }
+
+    function deleteById(id) {
+        _.remove(allUsers, {
+            '_id': id
         });
-        res.json(user);
-    });
+        return allUsers;
+    }
+
+    function findUserByUsername(username) {
+        var user = _.find(allUsers, {
+            "username": username
+        });
+
+        return user ? user : null;
+    }
+
+    function findUserByCredentials(credentials) {
+        var user = _.find(allUsers, {
+            "username": credentials.username,
+            "password": credentials.password
+        });
+
+        return user ? user : null;
+    }
+
+    return {
+        create: create,
+        findAll: findAll,
+        findById: findById,
+        update: update,
+        deleteById: deleteById,
+        findUserByUsername: findUserByUsername,
+        findUserByCredentials: findUserByCredentials
+    }
+
 };

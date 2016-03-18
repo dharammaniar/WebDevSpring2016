@@ -7,40 +7,120 @@ module.exports = function(_, app) {
 
     var allForms = require('./form.mock.json');
 
-    app.get('/api/form', function (req, res) {
-        res.json(allForms);
-    });
+    function create(form) {
+        if (!form) {
+            return;
+        }
+        allForms.push(form);
 
-    app.get('/api/form/:id', function (req, res) {
-        var index = req.params.id;
-        console.log(index);
-        res.json(allForms[index]);
-    });
+        return allForms;
+    }
 
-    app.delete('/api/form/:id', function (req, res) {
-        var index = req.params.id;
-        allForms.splice(index, 1);
-        res.json(allForms);
-    });
+    function findAll() {
+        return allForms;
+    }
 
-    app.post('/api/form', function (req, res) {
-        var newForm = req.body;
-        console.log(newForm);
-        allForms.push(newForm);
-        res.json(allForms);
-    });
-
-    app.put('/api/form/:id', function (req, res) {
-        var index = req.params.id;
-        allForms[index] = req.body;
-        res.json(allForms);
-    });
-
-    app.get('/api/form/title/:title', function (req, res) {
-        var title = req.params.title;
-        var form = _.find(allForms, {
-            "title": title
+    function findById(id) {
+        return _.find(allForms, {
+            _id: id
         });
-        res.json(form ? form : null);
-    });
+    }
+
+    function update(id, form) {
+
+        var index = _.findIndex(allForms, {
+                _id: id
+            }),
+            formToUpdate = allForms[index];
+
+        _.extend(formToUpdate, form);
+
+        allForms[index] = formToUpdate;
+        return formToUpdate;
+    }
+
+    function deleteById(id) {
+        _.remove(allForms, {
+            _id: id
+        });
+        return allForms;
+    }
+
+    function findFormByUserId(userId) {
+        var form = _.find(allForms, {
+            userId: userId
+        });
+
+        return form ? form : null;
+    }
+
+    function findFormByTitle(title) {
+        var form = _.find(allForms, {
+            title: title
+        });
+
+        return form ? form : null;
+    }
+
+    function findFieldByFormIdAndFieldId(formId, fieldId) {
+        var form = findById(formId);
+
+        var field = _.find(form.fields, {
+            _id: fieldId
+        });
+
+        return field ? field : null;
+    }
+
+    function deleteFieldByFormIdAndFieldId(formId, fieldId) {
+        var form = findById(formId);
+
+        if (!form) {
+            return null;
+        }
+
+        _.remove(form.fields, {
+            _id: fieldId
+        });
+        update(form._id, form);
+
+        return form;
+    }
+
+    function createFieldInForm(formId, field) {
+        var form = findById(formId);
+        form.fields.push(field);
+        update(form._id, form);
+
+        return form;
+    }
+
+    function updateFieldInForm(formId, fieldId, field) {
+        var form = findById(formId),
+
+            fieldIndex = _.find(form.fields, {
+                _id: fieldId
+            }),
+            fieldToUpdate = form.fields[fieldIndex];
+
+        _.extend(fieldToUpdate, field);
+        form.fields[fieldIndex] = fieldToUpdate;
+        update(form._id, form);
+
+        return form;
+    }
+
+    return {
+        create: create,
+        findAll: findAll,
+        findById: findById,
+        update: update,
+        deleteById: deleteById,
+        findFormByUserId: findFormByUserId,
+        findFormByTitle: findFormByTitle,
+        findFieldByFormIdAndFieldId: findFieldByFormIdAndFieldId,
+        deleteFieldByFormIdAndFieldId: deleteFieldByFormIdAndFieldId,
+        createFieldInForm: createFieldInForm,
+        updateFieldInForm: updateFieldInForm
+    }
 };
