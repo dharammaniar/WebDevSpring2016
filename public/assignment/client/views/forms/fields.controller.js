@@ -7,11 +7,32 @@
 
     angular
         .module('FormBuilderApp')
-        .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, modal) {
+        .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, modal, title) {
 
+            $scope.title = title;
             $scope.modal = modal;
 
+            var optionsString = null;
+            _.forEach(modal.options, function(option) {
+                if (optionsString) {
+                    optionsString = optionsString + "\n" + option.value + ":" + option.label;
+                } else {
+                    optionsString = option.value + ":" + option.label;
+                }
+            });
+
+            $scope.modal.placeholder = optionsString;
+
             $scope.ok = function(model) {
+                var stringArray = model.placeholder.split('\n');
+                var updatedOptions = [];
+                _.forEach(stringArray, function(string) {
+                     updatedOptions.push({
+                         value: string.split(':')[0],
+                         label: string.split(':')[1]
+                     })
+                });
+                model.options = updatedOptions;
                 $uibModalInstance.close(model);
             };
 
@@ -49,10 +70,97 @@
                 case 'TEXT':
                     modalInstance = $uibModal.open({
                         animation: true,
-                        templateUrl: 'myModalContent.html',
+                        templateUrl: 'labelPlaceholder.html',
                         controller: 'ModalInstanceCtrl',
                         size: 'sm',
                         resolve: {
+                            title: function() {
+                                return 'Single Line Field'
+                            },
+                            modal: field
+                        }
+                    });
+                    break;
+                case 'EMAIL':
+                    modalInstance = $uibModal.open({
+                        animation: true,
+                        templateUrl: 'labelPlaceholder.html',
+                        controller: 'ModalInstanceCtrl',
+                        size: 'sm',
+                        resolve: {
+                            title: function() {
+                                return 'Email Field'
+                            },
+                            modal: field
+                        }
+                    });
+                    break;
+                case 'TEXTAREA':
+                    modalInstance = $uibModal.open({
+                        animation: true,
+                        templateUrl: 'labelPlaceholder.html',
+                        controller: 'ModalInstanceCtrl',
+                        size: 'sm',
+                        resolve: {
+                            title: function() {
+                                return 'Multiple Lines Field'
+                            },
+                            modal: field
+                        }
+                    });
+                    break;
+                case 'DATE':
+                    modalInstance = $uibModal.open({
+                        animation: true,
+                        templateUrl: 'labelPlaceholderDate.html',
+                        controller: 'ModalInstanceCtrl',
+                        size: 'sm',
+                        resolve: {
+                            title: function() {
+                                return 'Date Field'
+                            },
+                            modal: field
+                        }
+                    });
+                    break;
+                case 'OPTIONS':
+                    modalInstance = $uibModal.open({
+                        animation: true,
+                        templateUrl: 'labelOptions.html',
+                        controller: 'ModalInstanceCtrl',
+                        size: 'sm',
+                        resolve: {
+                            title: function() {
+                                return 'Dropdown Field'
+                            },
+                            modal: field
+                        }
+                    });
+                    break;
+                case 'CHECKBOX':
+                    modalInstance = $uibModal.open({
+                        animation: true,
+                        templateUrl: 'labelOptions.html',
+                        controller: 'ModalInstanceCtrl',
+                        size: 'sm',
+                        resolve: {
+                            title: function() {
+                                return 'Checkbox Field'
+                            },
+                            modal: field
+                        }
+                    });
+                    break;
+                case 'RADIO':
+                    modalInstance = $uibModal.open({
+                        animation: true,
+                        templateUrl: 'labelOptions.html',
+                        controller: 'ModalInstanceCtrl',
+                        size: 'sm',
+                        resolve: {
+                            title: function() {
+                                return 'Radio Button Field'
+                            },
                             modal: field
                         }
                     });
