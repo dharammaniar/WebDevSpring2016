@@ -5,7 +5,22 @@
         .module('FormBuilderApp')
         .controller('FieldsController', FieldsController);
 
-    function FieldsController($rootScope, $routeParams, $scope, FieldService) {
+    angular
+        .module('FormBuilderApp')
+        .controller('ModalInstanceCtrl', function ($scope, $uibModalInstance, modal) {
+
+            $scope.modal = modal;
+
+            $scope.ok = function(model) {
+                $uibModalInstance.close(model);
+            };
+
+            $scope.cancel = function() {
+                $uibModalInstance.dismiss();
+            };
+        });
+
+    function FieldsController($uibModal, $routeParams, $scope, FieldService) {
 
         var formId = $routeParams.formId;
 
@@ -24,7 +39,44 @@
         $scope.removeField = removeField;
         $scope.updateModel = updateModel;
 
-        //Event Handler Implementation
+        $scope.open = function (fieldType, field) {
+
+            var modalInstance = null;
+            var originalLabel = field.label,
+                originalPlaceholder = field.placeholder;
+
+            switch (fieldType) {
+                case 'TEXT':
+                    modalInstance = $uibModal.open({
+                        animation: true,
+                        templateUrl: 'myModalContent.html',
+                        controller: 'ModalInstanceCtrl',
+                        size: 'sm',
+                        resolve: {
+                            modal: field
+                        }
+                    });
+                    break;
+                default:
+                    break;
+            }
+
+            modalInstance.result.then(function (model) {
+                field.label = model.label;
+                field.placeholder = model.placeholder;
+                FieldService.updateFields(formId, $scope.fields);
+                console.log(field);
+            }, function () {
+                field.label = originalLabel;
+                field.placeholder = originalPlaceholder;
+                console.log("Cancel Pressed");
+            });
+
+        };
+
+
+
+            //Event Handler Implementation
         function updateModel() {
             FieldService.updateFields(formId, $scope.fields);
         }
