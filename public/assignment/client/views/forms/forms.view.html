@@ -28,7 +28,7 @@
                 </td>
             </tr>
             <tr ng-repeat="userform in userforms" ng-class="{'success' : $index === selectedFormIndex}">
-                <td> <a href="#/fields"> {{userform.title}} </a> </td>
+                <td> <a href="#/fields/{{userform._id}}"> {{userform.title}} </a> </td>
                 <td>
                     <div class="nowrap">
                         <button ng-click="deleteForm(userform)" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>

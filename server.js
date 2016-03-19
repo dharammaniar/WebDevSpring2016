@@ -50,6 +50,7 @@ var formModel = require('./public/assignment/server/models/form.model.js')(_, ap
 
 require('./public/assignment/server/services/user.service.server.js')(_, app, userModel, uuid);
 require('./public/assignment/server/services/form.service.server.js')(_, app, formModel, uuid);
+require('./public/assignment/server/services/field.service.server.js')(_, app, formModel, uuid);
 
 app.listen(port, ipaddress);
 
