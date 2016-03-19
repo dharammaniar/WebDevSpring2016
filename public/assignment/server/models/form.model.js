@@ -110,6 +110,13 @@ module.exports = function(_, app) {
         return form;
     }
 
+    function updateFieldsInForm(formId, fields) {
+        var form = findById(formId);
+        form.fields = fields;
+        update(form._id, form);
+        return form;
+    }
+
     return {
         create: create,
         findAll: findAll,
@@ -121,6 +128,7 @@ module.exports = function(_, app) {
         findFieldByFormIdAndFieldId: findFieldByFormIdAndFieldId,
         deleteFieldByFormIdAndFieldId: deleteFieldByFormIdAndFieldId,
         createFieldInForm: createFieldInForm,
-        updateFieldInForm: updateFieldInForm
+        updateFieldInForm: updateFieldInForm,
+        updateFieldsInForm: updateFieldsInForm
     }
 };

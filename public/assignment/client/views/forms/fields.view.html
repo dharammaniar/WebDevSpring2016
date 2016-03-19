@@ -6,8 +6,8 @@
     </ul>
 
     <br>
-
-    <div ng-repeat="field in fields" ng-switch on="field.type">
+    <div dm-sortable>
+        <div ng-repeat="field in fields" ng-switch on="field.type">
         <div ng-switch-when="TEXT">
             <fieldset class="form-group">
                 <label for="{{field._id}}" class="control-label">{{field.label}}</label>
@@ -133,7 +133,7 @@
             </fieldset>
         </div>
     </div>
-
+    </div>
     <hr>
 
     <fieldset class="form-group">
@@ -141,12 +141,12 @@
         <div class="row nowrap">
             <div class="col-xs-6">
                 <select id="add_new_field" ng-model="model.fieldType" class="form-control">
-                    <option>Single Line Text</option>
-                    <option>Date</option>
-                    <option>Dropdown</option>
-                    <option>Checkboxes</option>
-                    <option>Radio Buttons</option>
-                    <option>Paragraph Text Field</option>
+                    <option value="SINGLE_LINE_TEXT">Single Line Text</option>
+                    <option value="MULTI_LINE_TEXT">Paragraph Text Field</option>
+                    <option value="DATE">Date</option>
+                    <option value="DROPDOWN">Dropdown</option>
+                    <option value="CHECKBOXES">Checkboxes</option>
+                    <option value="RADIO">Radio Buttons</option>
                 </select>
             </div>
             <div class="col-xs-6">

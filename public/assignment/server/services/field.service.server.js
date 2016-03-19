@@ -32,4 +32,9 @@ module.exports = function(_, app, model, uuid) {
         var form = model.updateFieldInForm(req.params.formId, req.params.fieldId, req.body);
         res.json(form);
     });
+
+    app.put('/api/assignment/form/:formId/field/', function (req, res) {
+        var form = model.updateFieldsInForm(req.params.formId, req.body);
+        res.json(form);
+    });
 };
