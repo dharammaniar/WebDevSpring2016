@@ -12,16 +12,18 @@
             $scope.title = title;
             $scope.modal = modal;
 
-            var optionsString = null;
-            _.forEach(modal.options, function(option) {
-                if (optionsString) {
-                    optionsString = optionsString + "\n" + option.value + ":" + option.label;
-                } else {
-                    optionsString = option.value + ":" + option.label;
-                }
-            });
+            if (modal.options) {
+                var optionsString = null;
+                _.forEach(modal.options, function (option) {
+                    if (optionsString) {
+                        optionsString = optionsString + "\n" + option.value + ":" + option.label;
+                    } else {
+                        optionsString = option.value + ":" + option.label;
+                    }
+                });
 
-            $scope.modal.placeholder = optionsString;
+                $scope.modal.placeholder = optionsString;
+            }
 
             $scope.ok = function(model) {
                 var stringArray = model.placeholder.split('\n');
