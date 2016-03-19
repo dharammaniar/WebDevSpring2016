@@ -24,6 +24,7 @@ module.exports = function(_, app, model, uuid) {
         var newForm = req.body;
         newForm.userId = req.params.userId;
         newForm._id = uuid.v4();
+        newForm.fields = [];
         console.log(newForm);
         var allForms = model.create(newForm);
         res.json(allForms);
