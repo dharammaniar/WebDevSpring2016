@@ -45,12 +45,7 @@ app.get('/api/news', function(req, res){
 
 });
 
-var userModel = require('./public/assignment/server/models/user.model.js')(_, app);
-var formModel = require('./public/assignment/server/models/form.model.js')(_, app);
-
-require('./public/assignment/server/services/user.service.server.js')(_, app, userModel, uuid);
-require('./public/assignment/server/services/form.service.server.js')(_, app, formModel, uuid);
-require('./public/assignment/server/services/field.service.server.js')(_, app, formModel, uuid);
+require('./public/assignment/server/app')(_, app, uuid);
 
 app.listen(port, ipaddress);
 
