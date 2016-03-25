@@ -5,66 +5,22 @@
         .module('FormBuilderApp')
         .factory('BlogService', BlogService);
 
-    function BlogService() {
-        var allBlogs = [
-            {
-                "_id": "1",
-                "userId": 123,
-                "title": "Example Blog 1",
-                "description": "Blog Description",
-                "dateCreated": "2016-03-02T07:35:09.988Z"
-            },
-            {
-                "_id": "2",
-                "userId": 123,
-                "title": "Example Blog 2",
-                "description": "Blog Description",
-                "dateCreated": "2016-03-04T07:35:09.988Z"
-            },
-            {
-                "_id": "3",
-                "userId": 234,
-                "title": "Example Blog 1",
-                "description": "Blog Description",
-                "dateCreated": "2016-03-01T07:35:09.988Z"
-            }
-        ];
+    function BlogService($http) {
 
-        function createBlogForUser(userId, blog, callback) {
-            _.extend(blog, {
-                _id: (new Date).getTime(),
-                userId: userId,
-                dateCreated: (new Date)
-            });
-            allBlogs[allBlogs.length] = blog;
-
-            callback(blog);
+        function createBlogForUser(userId, blog) {
+            return $http.post('/api/project/blog/' + userId, blog);
         }
 
-        function findAllBlogsForUser(userId, callback) {
-            var blogsFound = _.filter(allBlogs, {
-                userId: userId
-            });
-
-            callback(blogsFound);
+        function findAllBlogsForUser(userId) {
+            return $http.get('/api/project/blog/' + userId);
         }
 
-        function deleteBlogById(blogId, callback) {
-            _.remove(allBlogs, function(blog) {
-                return blog._id === blogId;
-            });
-
-            callback(allBlogs);
+        function deleteBlogById(blogId) {
+            return $http.delete('/api/project/blog/' + blogId);
         }
 
-        function updateBlogById(blogId, updatedBlog, callback) {
-            var blogToUpdate = _.find(allBlogs, {
-                _id: blogId
-            });
-
-            _.extend(blogToUpdate, updatedBlog);
-
-            callback(blogToUpdate);
+        function updateBlogById(blogId, updatedBlog) {
+            return $http.put('/api/project/blog/' + blogId, updatedBlog);
         }
 
         return {
