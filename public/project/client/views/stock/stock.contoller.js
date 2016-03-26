@@ -72,28 +72,35 @@
                 console.log(response);
             });
 
-            $http({
-                method: 'GET',
-                url: '/api/news?title=' + $scope.stockCode
-            }).then(function successCallback(response) {
+            fetchNews();
+        }
 
-                var results = response.data.responseData.results;
-                var news = [];
-                _.forEach(results, function(result) {
-                    news.push({
-                        title: result.titleNoFormatting,
-                        content: result.content,
-                        url: result.unescapedUrl,
-                        imageUrl: result.image ? result.image.url : null
-                    })
+        function fetchNews() {
+            $http.jsonp('https://ajax.googleapis.com/ajax/services/search/news?v=2.0&callback=JSON_CALLBACK&q=' + $scope.stockCode)
+                .then(function successCallback(response) {
+
+                    if(response.data.responseStatus == 503) {
+                        setTimeout(function(){
+                            console.log("Retrying");
+                            fetchNews();
+                        }, 3000);
+                    } else {
+                        var results = response.data.responseData.results;
+                        var news = [];
+                        _.forEach(results, function (result) {
+                            news.push({
+                                title: result.titleNoFormatting,
+                                content: result.content,
+                                url: result.unescapedUrl,
+                                imageUrl: result.image ? result.image.url : null
+                            })
+                        });
+                        $scope.news = news;
+                    }
+
+                }, function errorCallback(response) {
+                    console.log(response);
                 });
-
-                $scope.news = news;
-
-            }, function errorCallback(response) {
-                console.log(response);
-            });
-
         }
     }
 }());
