@@ -46,6 +46,7 @@ app.get('/api/news', function(req, res){
 });
 
 require('./public/assignment/server/app')(_, app, uuid);
+require('./public/project/server/app')(_, app, uuid);
 
 app.listen(port, ipaddress);
 
