@@ -5,10 +5,12 @@
         .module("FormBuilderApp")
         .controller("RegisterController", RegisterController);
 
-    function RegisterController($rootScope, $scope, $location, UserService) {
+    function RegisterController($rootScope, $location, UserService) {
 
+        var vm = this;
+        
         // Event Handler Declaration
-        $scope.register = register;
+        vm.register = register;
 
         // Event Handler Implementation
         function register(user) {

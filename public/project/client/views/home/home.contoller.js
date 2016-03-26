@@ -5,16 +5,19 @@
         .module('FormBuilderApp')
         .controller('HomeController', HomeController);
 
-    function HomeController($scope, $rootScope, $http, $sce) {
-        $scope.indexValue = '0.0';
-        $scope.difference = '0.0';
-        $scope.percentage = '0.0';
+    function HomeController($rootScope, $http, $sce) {
+        
+        var vm = this;
+        
+        vm.indexValue = '0.0';
+        vm.difference = '0.0';
+        vm.percentage = '0.0';
 
-        //$scope.news = [];
+        //vm.news = [];
 
         init();
 
-        $scope.deliberatelyTrustDangerousSnippet = function(text) {
+        vm.deliberatelyTrustDangerousSnippet = function(text) {
             return $sce.trustAsHtml(text);
         };
 
@@ -23,15 +26,15 @@
                 method: 'GET',
                 url: 'https://www.quandl.com/api/v3/datasets/NASDAQOMX/COMP.json?auth_token=bbt3K2NScvyFC4f-trat'
             }).then(function successCallback(response) {
-                $scope.indexValue = response.data.dataset.data[0][1];
-                $scope.high = response.data.dataset.data[0][2];
-                $scope.low = response.data.dataset.data[0][3];
+                vm.indexValue = response.data.dataset.data[0][1];
+                vm.high = response.data.dataset.data[0][2];
+                vm.low = response.data.dataset.data[0][3];
 
                 var differenceValue = (response.data.dataset.data[0][1] - response.data.dataset.data[1][1]).toFixed(2);
-                $scope.difference = differenceValue;
+                vm.difference = differenceValue;
 
                 var percentage = ((differenceValue/response.data.dataset.data[1][1])*100).toFixed(2);
-                $scope.percentage = '(' + percentage + '%)';
+                vm.percentage = '(' + percentage + '%)';
 
                 if (differenceValue >= 0 ) {
 
@@ -79,7 +82,6 @@
 
                     if(response.data.responseStatus == 503) {
                         setTimeout(function(){
-                            console.log("Retrying");
                             fetchNews();
                         }, 3000);
                     } else {
@@ -93,7 +95,7 @@
                                 imageUrl: result.image ? result.image.url : null
                             })
                         });
-                        $scope.news = news;
+                        vm.news = news;
                     }
 
                 }, function errorCallback(response) {

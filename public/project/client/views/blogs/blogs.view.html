@@ -19,28 +19,28 @@
             </tr>
             <tr>
                 <td>
-                    <input type="text" ng-model="selectedBlog.title" placeholder="Title" class="form-control"/>
+                    <input type="text" ng-model="model.selectedBlog.title" placeholder="Title" class="form-control"/>
                 </td>
                 <td>
-                    <input type="text" ng-model="selectedBlog.description" placeholder="Description" class="form-control"/>
+                    <input type="text" ng-model="model.selectedBlog.description" placeholder="Description" class="form-control"/>
                 </td>
-                <td> {{selectedBlog.dateCreated}} </td>
+                <td> {{model.selectedBlog.dateCreated}} </td>
                 <td>
                     <div class="nowrap">
-                        <button ng-click="addBlog(selectedBlog)" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-                        <button ng-click="updateBlog(selectedBlog)" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
+                        <button ng-click="model.addBlog(model.selectedBlog)" class="btn btn-primary"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                        <button ng-click="model.updateBlog(model.selectedBlog)" class="btn btn-success"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span></button>
 
                     </div>
                 </td>
             </tr>
-            <tr ng-repeat="currentBlog in userBlogs" ng-class="{'success' : $index === selectedBlogIndex}">
+            <tr ng-repeat="currentBlog in model.userBlogs" ng-class="{'success' : $index === model.selectedBlogIndex}">
                 <td> {{currentBlog.title}} </td>
                 <td> {{currentBlog.description}} </td>
                 <td> {{currentBlog.dateCreated}} </td>
                 <td>
                     <div class="nowrap">
-                        <button ng-click="deleteBlog(currentBlog)" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-                        <button ng-click="selectBlog($index)" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                        <button ng-click="model.deleteBlog(currentBlog)" class="btn btn-danger"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        <button ng-click="model.selectBlog($index)" class="btn btn-warning"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                     </div>
                 </td>
             </tr>

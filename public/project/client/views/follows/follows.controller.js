@@ -5,25 +5,27 @@
         .module('FormBuilderApp')
         .controller('FollowsController', FollowsController);
 
-    function FollowsController($rootScope, $scope, FollowsService) {
+    function FollowsController($rootScope, FollowsService) {
 
-        $scope.userFollows = [];
+        var vm = this;
+        
+        vm.userFollows = [];
         showAllFollowsForUser();
 
         function showAllFollowsForUser() {
             FollowsService.findAllFollowsForUser($rootScope.user.username)
                 .then(function(follows){
-                    $scope.userFollows = follows.data;
-                    delete $scope.selectedFollows;
-                    delete $scope.selectedFollowsIndex;
+                    vm.userFollows = follows.data;
+                    delete vm.selectedFollows;
+                    delete vm.selectedFollowsIndex;
                 });
         }
 
         // Event Handler Declaration
-        $scope.addFollows = addFollows;
-        $scope.updateFollows = updateFollows;
-        $scope.deleteFollows = deleteFollows;
-        $scope.selectFollows = selectFollows;
+        vm.addFollows = addFollows;
+        vm.updateFollows = updateFollows;
+        vm.deleteFollows = deleteFollows;
+        vm.selectFollows = selectFollows;
 
         //Event Handler Implementation
         function addFollows(follows) {
@@ -41,11 +43,11 @@
         }
 
         function selectFollows(index) {
-            $scope.selectedFollowsIndex = index;
-            $scope.selectedFollows = {
-                _id: $scope.userFollows[index]._id,
-                user1username: $scope.userFollows[index].user1username,
-                user2username: $scope.userFollows[index].user2username
+            vm.selectedFollowsIndex = index;
+            vm.selectedFollows = {
+                _id: vm.userFollows[index]._id,
+                user1username: vm.userFollows[index].user1username,
+                user2username: vm.userFollows[index].user2username
             }
         }
     }

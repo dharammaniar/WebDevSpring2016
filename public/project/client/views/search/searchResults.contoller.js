@@ -5,7 +5,8 @@
         .module('FormBuilderApp')
         .controller('SearchResultController', SearchResultController);
 
-    function SearchResultController($scope, $rootScope, StockService) {
+    function SearchResultController($rootScope, StockService) {
+        var vm = this;
 
         init();
 
@@ -22,7 +23,7 @@
                         });
                     });
 
-                    $scope.stocks = stocksResult;
+                    vm.stocks = stocksResult;
                 });
         }
     }

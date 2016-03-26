@@ -1,10 +1,10 @@
-<div class="container searchBar" ng-controller="SearchController">
+<div class="container searchBar" ng-controller="SearchController as model">
     <div class="row">
         <div id="custom-search-input">
             <div class="input-group col-sm-offset-3 col-md-offset-2">
                 <input type="search" class="search-query form-control" id="searchBox" ng-model="stock" placeholder="Search" />
                 <span class="input-group-btn">
-                    <button class="btn btn-danger" type="button" ng-click="findStock(stock)">
+                    <button class="btn btn-danger" type="button" ng-click="model.findStock(stock)">
                         <span class=" glyphicon glyphicon-search"></span>
                     </button>
                 </span>

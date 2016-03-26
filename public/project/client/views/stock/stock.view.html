@@ -1,13 +1,13 @@
 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
     <div class="row">
         <div class="col-xs-12 col-md-6">
-            <h3>{{stockCode}}: {{indexValue}}</h3>
+            <h3>{{model.stockCode}}: {{model.indexValue}}</h3>
         </div>
         <div class="col-xs-12 col-md-3 nowrap">
-            <h3>Difference: {{difference}}</h3>
+            <h3>Difference: {{model.difference}}</h3>
         </div>
         <div class="col-xs-12 col-md-3 nowrap">
-            <h3>Percentage: {{percentage}}</h3>
+            <h3>Percentage: {{model.percentage}}</h3>
         </div>
     </div>
     <hr>
@@ -15,11 +15,11 @@
         <div class="col-xs-12 col-md-6">
             <h3>News</h3>
             <table class="table">
-                <tr ng-repeat="each in news">
+                <tr ng-repeat="each in model.news">
                     <td>
-                        <a href="{{each.url}}" target="_blank"> <div ng-bind-html="deliberatelyTrustDangerousSnippet(each.title)"></div></a>
+                        <a href="{{each.url}}" target="_blank"> <div ng-bind-html="model.deliberatelyTrustDangerousSnippet(each.title)"></div></a>
                         <!--{{each.content}}-->
-                        <div ng-bind-html="deliberatelyTrustDangerousSnippet(each.content)"></div>
+                        <div ng-bind-html="model.deliberatelyTrustDangerousSnippet(each.content)"></div>
                     </td>
                     <td valign="middle">
                         <img src="{{each.imageUrl}}" width="150" class="img-rounded">
@@ -28,7 +28,7 @@
             </table>
         </div>
         <div class="col-xs-12 col-md-6">
-            <div id="stockContainer" class="left-border"></div>
+            <div id="stockContainer"></div>
         </div>
     </div>
 </div>

@@ -5,25 +5,27 @@
         .module('FormBuilderApp')
         .controller('PortfolioController', PortfolioController);
 
-    function PortfolioController($rootScope, $scope, PortfolioService) {
+    function PortfolioController($rootScope, PortfolioService) {
 
-        $scope.userStocks = [];
+        var vm = this;
+
+        vm.userStocks = [];
         showAllStocksForUser();
 
         function showAllStocksForUser() {
             PortfolioService.findAllStocksForUser($rootScope.user._id)
                 .then(function(comments){
-                    $scope.userStocks = comments.data;
-                    delete $scope.selectedStock;
-                    delete $scope.selectedStockIndex;
+                    vm.userStocks = comments.data;
+                    delete vm.selectedStock;
+                    delete vm.selectedStockIndex;
                 });
         }
 
         // Event Handler Declaration
-        $scope.addStock = addStock;
-        $scope.updateStock = updateStock;
-        $scope.deleteStock = deleteStock;
-        $scope.selectStock = selectStock;
+        vm.addStock = addStock;
+        vm.updateStock = updateStock;
+        vm.deleteStock = deleteStock;
+        vm.selectStock = selectStock;
 
         //Event Handler Implementation
         function addStock(stock) {
@@ -41,14 +43,14 @@
         }
 
         function selectStock(index) {
-            $scope.selectedStockIndex = index;
-            $scope.selectedStock = {
-                _id: $scope.userStocks[index]._id,
-                userId: $scope.userStocks[index].userId,
-                stock: $scope.userStocks[index].stock,
-                price: $scope.userStocks[index].price,
-                quantity: $scope.userStocks[index].quantity,
-                date: new Date($scope.userStocks[index].date)
+            vm.selectedStockIndex = index;
+            vm.selectedStock = {
+                _id: vm.userStocks[index]._id,
+                userId: vm.userStocks[index].userId,
+                stock: vm.userStocks[index].stock,
+                price: vm.userStocks[index].price,
+                quantity: vm.userStocks[index].quantity,
+                date: new Date(vm.userStocks[index].date)
             }
         }
     }

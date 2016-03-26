@@ -5,9 +5,11 @@
         .module('FormBuilderApp')
         .controller('SearchController', SearchController);
 
-    function SearchController($scope, $rootScope, $location) {
+    function SearchController($rootScope, $location) {
 
-        $scope.findStock = findStock;
+        var vm = this;
+
+        vm.findStock = findStock;
 
         function findStock(searchTerm) {
             $rootScope.searchTerm = searchTerm;

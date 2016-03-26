@@ -5,14 +5,15 @@
         .module('FormBuilderApp')
         .controller('HeaderController', HeaderController);
 
-    function HeaderController($scope, $location, $rootScope) {
-        $scope.$location = $location;
+    function HeaderController($location, $rootScope, UserService) {
 
-        $scope.logout = logout;
+        var vm = this;
+        vm.logout = logout;
 
         function logout() {
             $rootScope.user = null;
-            $location.path('/');
+            UserService.deleteUserSession();
+            $location.url('/');
         }
     }
 })();

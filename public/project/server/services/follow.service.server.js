@@ -5,7 +5,7 @@
 
 module.exports = function(_, app, model, uuid) {
 
-    app.post('/api/project/follows/', createFollowsForUser);
+    app.post('/api/project/follows', createFollowsForUser);
     app.get('/api/project/follows/:user1username', findAllFollowsForUser);
     app.delete('/api/project/follows/:followsId', deleteFollowsById);
     app.put('/api/project/follows/:followsId', updateFollowsById);

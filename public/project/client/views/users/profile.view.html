@@ -57,19 +57,17 @@
 
     <div class="row">
         <div class="col-xs-12 col-sm-10 col-sm-offset-2">
-            <button ng-click="update(user)" class="btn btn-primary col-xs-12"> Update </button>
+            <button ng-click="model.update(user)" class="btn btn-primary col-xs-12"> Update </button>
         </div>
     </div>
 
     <br>
 
     <div class="row">
-        <div class="alert alert-success col-xs-12 col-sm-10 col-sm-offset-2" ng-show="showSuccessAlert">
+        <div class="alert alert-success col-xs-12 col-sm-10 col-sm-offset-2" ng-show="model.showSuccessAlert">
             <strong>Updated!</strong>
         </div>
     </div>
-
-    <hr>
 
     <h2>Portfolio</h2>
     <div class="row col-xs-12">
@@ -89,7 +87,7 @@
                         Date Invested
                     </th>
                 </tr>
-                <tr ng-repeat="currentStock in userStocks" ng-class="{'success' : $index === selectedCommentIndex}">
+                <tr ng-repeat="currentStock in model.userStocks" ng-class="{'success' : $index === model.selectedCommentIndex}">
                     <td> {{currentStock.stock}} </td>
                     <td> {{currentStock.price}} </td>
                     <td> {{currentStock.quantity}} </td>
@@ -99,7 +97,6 @@
         </div>
     </div>
 
-    <hr>
     <h2>Comments</h2>
     <div class="row col-xs-12">
         <div class="table-responsive">
@@ -112,7 +109,7 @@
                         Date
                     </th>
                 </tr>
-                <tr ng-repeat="currentComment in userComments" ng-class="{'success' : $index === selectedCommentIndex}">
+                <tr ng-repeat="currentComment in model.userComments" ng-class="{'success' : $index === model.selectedCommentIndex}">
                     <td> {{currentComment.text}} </td>
                     <td> {{currentComment.dateCreated}} </td>
                 </tr>

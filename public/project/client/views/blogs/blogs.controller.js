@@ -5,25 +5,27 @@
         .module('FormBuilderApp')
         .controller('BlogController', BlogController);
 
-    function BlogController($rootScope, $scope, BlogService) {
+    function BlogController($rootScope, BlogService) {
 
-        $scope.userBlogs = [];
+        var vm = this;
+        
+        vm.userBlogs = [];
         showAllBlogsForUser();
 
         function showAllBlogsForUser() {
             BlogService.findAllBlogsForUser($rootScope.user._id)
                 .then(function(blogs) {
-                    $scope.userBlogs = blogs.data;
-                    delete $scope.selectedBlog;
-                    delete $scope.selectedBlogIndex;
+                    vm.userBlogs = blogs.data;
+                    delete vm.selectedBlog;
+                    delete vm.selectedBlogIndex;
                 });
         }
 
         // Event Handler Declaration
-        $scope.addBlog = addBlog;
-        $scope.updateBlog = updateBlog;
-        $scope.deleteBlog = deleteBlog;
-        $scope.selectBlog = selectBlog;
+        vm.addBlog = addBlog;
+        vm.updateBlog = updateBlog;
+        vm.deleteBlog = deleteBlog;
+        vm.selectBlog = selectBlog;
 
         //Event Handler Implementation
         function addBlog(blog) {
@@ -41,13 +43,13 @@
         }
 
         function selectBlog(index) {
-            $scope.selectedBlogIndex = index;
-            $scope.selectedBlog = {
-                _id: $scope.userBlogs[index]._id,
-                title: $scope.userBlogs[index].title,
-                description: $scope.userBlogs[index].description,
-                userId: $scope.userBlogs[index].userId,
-                dateCreated: $scope.userBlogs[index].dateCreated
+            vm.selectedBlogIndex = index;
+            vm.selectedBlog = {
+                _id: vm.userBlogs[index]._id,
+                title: vm.userBlogs[index].title,
+                description: vm.userBlogs[index].description,
+                userId: vm.userBlogs[index].userId,
+                dateCreated: vm.userBlogs[index].dateCreated
             }
         }
     }

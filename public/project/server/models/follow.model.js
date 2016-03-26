@@ -27,7 +27,7 @@ module.exports = function(_) {
         return allFollows;
     }
 
-    function updateFollowById(followId, updatedFollow) {
+    function updateFollowsById(followId, updatedFollow) {
         var followToUpdate = _.find(allFollows, {
             _id: followId
         });
@@ -41,6 +41,6 @@ module.exports = function(_) {
         createFollowsForUser: createFollowsForUser,
         findAllFollowsForUser: findAllFollowsForUser,
         deleteFollowsById: deleteFollowsById,
-        updateFollowById: updateFollowById
+        updateFollowsById: updateFollowsById
     };
 };

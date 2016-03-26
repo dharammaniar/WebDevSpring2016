@@ -5,11 +5,13 @@
         .module('FormBuilderApp')
         .controller('ProfileController', ProfileController);
 
-    function ProfileController($rootScope, $scope, $location, UserService, PortfolioService, CommentService) {
+    function ProfileController($rootScope, $location, UserService, PortfolioService, CommentService) {
 
+        var vm = this;
+        
         // Event Handler Declaration
-        $scope.update = update;
-        $scope.showSuccessAlert = false;
+        vm.update = update;
+        vm.showSuccessAlert = false;
 
         showAllStocksForUser();
         showAllCommentsForUser();
@@ -21,7 +23,7 @@
                     function(updatedUser) {
                         $rootScope.user = updatedUser.data;
                         $location.path('/profile');
-                        $scope.showSuccessAlert = true;
+                        vm.showSuccessAlert = true;
                     }
                 );
         }
@@ -29,18 +31,18 @@
         function showAllStocksForUser() {
             PortfolioService.findAllStocksForUser($rootScope.user._id)
                 .then(function(comments){
-                    $scope.userStocks = comments.data;
-                    delete $scope.selectedStock;
-                    delete $scope.selectedStockIndex;
+                    vm.userStocks = comments.data;
+                    delete vm.selectedStock;
+                    delete vm.selectedStockIndex;
                 });
         }
 
         function showAllCommentsForUser() {
             CommentService.findAllCommentsForUser($rootScope.user._id)
                 .then(function(comments){
-                    $scope.userComments = comments.data;
-                    delete $scope.selectedComment;
-                    delete $scope.selectedCommentIndex;
+                    vm.userComments = comments.data;
+                    delete vm.selectedComment;
+                    delete vm.selectedCommentIndex;
                 });
         }
     }

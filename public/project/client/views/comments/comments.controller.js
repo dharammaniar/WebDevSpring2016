@@ -5,25 +5,27 @@
         .module('FormBuilderApp')
         .controller('CommentController', CommentController);
 
-    function CommentController($rootScope, $scope, CommentService) {
+    function CommentController($rootScope, CommentService) {
 
-        $scope.userComments = [];
+        var vm = this;
+        
+        vm.userComments = [];
         showAllCommentsForUser();
 
         function showAllCommentsForUser() {
             CommentService.findAllCommentsForUser($rootScope.user._id)
                 .then(function(comments){
-                    $scope.userComments = comments.data;
-                    delete $scope.selectedComment;
-                    delete $scope.selectedCommentIndex;
+                    vm.userComments = comments.data;
+                    delete vm.selectedComment;
+                    delete vm.selectedCommentIndex;
                 });
         }
 
         // Event Handler Declaration
-        $scope.addComment = addComment;
-        $scope.updateComment = updateComment;
-        $scope.deleteComment = deleteComment;
-        $scope.selectComment = selectComment;
+        vm.addComment = addComment;
+        vm.updateComment = updateComment;
+        vm.deleteComment = deleteComment;
+        vm.selectComment = selectComment;
 
         //Event Handler Implementation
         function addComment(comment) {
@@ -41,11 +43,11 @@
         }
 
         function selectComment(index) {
-            $scope.selectedCommentIndex = index;
-            $scope.selectedComment = {
-                _id: $scope.userComments[index]._id,
-                text: $scope.userComments[index].text,
-                dateCreated: $scope.userComments[index].dateCreated
+            vm.selectedCommentIndex = index;
+            vm.selectedComment = {
+                _id: vm.userComments[index]._id,
+                text: vm.userComments[index].text,
+                dateCreated: vm.userComments[index].dateCreated
             }
         }
     }
