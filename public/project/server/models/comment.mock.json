@@ -3,18 +3,18 @@
     "_id": "1",
     "userId": "1",
     "text": "Example comment 1",
-    "dateCreated": ""
+    "dateCreated": "2016-09-13T05:00:00.000Z"
   },
   {
     "_id": "2",
     "userId": "1",
     "text": "Example comment 2",
-    "dateCreated": ""
+    "dateCreated": "2016-05-14T05:00:00.000Z"
   },
   {
     "_id": "3",
     "userId": "2",
     "text": "Example comment 1",
-    "dateCreated": ""
+    "dateCreated": "2016-03-04T05:00:00.000Z"
   }
 ]
