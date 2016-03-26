@@ -8,9 +8,6 @@ module.exports = function(_) {
     var allFollows = require('./follow.mock.json');
 
     function createFollowsForUser(follows) {
-        _.extend(follows, {
-            _id: (new Date).getTime()
-        });
         allFollows[allFollows.length] = follows;
 
         return follows;

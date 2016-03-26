@@ -9,7 +9,6 @@ module.exports = function(_) {
 
     function createStockForUser(userId, stock) {
         _.extend(stock, {
-            _id: (new Date).getTime(),
             userId: userId
         });
         allStocks[allStocks.length] = stock;

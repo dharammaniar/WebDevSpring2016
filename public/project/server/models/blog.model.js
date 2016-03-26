@@ -9,7 +9,6 @@ module.exports = function(_) {
 
     function createBlogForUser(userId, blog) {
         _.extend(blog, {
-            _id: (new Date).getTime(),
             userId: userId,
             dateCreated: (new Date)
         });

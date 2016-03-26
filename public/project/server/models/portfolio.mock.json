@@ -1,26 +1,26 @@
 [
   {
     "_id": "1",
-    "userId": 1,
+    "userId": "1",
     "stock": "AAPL",
     "price": "105.23",
-    "quantity": 30,
+    "quantity": "30",
     "date": "2016-03-04T05:00:00.000Z"
   },
   {
     "_id": "2",
-    "userId": 1,
+    "userId": "1",
     "stock": "GOGGL",
     "price": "675.48",
-    "quantity": 10,
+    "quantity": "10",
     "date": "2016-02-29T05:00:00.000Z"
   },
   {
     "_id": "3",
-    "userId": 1,
+    "userId": "1",
     "stock": "YAHOO",
     "price": "42.82",
-    "quantity": 200,
+    "quantity": "200",
     "date": "2016-01-14T05:00:00.000Z"
   }
 ]

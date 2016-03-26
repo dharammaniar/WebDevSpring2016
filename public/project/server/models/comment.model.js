@@ -9,7 +9,6 @@ module.exports = function(_) {
 
     function createCommentForUser(userId, comment) {
         _.extend(comment, {
-            _id: (new Date).getTime(),
             userId: userId,
             dateCreated: (new Date)
         });

@@ -11,11 +11,12 @@
         showAllFollowsForUser();
 
         function showAllFollowsForUser() {
-            FollowsService.findAllFollowsForUser($rootScope.user.username, function(follows){
-                $scope.userFollows = follows;
-                delete $scope.selectedFollows;
-                delete $scope.selectedFollowsIndex;
-            });
+            FollowsService.findAllFollowsForUser($rootScope.user.username)
+                .then(function(follows){
+                    $scope.userFollows = follows.data;
+                    delete $scope.selectedFollows;
+                    delete $scope.selectedFollowsIndex;
+                });
         }
 
         // Event Handler Declaration
@@ -27,16 +28,16 @@
         //Event Handler Implementation
         function addFollows(follows) {
             if (follows.user1username && follows.user2username) {
-                FollowsService.createFollowsForUser(follows, showAllFollowsForUser);
+                FollowsService.createFollowsForUser(follows).then(showAllFollowsForUser);
             }
         }
 
         function updateFollows(follows) {
-            FollowsService.updateFollowById(follows._id, follows, showAllFollowsForUser);
+            FollowsService.updateFollowById(follows._id, follows).then(showAllFollowsForUser);
         }
 
         function deleteFollows(follows) {
-            FollowsService.deleteFollowsById(follows._id, showAllFollowsForUser);
+            FollowsService.deleteFollowsById(follows._id).then(showAllFollowsForUser);
         }
 
         function selectFollows(index) {

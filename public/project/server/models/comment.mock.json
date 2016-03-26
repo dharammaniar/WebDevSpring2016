@@ -1,19 +1,19 @@
 [
   {
     "_id": "1",
-    "userId": 1,
+    "userId": "1",
     "text": "Example comment 1",
     "dateCreated": ""
   },
   {
     "_id": "2",
-    "userId": 1,
+    "userId": "1",
     "text": "Example comment 2",
     "dateCreated": ""
   },
   {
     "_id": "3",
-    "userId": 2,
+    "userId": "2",
     "text": "Example comment 1",
     "dateCreated": ""
   }

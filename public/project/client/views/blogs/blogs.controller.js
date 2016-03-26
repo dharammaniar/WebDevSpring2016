@@ -11,11 +11,12 @@
         showAllBlogsForUser();
 
         function showAllBlogsForUser() {
-            BlogService.findAllBlogsForUser($rootScope.user._id, function(blogs){
-                $scope.userBlogs = blogs;
-                delete $scope.selectedBlog;
-                delete $scope.selectedBlogIndex;
-            });
+            BlogService.findAllBlogsForUser($rootScope.user._id)
+                .then(function(blogs) {
+                    $scope.userBlogs = blogs.data;
+                    delete $scope.selectedBlog;
+                    delete $scope.selectedBlogIndex;
+                });
         }
 
         // Event Handler Declaration
@@ -27,16 +28,16 @@
         //Event Handler Implementation
         function addBlog(blog) {
             if (blog.title && blog.description) {
-                BlogService.createBlogForUser($rootScope.user._id, blog, showAllBlogsForUser);
+                BlogService.createBlogForUser($rootScope.user._id, blog).then(showAllBlogsForUser);
             }
         }
 
         function updateBlog(blog) {
-            BlogService.updateBlogById(blog._id, blog, showAllBlogsForUser);
+            BlogService.updateBlogById(blog._id, blog).then(showAllBlogsForUser);
         }
 
         function deleteBlog(blog) {
-            BlogService.deleteBlogById(blog._id, showAllBlogsForUser);
+            BlogService.deleteBlogById(blog._id).then(showAllBlogsForUser);
         }
 
         function selectBlog(index) {

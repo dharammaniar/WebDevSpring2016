@@ -13,13 +13,14 @@
 
         // Event Handler Implementation
         function update(user) {
-            UserService.updateUser(
-                $rootScope.user._id, user, function(updatedUser) {
-                    $rootScope.user = updatedUser;
-                    $location.path('/profile');
-                    $scope.showSuccessAlert = true;
-                }
-            )
+            UserService.updateUser($rootScope.user._id, user)
+                .then(
+                    function(updatedUser) {
+                        $rootScope.user = updatedUser.data;
+                        $location.path('/profile');
+                        $scope.showSuccessAlert = true;
+                    }
+                );
         }
     }
 }());

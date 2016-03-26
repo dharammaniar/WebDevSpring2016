@@ -5,11 +5,11 @@
 
 module.exports = function(_, app, model, uuid) {
 
-    app.post('/api/assignment/user', createUser);
-    app.get('/api/assignment/user/:id', findUserById);
-    app.put('/api/assignment/user/:id', updateUser);
-    app.delete('/api/assignment/user/:id', deleteUser);
-    app.get('/api/assignment/user', findUser);
+    app.post('/api/project/user', createUser);
+    app.get('/api/project/user/:id', findUserById);
+    app.put('/api/project/user/:id', updateUser);
+    app.delete('/api/project/user/:id', deleteUser);
+    app.get('/api/project/user', findUser);
 
     function createUser(req, res) {
         var newUser = req.body;

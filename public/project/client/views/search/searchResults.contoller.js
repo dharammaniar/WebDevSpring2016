@@ -11,18 +11,19 @@
 
         function init() {
             var searchTerm = $rootScope.searchTerm;
-            var searchResult = StockService.findMatchingStocks(searchTerm);
+            StockService.findMatchingStocks(searchTerm)
+                .then(function(searchResult) {
+                    var stocksResult = [];
 
-            var stocksResult = [];
+                    _.forEach(searchResult.data, function(search) {
+                        stocksResult.push({
+                            name: search,
+                            url: '#/stock/' + search.split(':')[0].trim()
+                        });
+                    });
 
-            _.forEach(searchResult, function(search) {
-                stocksResult.push({
-                    name: search,
-                    url: '#/stock/' + search.split(':')[0].trim()
+                    $scope.stocks = stocksResult;
                 });
-            });
-
-            $scope.stocks = stocksResult;
         }
     }
 }());

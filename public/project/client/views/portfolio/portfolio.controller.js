@@ -11,11 +11,12 @@
         showAllStocksForUser();
 
         function showAllStocksForUser() {
-            PortfolioService.findAllStocksForUser($rootScope.user._id, function(comments){
-                $scope.userStocks = comments;
-                delete $scope.selectedStock;
-                delete $scope.selectedStockIndex;
-            });
+            PortfolioService.findAllStocksForUser($rootScope.user._id)
+                .then(function(comments){
+                    $scope.userStocks = comments.data;
+                    delete $scope.selectedStock;
+                    delete $scope.selectedStockIndex;
+                });
         }
 
         // Event Handler Declaration
@@ -27,16 +28,16 @@
         //Event Handler Implementation
         function addStock(stock) {
             if (stock.stock && stock.price && stock.quantity && stock.date) {
-                PortfolioService.createStockForUser($rootScope.user._id, stock, showAllStocksForUser);
+                PortfolioService.createStockForUser($rootScope.user._id, stock).then(showAllStocksForUser);
             }
         }
 
         function updateStock(stock) {
-            PortfolioService.updateStockById(stock._id, stock, showAllStocksForUser);
+            PortfolioService.updateStockById(stock._id, stock).then(showAllStocksForUser);
         }
 
         function deleteStock(stock) {
-            PortfolioService.deleteStockById(stock._id, showAllStocksForUser);
+            PortfolioService.deleteStockById(stock._id).then(showAllStocksForUser);
         }
 
         function selectStock(index) {

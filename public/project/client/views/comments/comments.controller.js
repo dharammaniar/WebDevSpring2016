@@ -11,11 +11,12 @@
         showAllCommentsForUser();
 
         function showAllCommentsForUser() {
-            CommentService.findAllCommentsForUser($rootScope.user._id, function(comments){
-                $scope.userComments = comments;
-                delete $scope.selectedComment;
-                delete $scope.selectedCommentIndex;
-            });
+            CommentService.findAllCommentsForUser($rootScope.user._id)
+                .then(function(comments){
+                    $scope.userComments = comments.data;
+                    delete $scope.selectedComment;
+                    delete $scope.selectedCommentIndex;
+                });
         }
 
         // Event Handler Declaration
@@ -27,16 +28,16 @@
         //Event Handler Implementation
         function addComment(comment) {
             if (comment.text) {
-                CommentService.createCommentForUser($rootScope.user._id, comment, showAllCommentsForUser);
+                CommentService.createCommentForUser($rootScope.user._id, comment).then(showAllCommentsForUser);
             }
         }
 
         function updateComment(comment) {
-            CommentService.updateCommentById(comment._id, comment, showAllCommentsForUser);
+            CommentService.updateCommentById(comment._id, comment).then(showAllCommentsForUser);
         }
 
         function deleteComment(comment) {
-            CommentService.deleteCommentById(comment._id, showAllCommentsForUser);
+            CommentService.deleteCommentById(comment._id).then(showAllCommentsForUser);
         }
 
         function selectComment(index) {

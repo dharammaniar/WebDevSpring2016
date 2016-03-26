@@ -12,14 +12,11 @@
 
         // Event Handler Implementation
         function login(user) {
-            UserService.findUserByCredentials(
-                user.username,
-                user.password,
-                function(loggedInUser) {
-                    $rootScope.user = loggedInUser;
+            UserService.findUserByCredentials(user.username, user.password)
+                .then(function(loggedInUser) {
+                    $rootScope.user = loggedInUser.data;
                     $location.path('/profile');
-                }
-            )
+                });
         }
     }
 }());

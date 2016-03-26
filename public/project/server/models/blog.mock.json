@@ -1,21 +1,21 @@
 [
   {
     "_id": "1",
-    "userId": 2,
+    "userId": "2",
     "title": "Example Blog 1",
     "description": "Blog Description",
     "dateCreated": "2016-03-02T07:35:09.988Z"
   },
   {
     "_id": "2",
-    "userId": 2,
+    "userId": "2",
     "title": "Example Blog 2",
     "description": "Blog Description",
     "dateCreated": "2016-03-04T07:35:09.988Z"
   },
   {
     "_id": "3",
-    "userId": 2,
+    "userId": "2",
     "title": "Example Blog 1",
     "description": "Blog Description",
     "dateCreated": "2016-03-01T07:35:09.988Z"
