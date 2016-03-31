@@ -15,7 +15,7 @@
             UserService.createUser({
                 username: user.username,
                 password: user.password,
-                email: user.email
+                emails: user.emails.split(',')
             }).then(function successCallback(response) {
                 $rootScope.user = response.data;
                 $location.path('/profile');

@@ -3,10 +3,10 @@
  */
 'use strict';
 
-module.exports = function(_, app, uuid) {
+module.exports = function(_, app, db, uuid) {
 
-    var userModel = require('./models/user.model.js')(_, app);
-    var formModel = require('./models/form.model.js')(_, app);
+    var userModel = require('./models/user.model.js')(_, db);
+    var formModel = require('./models/form.model.js')(_, db);
 
     require('./services/user.service.server.js')(_, app, userModel, uuid);
     require('./services/form.service.server.js')(_, app, formModel, uuid);

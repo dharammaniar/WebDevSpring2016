@@ -7,43 +7,97 @@ module.exports = function(_, app, model, uuid) {
 
     app.post('/api/assignment/user', function (req, res) {
         var newUser = req.body;
-        newUser._id = uuid.v4();
-        var user = model.create(newUser);
-        res.json(user);
+        //newUser._id = uuid.v4();
+        model.create(newUser)
+            .then(
+                function(user) {
+                    res.json(user);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                }
+            );
     });
 
     app.get('/api/assignment/user/:id', function (req, res) {
         var id = req.params.id;
-        console.log(id);
-        var user = model.findById(id);
-        res.json(user);
+        model
+            .findById(id)
+            .then(
+                function(user) {
+                    res.json(user);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                }
+            );
     });
 
     app.get('/api/assignment/user', function (req, res) {
         var result = null;
         if (req.query.username && req.query.password) {
-            result = model.findUserByCredentials({
-                username: req.query.username,
-                password: req.query.password
-            });
-            res.json(result);
+            model
+                .findUserByCredentials({
+                    username: req.query.username,
+                    password: req.query.password
+                })
+                .then(
+                    function(user) {
+                        res.json(user);
+                    },
+                    function(err) {
+                        res.status(400).send(err);
+                    }
+                );
         } else if (req.query.username) {
-            result = model.findUserByUsername(req.query.username);
-            res.json(result);
+            model
+                .findUserByUsername(req.query.username)
+                .then(
+                    function(user) {
+                        res.json(user);
+                    },
+                    function(err) {
+                        res.status(400).send(err);
+                    }
+                );
         } else {
-            result = model.findAll();
-            res.json(result);
+            model
+                .findAll()
+                .then(
+                    function(users) {
+                        res.json(users);
+                    },
+                    function(err) {
+                        res.status(400).send(err);
+                    }
+                );
         }
 
     });
 
     app.put('/api/assignment/user/:id', function (req, res) {
-        var user = model.update(req.params.id, req.body);
-        res.json(user);
+        model
+            .update(req.params.id, req.body)
+            .then(
+                function(stats) {
+                    res.send(200);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                }
+            );
     });
 
     app.delete('/api/assignment/user/:id', function (req, res) {
-        var allUsers = model.deleteById(req.params.id);
-        res.json(allUsers);
+        model
+            .deleteById(req.params.id)
+            .then(
+                function(stats) {
+                    res.send(200);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                }
+            );
     });
 };
