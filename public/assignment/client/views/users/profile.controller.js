@@ -17,9 +17,11 @@
                 $rootScope.user._id,
                 user
             ).then(function successCallback(response) {
-                $rootScope.user = response.data;
-                $location.path('/profile');
-                $scope.showSuccessAlert = true;
+                if (response.status === 200) {
+                    $rootScope.user = user;
+                    $location.path('/profile');
+                    $scope.showSuccessAlert = true;
+                }
             });
         }
     }

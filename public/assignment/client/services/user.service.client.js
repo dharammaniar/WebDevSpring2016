@@ -31,13 +31,23 @@
             return $http.put('/api/assignment/user/' + userId, user);
         }
 
+        function findLoggedInUser() {
+            return $http.get('/api/assignment/usersession');
+        }
+
+        function deleteUserSession() {
+            return $http.delete('/api/assignment/usersession');
+        }
+
         return {
             findUserByUsername: findUserByUsername,
             findUserByCredentials: findUserByCredentials,
             findAllUsers: findAllUsers,
             createUser: createUser,
             deleteUserById: deleteUserById,
-            updateUser: updateUser
+            updateUser: updateUser,
+            findLoggedInUser: findLoggedInUser,
+            deleteUserSession: deleteUserSession
         };
     }
 })();

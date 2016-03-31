@@ -5,21 +5,39 @@
 
 module.exports = function(_, app, model, uuid) {
 
-    app.post('/api/assignment/user', function (req, res) {
+    app.get('/api/assignment/usersession', findLoggedInUser);
+    app.delete('/api/assignment/usersession', deleteUserSession);
+    app.post('/api/assignment/user', createUser);
+    app.get('/api/assignment/user/:id', getUserById);
+    app.get('/api/assignment/user', getUser);
+    app.put('/api/assignment/user/:id', updateUser);
+    app.delete('/api/assignment/user/:id', deleteUser);
+
+    function findLoggedInUser(req, res) {
+        res.json(req.session.loggedInUser);
+    }
+
+    function deleteUserSession(req, res) {
+        req.session.destroy();
+        res.send(200);
+    }
+
+    function createUser(req, res) {
         var newUser = req.body;
         //newUser._id = uuid.v4();
         model.create(newUser)
             .then(
                 function(user) {
+                    req.session.loggedInUser = user;
                     res.json(user);
                 },
                 function(err) {
                     res.status(400).send(err);
                 }
             );
-    });
+    }
 
-    app.get('/api/assignment/user/:id', function (req, res) {
+    function getUserById(req, res) {
         var id = req.params.id;
         model
             .findById(id)
@@ -31,10 +49,9 @@ module.exports = function(_, app, model, uuid) {
                     res.status(400).send(err);
                 }
             );
-    });
+    }
 
-    app.get('/api/assignment/user', function (req, res) {
-        var result = null;
+    function getUser(req, res) {
         if (req.query.username && req.query.password) {
             model
                 .findUserByCredentials({
@@ -43,6 +60,7 @@ module.exports = function(_, app, model, uuid) {
                 })
                 .then(
                     function(user) {
+                        req.session.loggedInUser = user;
                         res.json(user);
                     },
                     function(err) {
@@ -72,10 +90,9 @@ module.exports = function(_, app, model, uuid) {
                     }
                 );
         }
+    }
 
-    });
-
-    app.put('/api/assignment/user/:id', function (req, res) {
+    function updateUser(req, res) {
         model
             .update(req.params.id, req.body)
             .then(
@@ -86,9 +103,9 @@ module.exports = function(_, app, model, uuid) {
                     res.status(400).send(err);
                 }
             );
-    });
+    }
 
-    app.delete('/api/assignment/user/:id', function (req, res) {
+    function deleteUser(req, res) {
         model
             .deleteById(req.params.id)
             .then(
@@ -99,5 +116,5 @@ module.exports = function(_, app, model, uuid) {
                     res.status(400).send(err);
                 }
             );
-    });
+    }
 };
