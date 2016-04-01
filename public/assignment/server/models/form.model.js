@@ -47,6 +47,7 @@ module.exports = function() {
 
     function update(id, form) {
         var deferred = q.defer();
+        delete form._id;
         Form.update(
             {_id: id},
             {$set: form},

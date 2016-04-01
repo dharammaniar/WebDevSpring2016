@@ -54,7 +54,7 @@ module.exports = function(formModel) {
             .findById(formId)
             .then(
                 function(form){
-                    var fieldToUpdate   = form.fields.id(fieldId);
+                    var fieldToUpdate = form.fields.id(fieldId);
                     _.extend(fieldToUpdate, field);
                     return form.save();
                 }

@@ -43,6 +43,7 @@ module.exports = function() {
 
     function update(id, user) {
         var deferred = q.defer();
+        delete user._id;
         User.update(
             {_id: id},
             {$set: user},
