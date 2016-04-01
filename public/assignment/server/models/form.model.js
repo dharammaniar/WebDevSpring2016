@@ -3,118 +3,88 @@
  */
 'use strict';
 
-module.exports = function(_, app) {
+var mongoose = require('mongoose');
+var q = require('q');
 
-    var allForms = require('./form.mock.json');
+module.exports = function() {
+
+    var FormSchema = require('./form.schema.server.js')();
+    var Form = mongoose.model('Form', FormSchema);
+
+    function getMongooseModel() {
+        return Form;
+    }
 
     function create(form) {
-        if (!form) {
-            return;
-        }
-        allForms.push(form);
-
-        return allForms;
+        var deferred = q.defer();
+        Form.create(form, function (err, doc) {
+            if(err) {
+                deferred.reject(err);
+            } else {
+                deferred.resolve(doc);
+            }
+        });
+        return deferred.promise;
     }
 
     function findAll() {
-        return allForms;
+        var deferred = q.defer();
+        Form.find(
+            function(err, forms) {
+                if (!err) {
+                    deferred.resolve(forms);
+                } else {
+                    deferred.reject(err);
+                }
+            }
+        );
+        return deferred.promise;
     }
 
     function findById(id) {
-        return _.find(allForms, {
-            _id: id
-        });
+        return Form.findById(id);
     }
 
     function update(id, form) {
-
-        var index = _.findIndex(allForms, {
-                _id: id
-            }),
-            formToUpdate = allForms[index];
-
-        _.extend(formToUpdate, form);
-
-        allForms[index] = formToUpdate;
-        return formToUpdate;
+        var deferred = q.defer();
+        Form.update(
+            {_id: id},
+            {$set: form},
+            function (err, stats) {
+                if (!err) {
+                    deferred.resolve(stats);
+                } else {
+                    deferred.reject(err);
+                }
+            }
+        );
+        return deferred.promise;
     }
 
     function deleteById(id) {
-        _.remove(allForms, {
-            _id: id
-        });
-        return allForms;
+        var deferred = q.defer();
+        Form.remove(
+            {_id:id},
+            function(err, stats) {
+                if (!err) {
+                    deferred.resolve(stats);
+                } else {
+                    deferred.reject(err);
+                }
+            }
+        );
     }
 
     function findFormByUserId(userId) {
-        var form = _.filter(allForms, function(form) {
-            return form.userId == userId;
+        return Form.find({
+            userId: userId
         });
-
-        return form ? form : null;
     }
 
     function findFormByTitle(title) {
-        var form = _.find(allForms, {
+        return Form.findOne({
             title: title
         });
-
-        return form ? form : null;
-    }
-
-    function findFieldByFormIdAndFieldId(formId, fieldId) {
-        var form = findById(formId);
-
-        var field = _.find(form.fields, {
-            _id: fieldId
-        });
-
-        return field ? field : null;
-    }
-
-    function deleteFieldByFormIdAndFieldId(formId, fieldId) {
-        var form = findById(formId);
-
-        if (!form) {
-            return null;
-        }
-
-        _.remove(form.fields, {
-            _id: fieldId
-        });
-        update(form._id, form);
-
-        return form;
-    }
-
-    function createFieldInForm(formId, field) {
-        var form = findById(formId);
-        form.fields.push(field);
-        update(form._id, form);
-
-        return form;
-    }
-
-    function updateFieldInForm(formId, fieldId, field) {
-        var form = findById(formId),
-
-            fieldIndex = _.find(form.fields, {
-                _id: fieldId
-            }),
-            fieldToUpdate = form.fields[fieldIndex];
-
-        _.extend(fieldToUpdate, field);
-        form.fields[fieldIndex] = fieldToUpdate;
-        update(form._id, form);
-
-        return form;
-    }
-
-    function updateFieldsInForm(formId, fields) {
-        var form = findById(formId);
-        form.fields = fields;
-        update(form._id, form);
-        return form;
     }
 
     return {
@@ -125,10 +95,6 @@ module.exports = function(_, app) {
         deleteById: deleteById,
         findFormByUserId: findFormByUserId,
         findFormByTitle: findFormByTitle,
-        findFieldByFormIdAndFieldId: findFieldByFormIdAndFieldId,
-        deleteFieldByFormIdAndFieldId: deleteFieldByFormIdAndFieldId,
-        createFieldInForm: createFieldInForm,
-        updateFieldInForm: updateFieldInForm,
-        updateFieldsInForm: updateFieldsInForm
+        getMongooseModel: getMongooseModel
     }
 };

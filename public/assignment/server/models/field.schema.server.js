@@ -5,12 +5,12 @@ var mongoose = require('mongoose');
 
 module.exports = function () {
 
-    var FieldSchema = mongoose.Schema({
+    return mongoose.Schema({
         label: String,
         type: {
             type: String,
             default: 'TEXT',
-            enum:[
+            enum: [
                 'TEXT',
                 'TEXTAREA',
                 'EMAIL',
@@ -19,13 +19,12 @@ module.exports = function () {
                 'DATE',
                 'RADIOS',
                 'CHECKBOXES'
-            ]},
+            ]
+        },
         placeholder: String,
         options: {
             label: String,
             value: String
         }
     }, {collection: 'field'});
-
-    return FieldSchema;
 };

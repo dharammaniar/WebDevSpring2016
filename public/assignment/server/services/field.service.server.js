@@ -3,38 +3,90 @@
  */
 'use strict';
 
-module.exports = function(_, app, model, uuid) {
+module.exports = function(app, model) {
 
-    app.get('/api/assignment/form/:formId/field', function (req, res) {
-        var form = model.findById(req.params.formId);
-        res.json(form ? form.fields : null);
-    });
+    app.get('/api/assignment/form/:formId/field', findFieldsByFormId);
+    app.get('/api/assignment/form/:formId/field/:fieldId', findFieldByFormIdAndFieldId);
+    app.delete('/api/assignment/form/:formId/field/:fieldId', deleteFieldByFormIdAndFieldId);
+    app.post('/api/assignment/form/:formId/field', createFieldInForm);
+    app.put('/api/assignment/form/:formId/field/:fieldId', updateFieldInForm);
+    app.put('/api/assignment/form/:formId/field/', updateFieldsInForm);
 
-    app.get('/api/assignment/form/:formId/field/:fieldId', function (req, res) {
-        var form = model.findFieldByFormIdAndFieldId(req.params.formId, req.params.fieldId);
-        res.json(form);
-    });
+    function findFieldsByFormId(req, res) {
+        model
+            .findFieldsByFormId(req.params.formId)
+            .then(
+                function(fields) {
+                    res.json(fields);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
 
-    app.delete('/api/assignment/form/:formId/field/:fieldId', function (req, res) {
-        var form = model.deleteFieldByFormIdAndFieldId(req.params.formId, req.params.fieldId);
-        res.json(form);
-    });
+    function findFieldByFormIdAndFieldId(req, res) {
+        model
+            .findFieldByFormIdAndFieldId(req.params.formId, req.params.fieldId)
+            .then(
+                function(field) {
+                    res.json(field);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
 
-    app.post('/api/assignment/form/:formId/field', function (req, res) {
-        var newField = req.body;
-        newField._id = uuid.v4();
-        console.log(newField);
-        var form = model.createFieldInForm(req.params.formId, newField);
-        res.json(form);
-    });
+    function deleteFieldByFormIdAndFieldId(req, res) {
+        model
+            .deleteFieldByFormIdAndFieldId(req.params.formId, req.params.fieldId)
+            .then(
+                function(stats) {
+                    res.send(200);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
 
-    app.put('/api/assignment/form/:formId/field/:fieldId', function (req, res) {
-        var form = model.updateFieldInForm(req.params.formId, req.params.fieldId, req.body);
-        res.json(form);
-    });
+    function createFieldInForm(req, res) {
+        model
+            .createFieldInForm(req.params.formId, req.body)
+            .then(
+                function(form) {
+                    res.json(form);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
 
-    app.put('/api/assignment/form/:formId/field/', function (req, res) {
-        var form = model.updateFieldsInForm(req.params.formId, req.body);
-        res.json(form);
-    });
+    function updateFieldInForm(req, res) {
+        model
+            .updateFieldInForm(req.params.formId, req.params.fieldId, req.body)
+            .then(
+                function(stats) {
+                    res.send(200);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
+
+    function updateFieldsInForm(req, res) {
+        model
+            .updateFieldsInForm(req.params.formId, req.body)
+            .then(
+                function(stats) {
+                    res.send(200);
+                },
+                function(err) {
+                    res.status(400).send(err);
+                }
+            );
+    }
 };

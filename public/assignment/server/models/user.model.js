@@ -6,7 +6,7 @@
 var mongoose = require('mongoose');
 var q = require('q');
 
-module.exports = function(_, db) {
+module.exports = function() {
 
     var UserSchema = require('./user.schema.server.js')();
     var User = mongoose.model('User', UserSchema);

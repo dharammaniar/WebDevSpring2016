@@ -3,7 +3,7 @@
  */
 'use strict';
 
-module.exports = function(_, app, model, uuid) {
+module.exports = function(app, model) {
 
     app.get('/api/assignment/usersession', findLoggedInUser);
     app.delete('/api/assignment/usersession', deleteUserSession);
@@ -24,7 +24,6 @@ module.exports = function(_, app, model, uuid) {
 
     function createUser(req, res) {
         var newUser = req.body;
-        //newUser._id = uuid.v4();
         model.create(newUser)
             .then(
                 function(user) {

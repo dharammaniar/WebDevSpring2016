@@ -7,7 +7,7 @@ module.exports = function() {
 
     var FieldSchema = require('./field.schema.server.js');
 
-    var FormSchema = mongoose.Schema({
+    return mongoose.Schema({
         userId: String,
         title: {
             type: String,
@@ -19,6 +19,4 @@ module.exports = function() {
             default: Date.now
         }
     });
-
-    return FormSchema;
 };
