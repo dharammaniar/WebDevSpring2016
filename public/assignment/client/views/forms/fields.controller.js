@@ -1,5 +1,4 @@
 'use strict';
-
 (function (){
     angular
         .module('FormBuilderApp')
@@ -196,7 +195,6 @@
                 switch (fieldType) {
                     case 'SINGLE_LINE_TEXT':
                         FieldService.createFieldForForm(formId, {
-                                "_id": null,
                                 "label": "New Text Field",
                                 "type": "TEXT",
                                 "placeholder": "New Field"
@@ -207,7 +205,6 @@
                         break;
                     case 'MULTI_LINE_TEXT':
                         FieldService.createFieldForForm(formId, {
-                                "_id": null,
                                 "label": "New Text Field",
                                 "type": "TEXTAREA",
                                 "placeholder": "New Field"
@@ -218,7 +215,6 @@
                         break;
                     case 'DATE':
                         FieldService.createFieldForForm(formId, {
-                                "_id": null,
                                 "label": "New Date Field",
                                 "type": "DATE"
                             })
@@ -228,7 +224,7 @@
                         break;
                     case 'DROPDOWN':
                         FieldService.createFieldForForm(formId, {
-                                "_id": null, "label": "New Dropdown", "type": "OPTIONS", "options": [
+                                "label": "New Dropdown", "type": "OPTIONS", "options": [
                                     {"label": "Option 1", "value": "OPTION_1"},
                                     {"label": "Option 2", "value": "OPTION_2"},
                                     {"label": "Option 3", "value": "OPTION_3"}
@@ -240,7 +236,7 @@
                         break;
                     case 'CHECKBOXES':
                         FieldService.createFieldForForm(formId, {
-                                "_id": null, "label": "New Checkboxes", "type": "CHECKBOXES", "options": [
+                                "label": "New Checkboxes", "type": "CHECKBOXES", "options": [
                                     {"label": "Option A", "value": "OPTION_A"},
                                     {"label": "Option B", "value": "OPTION_B"},
                                     {"label": "Option C", "value": "OPTION_C"}
@@ -252,7 +248,7 @@
                         break;
                     case 'RADIO':
                         FieldService.createFieldForForm(formId, {
-                                "_id": null, "label": "New Radio Buttons", "type": "RADIOS", "options": [
+                                "label": "New Radio Buttons", "type": "RADIOS", "options": [
                                     {"label": "Option X", "value": "OPTION_X"},
                                     {"label": "Option Y", "value": "OPTION_Y"},
                                     {"label": "Option Z", "value": "OPTION_Z"}
@@ -271,7 +267,11 @@
         function removeField(field) {
             FieldService.deleteFieldFromForm(formId, field._id)
                 .then(function successCallback(response){
-                    $scope.fields = response.data.fields;
+                    if (response.status === 200) {
+                        _.remove($scope.fields, {
+                            _id: field._id
+                        })
+                    }
                 });
         }
     }

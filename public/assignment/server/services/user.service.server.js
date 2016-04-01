@@ -6,8 +6,8 @@
 module.exports = function(app, model) {
 
     app.get('/api/assignment/usersession', findLoggedInUser);
-    app.delete('/api/assignment/usersession', deleteUserSession);
     app.post('/api/assignment/user', createUser);
+    app.delete('/api/assignment/usersession', deleteUserSession);
     app.get('/api/assignment/user/:id', getUserById);
     app.get('/api/assignment/user', getUser);
     app.put('/api/assignment/user/:id', updateUser);

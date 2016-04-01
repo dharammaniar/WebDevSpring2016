@@ -5,7 +5,7 @@ var mongoose = require('mongoose');
 
 module.exports = function() {
 
-    var FieldSchema = require('./field.schema.server.js');
+    var FieldSchema = require('./field.schema.server.js')(mongoose);
 
     return mongoose.Schema({
         userId: String,

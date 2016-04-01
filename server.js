@@ -27,7 +27,7 @@ app.use(session({
 }));
 app.use(cookieParser());
 
-require('./public/assignment/server/app')(_, app, db, uuid);
+require('./public/assignment/server/app')(app, db, uuid);
 require('./public/project/server/app')(_, app, uuid);
 
 app.listen(port, ipaddress);

@@ -73,6 +73,7 @@ module.exports = function() {
                 }
             }
         );
+        return deferred.promise;
     }
 
     function findFormByUserId(userId) {
