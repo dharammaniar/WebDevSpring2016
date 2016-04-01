@@ -5,11 +5,13 @@
         .module('FormBuilderApp')
         .controller('ProfileController', ProfileController);
 
-    function ProfileController($rootScope, $scope, $location, UserService) {
+    function ProfileController($rootScope, $location, UserService) {
+
+        var vm = this;
 
         // Event Handler Declaration
-        $scope.update = update;
-        $scope.showSuccessAlert = false;
+        vm.update = update;
+        vm.showSuccessAlert = false;
 
         // Event Handler Implementation
         function update(user) {
@@ -20,7 +22,7 @@
                 if (response.status === 200) {
                     $rootScope.user = user;
                     $location.path('/profile');
-                    $scope.showSuccessAlert = true;
+                    vm.showSuccessAlert = true;
                 }
             });
         }

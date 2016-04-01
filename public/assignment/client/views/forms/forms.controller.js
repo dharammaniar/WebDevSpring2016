@@ -5,25 +5,27 @@
         .module('FormBuilderApp')
         .controller('FormController', FormController);
 
-    function FormController($rootScope, $scope, FormService) {
+    function FormController($rootScope, FormService) {
 
-        $scope.userforms = [];
+        var vm = this;
+
+        vm.userforms = [];
         showAllFormsForUser();
 
         function showAllFormsForUser() {
             FormService.findAllFormsForUser($rootScope.user._id)
                 .then(function successCallback(forms){
-                    $scope.userforms = forms.data;
-                    delete $scope.selectedForm;
-                    delete $scope.selectedFormIndex;
+                    vm.userforms = forms.data;
+                    delete vm.selectedForm;
+                    delete vm.selectedFormIndex;
                 });
         }
 
         // Event Handler Declaration
-        $scope.addForm = addForm;
-        $scope.updateForm = updateForm;
-        $scope.deleteForm = deleteForm;
-        $scope.selectForm = selectForm;
+        vm.addForm = addForm;
+        vm.updateForm = updateForm;
+        vm.deleteForm = deleteForm;
+        vm.selectForm = selectForm;
 
         //Event Handler Implementation
         function addForm(form) {
@@ -36,7 +38,7 @@
         }
 
         function updateForm(form) {
-            FormService.updateFormById($scope.selectedForm._id, form)
+            FormService.updateFormById(vm.selectedForm._id, form)
                 .then(function successCallback() {
                     showAllFormsForUser();
                 });
@@ -50,11 +52,11 @@
         }
 
         function selectForm(index) {
-            $scope.selectedFormIndex = index;
-            $scope.selectedForm = {
-                _id: $scope.userforms[index]._id,
-                title: $scope.userforms[index].title,
-                userId: $scope.userforms[index].userId
+            vm.selectedFormIndex = index;
+            vm.selectedForm = {
+                _id: vm.userforms[index]._id,
+                title: vm.userforms[index].title,
+                userId: vm.userforms[index].userId
             }
         }
     }

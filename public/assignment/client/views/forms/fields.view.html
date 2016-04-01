@@ -3,13 +3,13 @@
 
     <script type="text/ng-template" id="labelPlaceholder.html">
         <div class="modal-header">
-            <h3 class="modal-title">{{title}}</h3>
+            <h3 class="modal-title">{{popupModel.title}}</h3>
         </div>
         <div class="modal-body">
             <label for="TEXT-MODAL-LABEL" class="control-label">Label:</label>
             <div class="row nowrap">
                 <div class="col-xs-12" >
-                    <input type="text" id="TEXT-MODAL-LABEL" ng-model="modal.label" class="form-control">
+                    <input type="text" id="TEXT-MODAL-LABEL" ng-model="popupModel.modal.label" class="form-control">
                 </div>
             </div>
 
@@ -18,25 +18,25 @@
             <label for="TEXT-MODAL-PLACEHOLDER" class="control-label">Placeholder:</label>
             <div class="row nowrap">
                 <div class="col-xs-12" >
-                    <input type="text" id="TEXT-MODAL-PLACEHOLDER" ng-model="modal.placeholder" class="form-control">
+                    <input type="text" id="TEXT-MODAL-PLACEHOLDER" ng-model="popupModel.modal.placeholder" class="form-control">
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok(modal)">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-primary" type="button" ng-click="popupModel.ok(popupModel.modal)">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="popupModel.cancel()">Cancel</button>
         </div>
     </script>
 
     <script type="text/ng-template" id="labelPlaceholderDate.html">
         <div class="modal-header">
-            <h3 class="modal-title">{{title}}</h3>
+            <h3 class="modal-title">{{popupModel.title}}</h3>
         </div>
         <div class="modal-body">
             <label for="DATE-MODAL-LABEL" class="control-label">Label:</label>
             <div class="row nowrap">
                 <div class="col-xs-12" >
-                    <input type="text" id="DATE-MODAL-LABEL" ng-model="modal.label" class="form-control">
+                    <input type="text" id="DATE-MODAL-LABEL" ng-model="popupModel.modal.label" class="form-control">
                 </div>
             </div>
 
@@ -44,20 +44,20 @@
         </div>
 
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok(modal)">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-primary" type="button" ng-click="popupModel.ok(popupModel.modal)">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="popupModel.cancel()">Cancel</button>
         </div>
     </script>
 
     <script type="text/ng-template" id="labelOptions.html">
         <div class="modal-header">
-            <h3 class="modal-title">{{title}}</h3>
+            <h3 class="modal-title">{{popupModel.title}}</h3>
         </div>
         <div class="modal-body">
             <label for="OPTION-MODAL-LABEL" class="control-label">Label:</label>
             <div class="row nowrap">
                 <div class="col-xs-12" >
-                    <input type="text" id="OPTION-MODAL-LABEL" ng-model="modal.label" class="form-control">
+                    <input type="text" id="OPTION-MODAL-LABEL" ng-model="popupModel.modal.label" class="form-control">
                 </div>
             </div>
 
@@ -66,13 +66,13 @@
             <label for="OPTION-MODAL-PLACEHOLDER" class="control-label">Options:</label>
             <div class="row nowrap">
                 <div class="col-xs-12" >
-                    <textarea id="OPTION-MODAL-PLACEHOLDER" ng-model="modal.placeholder" class="form-control"></textarea>
+                    <textarea id="OPTION-MODAL-PLACEHOLDER" ng-model="popupModel.modal.options" class="form-control"></textarea>
                 </div>
             </div>
         </div>
         <div class="modal-footer">
-            <button class="btn btn-primary" type="button" ng-click="ok(modal)">OK</button>
-            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-primary" type="button" ng-click="popupModel.ok(popupModel.modal)">OK</button>
+            <button class="btn btn-warning" type="button" ng-click="popupModel.cancel()">Cancel</button>
         </div>
     </script>
 
@@ -83,7 +83,7 @@
 
     <br>
     <div dm-sortable>
-        <div ng-repeat="field in fields" ng-switch on="field.type">
+        <div ng-repeat="field in model.fields" ng-switch on="field.type">
         <div ng-switch-when="TEXT">
             <fieldset class="form-group">
                 <label for="{{field._id}}" class="control-label">{{field.label}}</label>
@@ -92,9 +92,9 @@
                         <input type="text" id="{{field._id}}" placeholder="{{field.placeholder}}" class="form-control">
                     </div>
                     <div class="col-xs-6">
-                        <button class="btn btn-primary" ng-click="open('TEXT', field)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                        <button class="btn btn-primary" ng-click="model.open('TEXT', field)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                         <button class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-                        <button class="btn btn-danger" ng-click="removeField(field)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        <button class="btn btn-danger" ng-click="model.removeField(field)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                         <button class="btn btn-default"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span></button>
                     </div>
                 </div>
@@ -108,9 +108,9 @@
                         <input type="email" id="{{field._id}}" placeholder="{{field.placeholder}}" class="form-control">
                     </div>
                     <div class="col-xs-6">
-                        <button class="btn btn-primary"  ng-click="open('EMAIL', field)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                        <button class="btn btn-primary"  ng-click="model.open('EMAIL', field)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                         <button class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-                        <button class="btn btn-danger" ng-click="removeField(field)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        <button class="btn btn-danger" ng-click="model.removeField(field)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                         <button class="btn btn-default"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span></button>
                     </div>
                 </div>
@@ -124,9 +124,9 @@
                         <textarea id="{{field._id}}" placeholder="{{field.placeholder}}" class="form-control"></textarea>
                     </div>
                     <div class="col-xs-6">
-                        <button class="btn btn-primary" ng-click="open('TEXTAREA', field)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                        <button class="btn btn-primary" ng-click="model.open('TEXTAREA', field)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                         <button class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-                        <button class="btn btn-danger" ng-click="removeField(field)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        <button class="btn btn-danger" ng-click="model.removeField(field)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                         <button class="btn btn-default"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span></button>
                     </div>
                 </div>
@@ -142,9 +142,9 @@
                         </select>
                     </div>
                     <div class="col-xs-6">
-                        <button class="btn btn-primary" ng-click="open('OPTIONS', field)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                        <button class="btn btn-primary" ng-click="model.open('OPTIONS', field)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                         <button class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-                        <button class="btn btn-danger" ng-click="removeField(field)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        <button class="btn btn-danger" ng-click="model.removeField(field)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                         <button class="btn btn-default"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span></button>
                     </div>
                 </div>
@@ -158,9 +158,9 @@
                         <input type="date" id="{{field._id}}" placeholder="{{field.placeholder}}" class="form-control">
                     </div>
                     <div class="col-xs-6">
-                        <button class="btn btn-primary" ng-click="open('DATE', field)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                        <button class="btn btn-primary" ng-click="model.open('DATE', field)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                         <button class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-                        <button class="btn btn-danger" ng-click="removeField(field)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        <button class="btn btn-danger" ng-click="model.removeField(field)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                         <button class="btn btn-default"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span></button>
                     </div>
                 </div>
@@ -179,9 +179,9 @@
                         </div>
                     </div>
                     <div class="col-xs-6">
-                        <button class="btn btn-primary" ng-click="open('RADIO', field)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                        <button class="btn btn-primary" ng-click="model.open('RADIO', field)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                         <button class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-                        <button class="btn btn-danger" ng-click="removeField(field)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        <button class="btn btn-danger" ng-click="model.removeField(field)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                         <button class="btn btn-default"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span></button>
                     </div>
                 </div>
@@ -200,9 +200,9 @@
                         </div>
                     </div>
                     <div class="col-xs-6">
-                        <button class="btn btn-primary" ng-click="open('CHECKBOX', field)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
+                        <button class="btn btn-primary" ng-click="model.open('CHECKBOX', field)"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button>
                         <button class="btn btn-success"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
-                        <button class="btn btn-danger" ng-click="removeField(field)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                        <button class="btn btn-danger" ng-click="model.removeField(field)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
                         <button class="btn btn-default"><span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span></button>
                     </div>
                 </div>
@@ -226,7 +226,7 @@
                 </select>
             </div>
             <div class="col-xs-6">
-                <button class="btn btn-success" ng-click="addField(model.fieldType)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
+                <button class="btn btn-success" ng-click="model.addField(model.fieldType)"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></button>
             </div>
         </div>
     </fieldset>

@@ -5,10 +5,12 @@
         .module('FormBuilderApp')
         .controller('LoginController', LoginController);
 
-    function LoginController($rootScope, $scope, $location, UserService) {
+    function LoginController($rootScope, $location, UserService) {
+
+        var vm = this;
 
         // Event Handler Declaration
-        $scope.login = login;
+        vm.login = login;
 
         // Event Handler Implementation
         function login(user) {

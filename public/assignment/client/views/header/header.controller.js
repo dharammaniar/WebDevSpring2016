@@ -5,10 +5,12 @@
         .module('FormBuilderApp')
         .controller('HeaderController', HeaderController);
 
-    function HeaderController($scope, $location, $rootScope, UserService) {
-        $scope.$location = $location;
+    function HeaderController($location, $rootScope, UserService) {
+        var vm = this;
 
-        $scope.logout = logout;
+        vm.$location = $location;
+
+        vm.logout = logout;
 
         function logout() {
             $rootScope.user = null;

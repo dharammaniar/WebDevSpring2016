@@ -9,42 +9,49 @@
                     templateUrl: "views/home/home.view.html",
                     resolve: {
                         getLoggedInUser: getLoggedInUser
-                    }
+                    },
+                    controllerAs: 'model'
                 })
                 .when("/register", {
                     templateUrl: "views/users/register.view.html",
-                    controller: 'RegisterController'
+                    controller: 'RegisterController',
+                    controllerAs: 'model'
                 })
                 .when("/login", {
                     templateUrl: "views/users/login.view.html",
-                    controller: 'LoginController'
+                    controller: 'LoginController',
+                    controllerAs: 'model'
                 })
                 .when("/profile", {
                     templateUrl: "views/users/profile.view.html",
                     controller: 'ProfileController',
                     resolve: {
                         verifyUserIsLoggedIn: verifyUserIsLoggedIn
-                    }
+                    },
+                    controllerAs: 'model'
                 })
                 .when("/admin", {
                     templateUrl: "views/admin/admin.view.html",
                     resolve: {
                         verifyUserIsLoggedIn: verifyUserIsLoggedIn
-                    }
+                    },
+                    controllerAs: 'model'
                 })
                 .when("/forms", {
                     templateUrl: "views/forms/forms.view.html",
                     controller: 'FormController',
                     resolve: {
                         verifyUserIsLoggedIn: verifyUserIsLoggedIn
-                    }
+                    },
+                    controllerAs: 'model'
                 })
                 .when("/fields/:formId", {
                     templateUrl: "views/forms/fields.view.html",
                     controller: 'FieldsController',
                     resolve: {
                         verifyUserIsLoggedIn: verifyUserIsLoggedIn
-                    }
+                    },
+                    controllerAs: 'model'
                 })
                 .otherwise({
                     redirectsTo: "/"

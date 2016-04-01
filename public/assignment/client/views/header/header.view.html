@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="HeaderController">
+<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="HeaderController as model">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -11,13 +11,13 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li class="visible-xs-block" ng-class="{'active' : $location.url() == '/'}"><a href="#/">Home</a></li>
-                <li class="visible-xs-block" ng-show="user" ng-class="{'active' : $location.url() == '/forms'}"><a href="#/forms">Forms</a></li>
-                <li ng-hide="user" ng-class="{'active': $location.url() == '/login'}"><a href="#/login">Login</a></li>
-                <li ng-hide="user" ng-class="{'active': $location.url() == '/register'}"><a href="#/register">Register</a></li>
-                <li ng-show="user" ng-class="{'active': $location.url() == '/profile'}"><a href="#/profile">{{user.username}}</a></li>
-                <li ng-show="user.roles.indexOf('admin') >= 0" ng-class="{'active': $location.url() == '/admin'}"><a href="#/admin">Admin</a></li>
-                <li ng-show="user"> <a href ng-click="logout()">Logout</a></li>
+                <li class="visible-xs-block" ng-class="{'active' : model.$location.url() == '/'}"><a href="#/">Home</a></li>
+                <li class="visible-xs-block" ng-show="user" ng-class="{'active' : model.$location.url() == '/forms'}"><a href="#/forms">Forms</a></li>
+                <li ng-hide="user" ng-class="{'active': model.$location.url() == '/login'}"><a href="#/login">Login</a></li>
+                <li ng-hide="user" ng-class="{'active': model.$location.url() == '/register'}"><a href="#/register">Register</a></li>
+                <li ng-show="user" ng-class="{'active': model.$location.url() == '/profile'}"><a href="#/profile">{{user.username}}</a></li>
+                <li ng-show="user.roles.indexOf('admin') >= 0" ng-class="{'active': model.$location.url() == '/admin'}"><a href="#/admin">Admin</a></li>
+                <li ng-show="user"> <a href ng-click="model.logout()">Logout</a></li>
             </ul>
         </div>
     </div>
