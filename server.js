@@ -10,7 +10,19 @@ var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
 var mongoose = require('mongoose');
-var db = mongoose.connect('mongodb://localhost/form-builder-app');
+// create a default connection string
+var connectionString = 'mongodb://127.0.0.1:27017/form-builder-app';
+
+// use remote connection string
+// if running in remote server
+if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
+    connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+        process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+        process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+        process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+        process.env.OPENSHIFT_APP_NAME;
+}
+var db = mongoose.connect(connectionString);
 
 var _  = require('lodash');
 app.use(express.static(__dirname + '/public'));
