@@ -26,15 +26,17 @@
             }
 
             vm.ok = function(model) {
-                var stringArray = model.options.split('\n');
-                var updatedOptions = [];
-                _.forEach(stringArray, function(string) {
-                     updatedOptions.push({
-                         value: string.split(':')[0],
-                         label: string.split(':')[1]
-                     })
-                });
-                model.options = updatedOptions;
+                if (model.options.length > 0) {
+                    var stringArray = model.options.split('\n');
+                    var updatedOptions = [];
+                    _.forEach(stringArray, function (string) {
+                        updatedOptions.push({
+                            value: string.split(':')[0],
+                            label: string.split(':')[1]
+                        })
+                    });
+                    model.options = updatedOptions;
+                }
                 $uibModalInstance.close(model);
             };
 
