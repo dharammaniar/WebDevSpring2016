@@ -96,6 +96,7 @@ module.exports = function(app, model) {
             .update(req.params.id, req.body)
             .then(
                 function(stats) {
+                    req.session.loggedInUser = req.body;
                     res.send(200);
                 },
                 function(err) {
