@@ -192,9 +192,7 @@
 
         };
 
-
-
-            //Event Handler Implementation
+        //Event Handler Implementation
         function updateModel() {
             FieldService.updateFields(formId, vm.fields);
         }
