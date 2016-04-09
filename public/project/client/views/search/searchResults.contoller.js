@@ -16,10 +16,10 @@
                 .then(function(searchResult) {
                     var stocksResult = [];
 
-                    _.forEach(searchResult.data, function(search) {
+                    _.forEach(searchResult.data, function(stock) {
                         stocksResult.push({
-                            name: search,
-                            url: '#/stock/' + search.split(':')[0].trim()
+                            name: stock.code + ' : ' + stock.company,
+                            url: '#/stock/' + stock.code
                         });
                     });
 

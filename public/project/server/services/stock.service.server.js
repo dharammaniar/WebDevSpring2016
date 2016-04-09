@@ -12,11 +12,27 @@ module.exports = function(app, model) {
     function getStocks(req, res) {
         if (req.query.searchTerm) {
             var searchTerm = req.query.searchTerm;
-            var matchingStocks = model.findMatchingStocks(searchTerm);
-            res.json(matchingStocks);
+            model
+                .findMatchingStocks(searchTerm)
+                .then(
+                    function(stocks) {
+                        res.json(stocks);
+                    },
+                    function(err) {
+                        res.status(400).send(err);
+                    }
+                );
         } else {
-            var stocks = model.getAllStocks();
-            res.json(stocks);
+            model
+                .findAll()
+                .then(
+                    function(stocks) {
+                        res.json(stocks);
+                    },
+                    function(err) {
+                        res.status(400).send(err);
+                    }
+                );
         }
     }
 };
