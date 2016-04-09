@@ -8,11 +8,11 @@
     function StockService($http) {
 
         function getAllStocks() {
-            return $http.get('/api/project/stock');
+            return $http.get('/api/projectOld/stock');
         }
 
         function findMatchingStocks(searchTerm) {
-            return $http.get('/api/project/stock?searchTerm=' + searchTerm);
+            return $http.get('/api/projectOld/stock?searchTerm=' + searchTerm);
         }
 
         return {

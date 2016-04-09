@@ -5,7 +5,7 @@
 
 module.exports = function(_, app, model) {
 
-    app.get('/api/project/stock', getStocks);
+    app.get('/api/projectOld/stock', getStocks);
 
     function getStocks(req, res) {
         if (req.query.searchTerm) {

@@ -5,10 +5,10 @@
 
 module.exports = function(_, app, model, uuid) {
 
-    app.post('/api/project/portfolio/:userId', createStockForUser);
-    app.get('/api/project/portfolio/:userId', findAllStocksForUser);
-    app.delete('/api/project/portfolio/:stockId', deleteStockById);
-    app.put('/api/project/portfolio/:stockId', updateStockById);
+    app.post('/api/projectOld/portfolio/:userId', createStockForUser);
+    app.get('/api/projectOld/portfolio/:userId', findAllStocksForUser);
+    app.delete('/api/projectOld/portfolio/:stockId', deleteStockById);
+    app.put('/api/projectOld/portfolio/:stockId', updateStockById);
 
     function createStockForUser(req, res) {
         var userId = req.params.userId;

@@ -5,10 +5,10 @@
 
 module.exports = function(_, app, model, uuid) {
 
-    app.post('/api/project/blog/:userId', createBlogForUser);
-    app.get('/api/project/blog/:userId', findAllBlogsForUser);
-    app.delete('/api/project/blog/:blogId', deleteBlogById);
-    app.put('/api/project/blog/:blogId', updateBlogById);
+    app.post('/api/projectOld/blog/:userId', createBlogForUser);
+    app.get('/api/projectOld/blog/:userId', findAllBlogsForUser);
+    app.delete('/api/projectOld/blog/:blogId', deleteBlogById);
+    app.put('/api/projectOld/blog/:blogId', updateBlogById);
 
     function createBlogForUser(req, res) {
         var userId = req.params.userId;

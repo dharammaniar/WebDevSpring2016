@@ -8,35 +8,35 @@
     function UserService($http) {
 
         function findUserByUsername(username) {
-            return $http.get('/api/project/user?username='+username);
+            return $http.get('/api/projectOld/user?username='+username);
         }
 
         function findUserByCredentials(username, password) {
-            return $http.get('/api/project/user?username=' + username + '&password=' + password);
+            return $http.get('/api/projectOld/user?username=' + username + '&password=' + password);
         }
 
         function findAllUsers() {
-            return $http.get('/api/project/user');
+            return $http.get('/api/projectOld/user');
         }
 
         function createUser(user) {
-            return $http.post('/api/project/user', user);
+            return $http.post('/api/projectOld/user', user);
         }
 
         function deleteUserById(userId) {
-            return $http.delete('/api/project/user/' + userId);
+            return $http.delete('/api/projectOld/user/' + userId);
         }
 
         function updateUser(userId, user) {
-            return $http.put('/api/project/user/' + userId, user);
+            return $http.put('/api/projectOld/user/' + userId, user);
         }
 
         function findLoggedInUser() {
-            return $http.get('/api/project/usersession');
+            return $http.get('/api/projectOld/usersession');
         }
 
         function deleteUserSession() {
-            return $http.delete('/api/project/usersession');
+            return $http.delete('/api/projectOld/usersession');
         }
 
         return {

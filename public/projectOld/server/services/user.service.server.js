@@ -5,13 +5,13 @@
 
 module.exports = function(_, app, model, uuid) {
 
-    app.post('/api/project/user', createUser);
-    app.get('/api/project/user/:id', findUserById);
-    app.get('/api/project/usersession', findLoggedInUser);
-    app.delete('/api/project/usersession', deleteUserSession);
-    app.put('/api/project/user/:id', updateUser);
-    app.delete('/api/project/user/:id', deleteUser);
-    app.get('/api/project/user', findUser);
+    app.post('/api/projectOld/user', createUser);
+    app.get('/api/projectOld/user/:id', findUserById);
+    app.get('/api/projectOld/usersession', findLoggedInUser);
+    app.delete('/api/projectOld/usersession', deleteUserSession);
+    app.put('/api/projectOld/user/:id', updateUser);
+    app.delete('/api/projectOld/user/:id', deleteUser);
+    app.get('/api/projectOld/user', findUser);
 
     function createUser(req, res) {
         var newUser = req.body;

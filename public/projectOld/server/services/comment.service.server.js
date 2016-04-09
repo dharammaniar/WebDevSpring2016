@@ -5,10 +5,10 @@
 
 module.exports = function(_, app, model, uuid) {
 
-    app.post('/api/project/comment/:userId', createCommentForUser);
-    app.get('/api/project/comment/:userId', findAllCommentsForUser);
-    app.delete('/api/project/comment/:commentId', deleteCommentById);
-    app.put('/api/project/comment/:commentId', updateCommentById);
+    app.post('/api/projectOld/comment/:userId', createCommentForUser);
+    app.get('/api/projectOld/comment/:userId', findAllCommentsForUser);
+    app.delete('/api/projectOld/comment/:commentId', deleteCommentById);
+    app.put('/api/projectOld/comment/:commentId', updateCommentById);
 
     function createCommentForUser(req, res) {
         var userId = req.params.userId;
