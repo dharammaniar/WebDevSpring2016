@@ -138,14 +138,14 @@
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
                 <li class="sidebar-search">
-                    <div class="input-group custom-search-form">
+                    <form class="input-group custom-search-form" ng-submit="model.findStock(model.stock)">
                         <input type="text" class="form-control" ng-model="model.stock" placeholder="Search...">
-                                <span class="input-group-btn">
-                                <button class="btn btn-default" type="button" ng-click="model.findStock(stock)">
-                                    <i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                    </div>
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </span>
+                    </form>
                 </li>
                 <li>
                     <a href="#/"><i class="fa fa-home fa-fw"></i> Home</a>
