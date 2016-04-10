@@ -18,6 +18,11 @@
                     controller: 'SearchResultController',
                     controllerAs: 'model'
                 })
+                .when("/stock/:code", {
+                    templateUrl: "views/stock/stock.view.html",
+                    controller: 'StockController',
+                    controllerAs: 'model'
+                })
                 .otherwise({
                     redirectsTo: '/'
                 });

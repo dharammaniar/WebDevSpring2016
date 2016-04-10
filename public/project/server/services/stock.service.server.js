@@ -22,6 +22,17 @@ module.exports = function(app, model) {
                         res.status(400).send(err);
                     }
                 );
+        } else if (req.query.code) {
+            var code = req.query.code;
+            model.findStockByCode(code)
+                .then(
+                    function(stock) {
+                        res.json(stock);
+                    },
+                    function(err) {
+                        res.status(400).send(err);
+                    }
+                )
         } else {
             model
                 .findAll()

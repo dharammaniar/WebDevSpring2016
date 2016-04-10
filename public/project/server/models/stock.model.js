@@ -26,6 +26,12 @@ module.exports = function() {
         return deferred.promise;
     }
 
+    function findStockByCode(code) {
+        return Stock.findOne({
+            code: code
+        });
+    }
+
     function findMatchingStocks(searchTerm) {
         var deferred = q.defer();
 
@@ -47,6 +53,7 @@ module.exports = function() {
 
     return {
         findAll: findAll,
+        findStockByCode: findStockByCode,
         findMatchingStocks: findMatchingStocks
     };
 };

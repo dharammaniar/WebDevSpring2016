@@ -18,9 +18,14 @@
             return $http.get('/api/project/stock?searchTerm=' + searchTerm);
         }
 
+        function getStockByCode(code) {
+            return $http.get('/api/project/stock?code=' + code);
+        }
+
         return {
             getAllStocks: getAllStocks,
-            findMatchingStocks: findMatchingStocks
+            findMatchingStocks: findMatchingStocks,
+            getStockByCode: getStockByCode
         };
     }
 })();
