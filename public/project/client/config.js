@@ -33,6 +33,11 @@
                     controller: 'LoginController',
                     controllerAs: 'model'
                 })
+                .when('/profile', {
+                    templateUrl: 'views/user/profile.view.html',
+                    controller: 'ProfileController',
+                    controllerAs: 'model'
+                })
                 .otherwise({
                     redirectsTo: '/'
                 });
