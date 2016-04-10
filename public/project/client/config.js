@@ -28,6 +28,11 @@
                     controller: 'RegisterController',
                     controllerAs: 'model'
                 })
+                .when('/login', {
+                    templateUrl: 'views/user/login.view.html',
+                    controller: 'LoginController',
+                    controllerAs: 'model'
+                })
                 .otherwise({
                     redirectsTo: '/'
                 });
