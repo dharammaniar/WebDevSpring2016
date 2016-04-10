@@ -3,33 +3,118 @@
  */
 'use strict';
 
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
+
 module.exports = function(app, model) {
 
-    app.get('/api/project/usersession', findLoggedInUser);
-    app.post('/api/project/user', createUser);
-    app.delete('/api/project/usersession', deleteUserSession);
     app.get('/api/project/user/:id', getUserById);
     app.get('/api/project/user', getUser);
     app.put('/api/project/user/:id', updateUser);
 
-    function findLoggedInUser(req, res) {
-        res.json(req.session.loggedInUser);
+    var auth = authorized;
+    app.post  ('/api/project/login', passport.authenticate('local'), login);
+    app.post  ('/api/project/logout',         logout);
+    app.get   ('/api/project/loggedin',       loggedin);
+    app.post  ('/api/project/register',       register);
+
+    passport.use(new LocalStrategy(localStrategy));
+    passport.serializeUser(serializeUser);
+    passport.deserializeUser(deserializeUser);
+
+    function localStrategy(username, password, done) {
+        model
+            .findUserByCredentials({
+                username: username,
+                password: password
+            })
+            .then(
+                function(user) {
+                    if(user) {
+                        return done(null, user);
+                    } else {
+                        return done(null, false);
+                    }
+                },
+                function(err) {
+                    if (err) {
+                        return done(err);
+                    }
+                }
+            );
     }
 
-    function deleteUserSession(req, res) {
-        req.session.destroy();
+    function authorized(req, res, next) {
+        if (!req.isAuthenticated()) {
+            res.send(401);
+        } else {
+            next();
+        }
+    }
+
+    function serializeUser(user, done) {
+        delete user.password;
+        done(null, user);
+    }
+
+    function deserializeUser(user, done) {
+        model
+            .findById(user._id)
+            .then(
+                function(user){
+                    delete user.password;
+                    done(null, user);
+                },
+                function(err){
+                    done(err, null);
+                }
+            );
+    }
+
+    function loggedin(req, res) {
+        res.send(req.isAuthenticated() ? req.user : '0');
+    }
+
+    function logout(req, res) {
+        req.logOut();
         res.send(200);
     }
 
-    function createUser(req, res) {
-        var newUser = req.body;
-        model.create(newUser)
+    function login(req, res) {
+        var user = req.user;
+        delete user.password;
+        res.json(user);
+    }
+
+    function register (req, res) {
+        var user = req.body;
+        model
+            .findUserByUsername(user.username)
             .then(
-                function(user) {
-                    req.session.loggedInUser = user;
-                    res.json(user);
+                function(user){
+                    if(user) {
+                        res.json(null);
+                    } else {
+                        return model.createUser(user);
+                    }
                 },
-                function(err) {
+                function(err){
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function(user){
+                    if(user){
+                        req.login(user, function(err) {
+                            if(err) {
+                                res.status(400).send(err);
+                            } else {
+                                res.json(user);
+                            }
+                        });
+                    }
+                },
+                function(err){
                     res.status(400).send(err);
                 }
             );

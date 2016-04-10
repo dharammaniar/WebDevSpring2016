@@ -13,7 +13,7 @@
                     controller: 'HomeController',
                     controllerAs: 'model',
                     resolve: {
-                        getLoggedInUser: getLoggedInUser
+                        loggedin: getLoggedInUser
                     }
                 })
                 .when('/searchResults', {
@@ -21,7 +21,7 @@
                     controller: 'SearchResultController',
                     controllerAs: 'model',
                     resolve: {
-                        getLoggedInUser: getLoggedInUser
+                        loggedin: getLoggedInUser
                     }
                 })
                 .when('/stock/:code', {
@@ -29,7 +29,7 @@
                     controller: 'StockController',
                     controllerAs: 'model',
                     resolve: {
-                        getLoggedInUser: getLoggedInUser
+                        loggedin: getLoggedInUser
                     }
                 })
                 .when('/register', {
@@ -47,7 +47,7 @@
                     controller: 'ProfileController',
                     controllerAs: 'model',
                     resolve: {
-                        verifyUserIsLoggedIn: verifyUserIsLoggedIn
+                        loggedin: checkLoggedin
                     }
                 })
                 .otherwise({
@@ -55,30 +55,44 @@
                 });
         });
 
-    function verifyUserIsLoggedIn(UserService, $q, $location, $rootScope) {
+    var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
         var deferred = $q.defer();
-        UserService.findLoggedInUser()
-            .then(function (response){
-                var currentUser = response.data;
-                if(currentUser) {
-                    $rootScope.user = currentUser;
-                    deferred.resolve();
-                } else {
-                    deferred.reject();
-                    $location.url("/");
-                }
-            });
-        return deferred.promise;
-    }
 
-    function getLoggedInUser(UserService, $q, $rootScope) {
-        var deferred = $q.defer();
-        UserService.findLoggedInUser()
-            .then(function (response){
-                $rootScope.user = response.data;
+        $http.get('/api/project/loggedin').success(function(user)
+        {
+            $rootScope.errorMessage = null;
+            // User is Authenticated
+            if (user !== '0')
+            {
+                $rootScope.user = user;
                 deferred.resolve();
-            });
+            }
+            // User is Not Authenticated
+            else
+            {
+                $rootScope.error = 'You need to log in.';
+                deferred.reject();
+                $location.url('/');
+            }
+        });
+
         return deferred.promise;
-    }
+    };
+
+    var getLoggedInUser = function($q, $timeout, $http, $location, $rootScope) {
+        var deferred = $q.defer();
+
+        $http.get('/api/project/loggedin').success(function(user)
+        {
+            $rootScope.errorMessage = null;
+            // User is Authenticated
+            if (user !== '0'){
+                $rootScope.user = user;
+            }
+            deferred.resolve();
+        });
+
+        return deferred.promise;
+    };
 
 })();

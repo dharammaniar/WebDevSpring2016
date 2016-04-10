@@ -6,6 +6,7 @@ var app = express();
 var bodyParser = require('body-parser');
 var multer = require('multer');
 var uuid = require('node-uuid');
+var passport = require('passport');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
 
@@ -32,12 +33,20 @@ var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
+
+// configure cookie parser - needed for oauth
+app.use(cookieParser());
+
+// configure session support
 app.use(session({
-    secret: "maniardharam",
+    secret: 'maniardharam',
     resave: false,
     saveUninitialized: true
 }));
-app.use(cookieParser());
+
+// initialize passport and session support
+app.use(passport.initialize());
+app.use(passport.session());
 
 require('./public/assignment/server/app')(app, db, uuid);
 require('./public/project/server/app')(app);

@@ -16,8 +16,15 @@
 
         function logout() {
             $rootScope.user = null;
-            UserService.deleteUserSession();
-            $location.path('/');
+            UserService.logout()
+                .then(function(response){
+                    if (response.status == 200) {
+                        $location.path('/');
+                    }
+                }, function(err) {
+                    console.log(err);
+                });
+            
         }
 
         function findStock(searchTerm) {
