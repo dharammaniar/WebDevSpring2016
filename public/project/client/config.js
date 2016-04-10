@@ -13,14 +13,19 @@
                     controller: 'HomeController',
                     controllerAs: 'model'
                 })
-                .when("/searchResults", {
-                    templateUrl: "views/search/searchResult.view.html",
+                .when('/searchResults', {
+                    templateUrl: 'views/search/searchResult.view.html',
                     controller: 'SearchResultController',
                     controllerAs: 'model'
                 })
-                .when("/stock/:code", {
-                    templateUrl: "views/stock/stock.view.html",
+                .when('/stock/:code', {
+                    templateUrl: 'views/stock/stock.view.html',
                     controller: 'StockController',
+                    controllerAs: 'model'
+                })
+                .when('/register', {
+                    templateUrl: 'views/user/register.view.html',
+                    controller: 'RegisterController',
                     controllerAs: 'model'
                 })
                 .otherwise({
