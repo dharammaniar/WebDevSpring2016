@@ -32,6 +32,14 @@
                         loggedin: getLoggedInUser
                     }
                 })
+                .when('/portfolio', {
+                    templateUrl: 'views/portfolio/portfolio.view.html',
+                    controller: 'PortfolioController',
+                    controllerAs: 'model',
+                    resolve: {
+                        loggedin: checkLoggedin
+                    }
+                })
                 .when('/register', {
                     templateUrl: 'views/user/register.view.html',
                     controller: 'RegisterController',

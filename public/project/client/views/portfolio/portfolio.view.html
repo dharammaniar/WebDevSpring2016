@@ -1,0 +1,108 @@
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Portfolio</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-clock-o fa-fw"></i> Add / Edit
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <td><b>Stock</b></td>
+                                <td><input type="text" ng-model="model.selectedStock.code" placeholder="Stock" class="form-control"/></td>
+                            </tr>
+                            <tr>
+                                <td><b>Investment Price</b></td>
+                                <td><input type="text" ng-model="model.selectedStock.invPrice" placeholder="Price" class="form-control"/></td>
+                            </tr>
+                            <tr>
+                                <td><b>Quantity</b></td>
+                                <td><input type="text" ng-model="model.selectedStock.quantity" placeholder="Quantity" class="form-control"/></td>
+                            </tr>
+                            <tr>
+                                <td><b>Investment Date</b></td>
+                                <td><input type="date" ng-model="model.selectedStock.invDate" placeholder="Date" class="form-control"/></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button ng-click="model.addStock(model.selectedStock)" class="btn btn-primary form-control"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td><button ng-click="model.updateStock(model.selectedStock)" class="btn btn-success form-control"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Update</button></td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div ng-repeat="currentStock in model.userStocks">
+            <div class="col-lg-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-money fa-fw"></i> <a href="#/stock/{{currentStock.code}}">{{currentStock.code}} : {{currentStock.stockIndex}}</a>
+                        <div class="pull-right">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Actions<span class="caret"></span></button>
+                                <ul class="dropdown-menu pull-right" role="menu">
+                                    <li><a href ng-click="model.selectStock($index)"><i class="fa fa-pencil fa-fw"></i> Edit</a>
+                                    </li>
+                                    <li><a href ng-click="model.deleteStock(currentStock)"><i class="fa fa-remove fa-fw"></i>Delete</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <td><b>Investment Date</b></td>
+                                    <td>{{currentStock.invDate}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Investment Price</b></td>
+                                    <td>{{currentStock.invPrice}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Quantity</b></td>
+                                    <td>{{currentStock.quantity}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Investment Total</b></td>
+                                    <td>{{currentStock.invTotal}}</td>
+                                </tr>
+                                <tr>
+                                    <td><b>Current Total</b></td>
+                                    <td>{{currentStock.currentTotal}}</td>
+                                </tr>
+                                <tr ng-show="currentStock.profit">
+                                    <td><b>Current Profit</b></td>
+                                    <td class="profit"><b><i class="fa fa-thumbs-o-up"></i>{{currentStock.profit}}</b></td>
+                                </tr>
+                                <tr ng-show="currentStock.profit">
+                                    <td><b>Profit Percentage</b></td>
+                                    <td class="profit"><b><i class="fa fa-thumbs-o-up"></i>{{currentStock.profitPercentage}}</b></td>
+                                </tr>
+                                <tr ng-show="currentStock.loss">
+                                    <td><b>Current Loss</b></td>
+                                    <td class="loss"><b><i class="fa fa-thumbs-o-down"></i>{{currentStock.loss}}</b></td>
+                                </tr>
+                                <tr ng-show="currentStock.loss">
+                                    <td><b>Loss Percentage</b></td>
+                                    <td class="loss"><b><i class="fa fa-thumbs-o-down"></i>{{currentStock.lossPercentage}}</b></td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

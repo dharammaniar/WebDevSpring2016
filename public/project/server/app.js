@@ -10,4 +10,7 @@ module.exports = function(app) {
 
     var userModel = require('./models/user.model')();
     require('./services/user.service.server')(app, userModel);
+
+    var portfolioModel = require('./models/portfolioStocks.model')(userModel);
+    require('./services/portfolioStocks.service.server')(app, portfolioModel);
 };

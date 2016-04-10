@@ -1,3 +1,13 @@
 .navbar-portman {
     margin-bottom: 0;
 }
+.table>tbody>tr>td {
+    border-top:0px;
+    vertical-align: middle;
+}
+.profit {
+    color: #4CAF50;
+}
+.loss {
+    color: #F44336;
+}

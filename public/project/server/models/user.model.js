@@ -11,6 +11,10 @@ module.exports = function() {
     var UserSchema = require('./user.schema.server.js')();
     var ProjectUser = mongoose.model('ProjectUser', UserSchema);
 
+    function getMongooseModel() {
+        return ProjectUser;
+    }
+
     function create(user) {
         var deferred = q.defer();
         ProjectUser.create(user, function (err, doc) {
@@ -62,7 +66,8 @@ module.exports = function() {
         findById: findById,
         update: update,
         findUserByUsername: findUserByUsername,
-        findUserByCredentials: findUserByCredentials
+        findUserByCredentials: findUserByCredentials,
+        getMongooseModel: getMongooseModel
     }
 
 };
