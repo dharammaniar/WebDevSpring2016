@@ -7,7 +7,7 @@
         .module('PortManApp')
         .controller('StockController', StockController);
 
-    function StockController($http, $sce, $routeParams, StockService) {
+    function StockController($http, $sce, $routeParams, $rootScope, $location, StockService) {
         var vm = this;
 
         vm.stockCode = $routeParams.code;
@@ -25,6 +25,11 @@
 
         vm.deliberatelyTrustDangerousSnippet = function(text) {
             return $sce.trustAsHtml(text);
+        };
+
+        vm.addToPortfolio = function() {
+            $rootScope.addToPortfolioCode = vm.stockCode;
+            $location.path('/portfolio');
         };
 
         function init() {

@@ -8,7 +8,7 @@
         .module('PortManApp')
         .controller('PortfolioController', PortfolioController);
 
-    function PortfolioController($http, $rootScope, PortfolioService) {
+    function PortfolioController($rootScope, PortfolioService) {
 
         var vm = this;
 
@@ -21,11 +21,23 @@
                     vm.userStocks = portfolio;
                     delete vm.selectedStock;
                     delete vm.selectedStockIndex;
+                    if ($rootScope.addToPortfolioCode) {
+                        vm.selectedStock = {
+                            code: $rootScope.addToPortfolioCode
+                        };
+                        delete $rootScope['addToPortfolioCode'];
+                    }
                 }, function(err) {
                     console.log(err);
                 }, function(progress) {
                     vm.userStocks = progress;
                 });
+        }
+
+        if ($rootScope.addToPortfolioCode) {
+            vm.selectedStock = {
+                code: $rootScope.addToPortfolioCode
+            };
         }
 
         // Event Handler Declaration
