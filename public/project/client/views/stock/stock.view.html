@@ -1,17 +1,12 @@
 <div id="page-wrapper">
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">{{model.stock.company}}
-                <div class="pull-right">
-                    <div class="btn-group">
-                        <button type="button" ng-click="model.addToPortfolio()" class="btn btn-primary">Add to Portfolio</button>
-                    </div>
-                </div>
+            <h1>{{model.stock.company}}
             </h1>
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-6">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <div class="row">
@@ -27,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-6">
             <div class="panel panel-green">
                 <div class="panel-heading">
                     <div class="row">
@@ -43,7 +38,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-6">
             <div class="panel panel-yellow">
                 <div class="panel-heading">
                     <div class="row">
@@ -59,13 +54,24 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-3 col-md-6">
+        <div class="col-lg-6">
             <div class="panel panel-red">
                 <div class="panel-heading">
                     <div class="row">
                         <div class="col-xs-6">
                             <div class="huge">{{model.volume}}</div>
                             <div>Volume</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row" ng-show="user">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="btn-group">
+                            <button type="button" ng-click="model.addToPortfolio()" class="btn btn-primary">Add to Portfolio</button>
                         </div>
                     </div>
                 </div>
