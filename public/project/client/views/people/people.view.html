@@ -1,0 +1,95 @@
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">People</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-exchange fa-fw"></i> Investors I follow
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" ng-repeat="investorIFollow in model.investorsIFollow">
+                                <tr>
+                                    <td width="80%">
+                                        <h4>{{investorIFollow.firstName}} {{investorIFollow.lastName}}</h4>
+                                    </td>
+                                    <td width="20%">
+                                        <button class="btn btn-danger" ng-click="model.unfollow(investorIFollow)" ><i class="fa fa-user-times" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-exchange fa-fw"></i> Investors to follow
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" ng-repeat="investorToFollow in model.investorsToFollow">
+                                <tr>
+                                    <td width="80%">
+                                        <h4>{{investorToFollow.firstName}} {{investorToFollow.lastName}}</h4>
+                                    </td>
+                                    <td width="20%">
+                                        <button class="btn btn-success" ng-click="model.follow(investorToFollow)" ><i class="fa fa-user-plus" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-exchange fa-fw"></i> Analysts I follow
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" ng-repeat="analystIFollow in model.analystsIFollow">
+                                <tr>
+                                    <td width="80%">
+                                        <h4>{{analystIFollow.firstName}} {{analystIFollow.lastName}}</h4>
+                                    </td>
+                                    <td width="20%">
+                                        <button class="btn btn-danger" ng-click="model.unfollow(analystIFollow)" ><i class="fa fa-user-times" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-exchange fa-fw"></i> Analysts to follow
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-hover" ng-repeat="analystToFollow in model.analystsToFollow">
+                                <tr>
+                                    <td width="80%">
+                                        <h4>{{analystToFollow.firstName}} {{analystToFollow.lastName}}</h4>
+                                    </td>
+                                    <td width="20%">
+                                        <button class="btn btn-success" ng-click="model.follow(analystToFollow)" ><i class="fa fa-user-plus" aria-hidden="true"></i></button>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

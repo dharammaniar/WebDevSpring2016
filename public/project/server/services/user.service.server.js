@@ -87,15 +87,15 @@ module.exports = function(app, model) {
     }
 
     function register (req, res) {
-        var user = req.body;
+        var userToCreate = req.body;
         model
-            .findUserByUsername(user.username)
+            .findUserByUsername(userToCreate.username)
             .then(
                 function(user){
                     if(user) {
                         res.json(null);
                     } else {
-                        return model.createUser(user);
+                        return model.create(userToCreate);
                     }
                 },
                 function(err){
@@ -161,6 +161,17 @@ module.exports = function(app, model) {
                         res.status(400).send(err);
                     }
                 );
+        } else {
+            model
+                .findAll()
+                .then(
+                    function(users) {
+                        res.json(users);
+                    },
+                    function(err) {
+                        res.status(400).send(err);
+                    }
+                )
         }
     }
 

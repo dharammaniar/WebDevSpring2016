@@ -13,6 +13,12 @@ module.exports = function () {
         firstName: String,
         lastName: String,
         email: String,
+        type: {
+            type: String,
+            default: 'investor',
+            enum: ['investor', 'analyst']
+        },
+        followedUsers: [String],
         portfolioStocks: [PortfolioStocksSchema]
     }, {collection: 'projectUser'});
 };

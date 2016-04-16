@@ -58,6 +58,14 @@
                         loggedin: checkLoggedin
                     }
                 })
+                .when('/people', {
+                    templateUrl: 'views/people/people.view.html',
+                    controller: 'PeopleController',
+                    controllerAs: 'model',
+                    resolve: {
+                        loggedin: checkLoggedin
+                    }
+                })
                 .otherwise({
                     redirectsTo: '/'
                 });

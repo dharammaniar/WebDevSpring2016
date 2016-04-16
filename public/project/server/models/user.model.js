@@ -5,6 +5,7 @@
 
 var mongoose = require('mongoose');
 var q = require('q');
+var _ = require('lodash');
 
 module.exports = function() {
 
@@ -29,6 +30,23 @@ module.exports = function() {
 
     function findById(id) {
         return ProjectUser.findById(id);
+    }
+
+    function findAll() {
+        var deferred = q.defer();
+        ProjectUser.find(
+            function(err, users) {
+                if (!err) {
+                    _.forEach(users, function(user) {
+                        _.unset(user, user.password);
+                    });
+                    deferred.resolve(users);
+                } else {
+                    deferred.reject(err);
+                }
+            }
+        );
+        return deferred.promise;
     }
 
     function update(id, user) {
@@ -67,7 +85,8 @@ module.exports = function() {
         update: update,
         findUserByUsername: findUserByUsername,
         findUserByCredentials: findUserByCredentials,
-        getMongooseModel: getMongooseModel
+        getMongooseModel: getMongooseModel,
+        findAll: findAll
     }
 
 };

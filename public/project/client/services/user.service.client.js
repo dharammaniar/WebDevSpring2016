@@ -18,15 +18,19 @@
         }
 
         function logout() {
-            return $http.post("/api/project/logout");
+            return $http.post('/api/project/logout');
         }
 
         function login(user) {
-            return $http.post("/api/project/login", user);
+            return $http.post('/api/project/login', user);
         }
 
         function register(user) {
-            return $http.post("/api/project/register", user);
+            return $http.post('/api/project/register', user);
+        }
+
+        function findAllUsers() {
+            return $http.get('/api/project/user');
         }
 
         return {
@@ -34,7 +38,8 @@
             updateUser: updateUser,
             logout: logout,
             login: login,
-            register: register
+            register: register,
+            findAllUsers: findAllUsers
         };
     }
 })();
