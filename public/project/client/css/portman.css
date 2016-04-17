@@ -11,6 +11,9 @@
 .loss {
     color: #F44336;
 }
+.paddingTop20 {
+    padding-top: 20px;
+}
 .panel {
     -webkit-transition: background-color 1s;
     transition: background-color 1s;

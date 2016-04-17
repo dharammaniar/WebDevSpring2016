@@ -8,7 +8,7 @@
         .module('PortManApp')
         .controller('PortfolioController', PortfolioController);
 
-    function PortfolioController($rootScope, $routeParams, PortfolioService) {
+    function PortfolioController($rootScope, $routeParams, PortfolioService, CommentService, UserService) {
 
         var vm = this;
         vm.userId = $routeParams.userId;
@@ -19,6 +19,8 @@
 
         vm.userStocks = [];
         showAllStocksForUser();
+
+        showAllCommentsForUser();
 
         function showAllStocksForUser() {
             var firstProgress = true;
@@ -52,6 +54,37 @@
                 });
         }
 
+        function showAllCommentsForUser() {
+            vm.userComments = [];
+            CommentService.findCommentsByUserId(vm.userId)
+                .then(
+                    function(response) {
+                        var comments = response.data,
+                            userComments = [];
+                        _.forEach(comments, function(comment) {
+                            UserService.findById(comment.userId)
+                                .then(function(response) {
+                                    var user = response.data;
+                                    _.extend(comment, {
+                                        userFirstName: user.firstName,
+                                        userLastName: user.lastName,
+                                        timestamp: moment(comment.timestamp).format('MM/DD/YYYY HH:mm:SS')
+                                    });
+                                    userComments.push(comment);
+                                    if (userComments.length === comments.length) {
+                                        vm.userComments = _.sortBy(userComments, 'timestamp');
+                                    }
+                                }, function(err) {
+                                    console.log(err);
+                                });
+                        });
+                    },
+                    function(err) {
+                        console.log(err);
+                    }
+                );
+        }
+
         if ($rootScope.addToPortfolioCode) {
             vm.selectedStock = {
                 code: $rootScope.addToPortfolioCode
@@ -63,6 +96,7 @@
         vm.updateStock = updateStock;
         vm.deleteStock = deleteStock;
         vm.selectStock = selectStock;
+        vm.addComment = addComment;
 
         //Event Handler Implementation
         function addStock(stock) {
@@ -116,6 +150,19 @@
                 quantity: vm.userStocks[index].quantity,
                 invDate: new Date(vm.userStocks[index].invDate)
             }
+        }
+
+        function addComment(comment) {
+            _.extend(comment, {
+                userId: $rootScope.user._id,
+                timestamp: Date.now
+            });
+            CommentService.addCommentToUserComments(vm.userId, comment)
+                .then(function(response) {
+                    showAllCommentsForUser();
+                }, function(err) {
+                    console.log(err);
+                });
         }
     }
 }());

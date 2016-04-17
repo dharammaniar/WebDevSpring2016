@@ -5,39 +5,33 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-3" ng-show="model.isSelf">
+        <div class="col-lg-12" ng-show="model.isSelf">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-clock-o fa-fw"></i> Add / Edit
                 </div>
                 <div class="panel-body">
-                    <div class="table-responsive">
-                        <table class="table">
-                            <tr>
-                                <td><b>Stock</b></td>
-                                <td><input type="text" ng-model="model.selectedStock.code" placeholder="Stock" class="form-control"/></td>
-                            </tr>
-                            <tr>
-                                <td><b>Investment Price</b></td>
-                                <td><input type="text" ng-model="model.selectedStock.invPrice" placeholder="Price" class="form-control"/></td>
-                            </tr>
-                            <tr>
-                                <td><b>Quantity</b></td>
-                                <td><input type="text" ng-model="model.selectedStock.quantity" placeholder="Quantity" class="form-control"/></td>
-                            </tr>
-                            <tr>
-                                <td><b>Investment Date</b></td>
-                                <td><input type="date" ng-model="model.selectedStock.invDate" placeholder="Date" class="form-control"/></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><button ng-click="model.addStock(model.selectedStock)" class="btn btn-primary form-control"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Add</button></td>
-                            </tr>
-                            <tr>
-                                <td></td>
-                                <td><button ng-click="model.updateStock(model.selectedStock)" class="btn btn-success form-control"><span class="glyphicon glyphicon-ok" aria-hidden="true"></span> Update</button></td>
-                            </tr>
-                        </table>
+                    <div class="row">
+                        <form class="form-horizontal">
+                        <div class="col-lg-2 nowrap">
+                            <b>Stock:</b><input type="text" ng-model="model.selectedStock.code" placeholder="Stock" class="form-control"/>
+                        </div>
+                        <div class="col-lg-2 nowrap">
+                            <b>Investment Price</b><input type="text" ng-model="model.selectedStock.invPrice" placeholder="Price" class="form-control"/>
+                        </div>
+                        <div class="col-lg-2 nowrap">
+                            <b>Quantity</b><input type="text" ng-model="model.selectedStock.quantity" placeholder="Quantity" class="form-control"/>
+                        </div>
+                        <div class="col-lg-2 nowrap">
+                            <b>Investment Date</b><input type="date" ng-model="model.selectedStock.invDate" placeholder="Date" class="form-control"/>
+                        </div>
+                        <div class="col-lg-2 nowrap paddingTop20">
+                            <button ng-click="model.addStock(model.selectedStock)" class="btn btn-primary form-control"><i class="fa fa-plus-square-o fa-lg" aria-hidden="true"></i> Add</button>
+                        </div>
+                        <div class="col-lg-2 nowrap paddingTop20">
+                            <button ng-click="model.updateStock(model.selectedStock)" class="btn btn-success form-control"><i class="fa fa-pencil-square-o fa-lg" aria-hidden="true"></i> Update</button>
+                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -100,6 +94,40 @@
                                 </tr>
                             </table>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <i class="fa fa-comments fa-fw"></i>Comments
+                </div>
+                <div class="panel-body">
+                    <ul class="chat">
+                        <li class="left clearfix" ng-repeat="comment in model.userComments">
+                            <div class="clearfix">
+                                <div class="header">
+                                    <strong class="primary-font">{{comment.userFirstName}} {{comment.userLastName}}</strong>
+                                    <small class="pull-right text-muted">
+                                        <i class="fa fa-clock-o fa-fw"></i> {{comment.timestamp}}
+                                    </small>
+                                </div>
+                                <p>
+                                    {{comment.text}}
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel-footer">
+                    <div class="input-group">
+                        <input id="btn-input" type="text" class="form-control input-sm" placeholder="Type your comment here..." ng-model="model.newComment.text">
+                        <span class="input-group-btn">
+                            <button class="btn btn-warning btn-sm" ng-click="model.addComment(model.newComment)">Comment</button>
+                        </span>
                     </div>
                 </div>
             </div>

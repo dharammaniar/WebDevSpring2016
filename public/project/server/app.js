@@ -13,4 +13,7 @@ module.exports = function(app) {
 
     var portfolioModel = require('./models/portfolioStocks.model')(userModel);
     require('./services/portfolioStocks.service.server')(app, portfolioModel);
+
+    var commentModel = require('./models/comments.model')(userModel);
+    require('./services/portfolioComments.service.server')(app, commentModel);
 };
