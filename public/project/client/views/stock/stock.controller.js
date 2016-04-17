@@ -32,6 +32,10 @@
             $location.path('/portfolio/'+$rootScope.user._id);
         };
 
+        vm.goToMessageBoard = function() {
+            $location.path('/stock/' + vm.stockCode + '/messageboard');
+        };
+
         function init() {
             StockService.getStockByCode(vm.stockCode)
                 .then(

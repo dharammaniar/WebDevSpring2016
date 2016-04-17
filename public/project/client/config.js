@@ -32,6 +32,14 @@
                         loggedin: getLoggedInUser
                     }
                 })
+                .when('/stock/:code/messageboard', {
+                    templateUrl: 'views/stock/messageboard.view.html',
+                    controller: 'MessageBoardController',
+                    controllerAs: 'model',
+                    resolve: {
+                        loggedin: getLoggedInUser
+                    }
+                })
                 .when('/portfolio/:userId', {
                     templateUrl: 'views/portfolio/portfolio.view.html',
                     controller: 'PortfolioController',

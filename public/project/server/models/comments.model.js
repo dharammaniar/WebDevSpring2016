@@ -3,9 +3,10 @@
  */
 var _ = require('lodash');
 
-module.exports = function(projectUserModel) {
+module.exports = function(projectUserModel, stockModel) {
 
     var ProjectUser = projectUserModel.getMongooseModel();
+    var Stock = stockModel.getMongooseModel();
 
     function findCommentsByUserId(userId) {
         return ProjectUser
@@ -61,11 +62,70 @@ module.exports = function(projectUserModel) {
             )
     }
 
+    function findMessagesByStock(stockCode) {
+        return Stock
+            .findStockByCode(stockCode)
+            .then(
+                function(stock) {
+                    return stock.messages;
+                }
+            );
+    }
+
+    function findMessageByIdAndStockCode(stockCode, messageId) {
+        return Stock
+            .findStockByCode(stockCode)
+            .then(
+                function(stock) {
+                    return stock.messages.id(messageId);
+                }
+            )
+    }
+
+    function deleteMessageByIdAndStockCode(stockCode, messageId) {
+        return Stock
+            .findStockByCode(stockCode)
+            .then(
+                function(stock) {
+                    stock.messages.id(messageId).remove();
+                    return stock.save();
+                }
+            )
+    }
+
+    function addMessageToStockMessages(stockCode, message) {
+        return Stock
+            .findStockByCode(stockCode)
+            .then(
+                function(stock) {
+                    stock.messages.push(message);
+                    return stock.save();
+                }
+            );
+    }
+
+    function updateMessageInStockMessages(stockCode, messageId, message) {
+        return Stock
+            .findStockByCode(stockCode)
+            .then(
+                function(stock) {
+                    var messageToUpdate = stock.messages.id(messageId);
+                    _.extend(messageToUpdate, message);
+                    return stock.save();
+                }
+            )
+    }
+
     return {
         findCommentsByUserId: findCommentsByUserId,
         findCommentByIdAndUserId: findCommentByIdAndUserId,
         deleteCommentByIdAndUserId: deleteCommentByIdAndUserId,
         addCommentToUserComments: addCommentToUserComments,
-        updateCommentInUserComments: updateCommentInUserComments
+        updateCommentInUserComments: updateCommentInUserComments,
+        findMessagesByStock: findMessagesByStock,
+        findMessageByIdAndStockCode: findMessageByIdAndStockCode,
+        deleteMessageByIdAndStockCode: deleteMessageByIdAndStockCode,
+        addMessageToStockMessages: addMessageToStockMessages,
+        updateMessageInStockMessages: updateMessageInStockMessages
     }
 };

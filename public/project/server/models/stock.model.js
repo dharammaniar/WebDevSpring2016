@@ -10,7 +10,14 @@ var q = require('q');
 module.exports = function() {
 
     var StockSchema = require('./stock.schema.server.js')();
+
+    StockSchema.statics.findStockByCode = findStockByCode;
+
     var Stock = mongoose.model('Stock', StockSchema);
+
+    function getMongooseModel() {
+        return Stock;
+    }
 
     function findAll() {
         var deferred = q.defer();
@@ -54,6 +61,7 @@ module.exports = function() {
     return {
         findAll: findAll,
         findStockByCode: findStockByCode,
-        findMatchingStocks: findMatchingStocks
+        findMatchingStocks: findMatchingStocks,
+        getMongooseModel: getMongooseModel
     };
 };

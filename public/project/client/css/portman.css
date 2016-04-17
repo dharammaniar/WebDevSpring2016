@@ -44,3 +44,13 @@
     -webkit-transition: opacity 0;
     transition: opacity 0;
 }
+
+.messageboard {
+    padding-top: 10px;
+}
+
+@media (min-width: 1200px) {
+    .messageboard {
+        padding-top: 0px;
+    }
+}
