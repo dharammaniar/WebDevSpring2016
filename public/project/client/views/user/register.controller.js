@@ -21,7 +21,7 @@
                 email: user.email
             }).then(function successCallback(response) {
                 $rootScope.user = response.data;
-                $location.path('/profile');
+                $location.path('/profile/'+response.data._id);
             });
         }
     }

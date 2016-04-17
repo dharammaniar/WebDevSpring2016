@@ -7,17 +7,32 @@
         .module('PortManApp')
         .controller('ProfileController', ProfileController);
 
-    function ProfileController($rootScope, $location, UserService, PortfolioService) {
+    function ProfileController($rootScope, $location, $routeParams, UserService, PortfolioService) {
         var vm = this;
         vm.showSuccessAlert = false;
         vm.user = $rootScope.user;
+
+        vm.userId = $routeParams.userId;
+        vm.isSelf = true;
+        if (vm.user._id !== vm.userId) {
+            vm.isSelf = false;
+            UserService.findById(vm.userId)
+                .then(
+                    function(response) {
+                        vm.user = response.data;
+                    },
+                    function(err) {
+                        console.log(err);
+                    }
+                );
+        }
 
         init();
         
         function init() {
             vm.invTotal = 0;
             vm.currentTotal = 0;
-            PortfolioService.getPortfolio(vm.user._id)
+            PortfolioService.getPortfolio(vm.userId)
                 .then(function(portfolio) {
                     _.forEach(portfolio, function(stock) {
                         vm.invTotal += stock.invTotalNumber;

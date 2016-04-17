@@ -16,7 +16,7 @@
                             <table class="table table-hover" ng-repeat="investorIFollow in model.investorsIFollow">
                                 <tr>
                                     <td width="80%">
-                                        <h4>{{investorIFollow.firstName}} {{investorIFollow.lastName}}</h4>
+                                        <a href="#/profile/{{investorIFollow._id}}"><h4>{{investorIFollow.firstName}} {{investorIFollow.lastName}}</h4></a>
                                     </td>
                                     <td width="20%">
                                         <button class="btn btn-danger" ng-click="model.unfollow(investorIFollow)" ><i class="fa fa-user-times" aria-hidden="true"></i></button>
@@ -37,7 +37,7 @@
                             <table class="table table-hover" ng-repeat="investorToFollow in model.investorsToFollow">
                                 <tr>
                                     <td width="80%">
-                                        <h4>{{investorToFollow.firstName}} {{investorToFollow.lastName}}</h4>
+                                        <a href="#/profile/{{investorToFollow._id}}"><h4>{{investorToFollow.firstName}} {{investorToFollow.lastName}}</h4></a>
                                     </td>
                                     <td width="20%">
                                         <button class="btn btn-success" ng-click="model.follow(investorToFollow)" ><i class="fa fa-user-plus" aria-hidden="true"></i></button>
@@ -58,7 +58,7 @@
                             <table class="table table-hover" ng-repeat="analystIFollow in model.analystsIFollow">
                                 <tr>
                                     <td width="80%">
-                                        <h4>{{analystIFollow.firstName}} {{analystIFollow.lastName}}</h4>
+                                        <a href="#/profile/{{analystIFollow._id}}"><h4>{{analystIFollow.firstName}} {{analystIFollow.lastName}}</h4></a>
                                     </td>
                                     <td width="20%">
                                         <button class="btn btn-danger" ng-click="model.unfollow(analystIFollow)" ><i class="fa fa-user-times" aria-hidden="true"></i></button>
@@ -79,7 +79,7 @@
                             <table class="table table-hover" ng-repeat="analystToFollow in model.analystsToFollow">
                                 <tr>
                                     <td width="80%">
-                                        <h4>{{analystToFollow.firstName}} {{analystToFollow.lastName}}</h4>
+                                        <a href="#/profile/{{analystToFollow._id}}"><h4>{{analystToFollow.firstName}} {{analystToFollow.lastName}}</h4></a>
                                     </td>
                                     <td width="20%">
                                         <button class="btn btn-success" ng-click="model.follow(analystToFollow)" ><i class="fa fa-user-plus" aria-hidden="true"></i></button>

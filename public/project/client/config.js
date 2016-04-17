@@ -32,7 +32,7 @@
                         loggedin: getLoggedInUser
                     }
                 })
-                .when('/portfolio', {
+                .when('/portfolio/:userId', {
                     templateUrl: 'views/portfolio/portfolio.view.html',
                     controller: 'PortfolioController',
                     controllerAs: 'model',
@@ -50,7 +50,7 @@
                     controller: 'LoginController',
                     controllerAs: 'model'
                 })
-                .when('/profile', {
+                .when('/profile/:userId', {
                     templateUrl: 'views/user/profile.view.html',
                     controller: 'ProfileController',
                     controllerAs: 'model',

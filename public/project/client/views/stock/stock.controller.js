@@ -29,7 +29,7 @@
 
         vm.addToPortfolio = function() {
             $rootScope.addToPortfolioCode = vm.stockCode;
-            $location.path('/portfolio');
+            $location.path('/portfolio/'+$rootScope.user._id);
         };
 
         function init() {

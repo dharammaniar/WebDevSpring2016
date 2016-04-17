@@ -76,8 +76,12 @@
                             deferred.reject(response);
                         });
                     });
-                    deferred.notify(userStocks);
-                    userStocks = [];
+                    if (userStocks.length !== 0) {
+                        deferred.notify(userStocks);
+                        userStocks = [];
+                    } else {
+                        deferred.resolve(userStocks);
+                    }
                 });
 
             return deferred.promise;

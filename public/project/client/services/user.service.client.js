@@ -33,13 +33,18 @@
             return $http.get('/api/project/user');
         }
 
+        function findById(userId) {
+            return $http.get('/api/project/user/' + userId);
+        }
+
         return {
             findUserByUsername: findUserByUsername,
             updateUser: updateUser,
             logout: logout,
             login: login,
             register: register,
-            findAllUsers: findAllUsers
+            findAllUsers: findAllUsers,
+            findById: findById
         };
     }
 })();

@@ -123,7 +123,7 @@
                 <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
             </a>
             <ul ng-show="user" class="dropdown-menu dropdown-user">
-                <li><a href="#/profile"><i class="fa fa-user fa-fw"></i> User Profile</a>
+                <li><a href="#/profile/{{user._id}}"><i class="fa fa-user fa-fw"></i> User Profile</a>
                 </li>
                 <li class="divider"></li>
                 <li><a href ng-click="model.logout()"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
@@ -155,10 +155,10 @@
                     <a href="#/"><i class="fa fa-home fa-fw"></i> Home</a>
                 </li>
                 <li ng-show="user">
-                    <a href="#/profile"><i class="fa fa-user fa-fw"></i> Profile</a>
+                    <a href="#/profile/{{user._id}}"><i class="fa fa-user fa-fw"></i> Profile</a>
                 </li>
                 <li ng-show="user">
-                    <a href="#/portfolio"><i class="fa fa-user fa-fw"></i> Portfolio</a>
+                    <a href="#/portfolio/{{user._id}}"><i class="fa fa-user fa-fw"></i> Portfolio</a>
                 </li>
                 <li ng-show="user">
                     <a href="#/people"><i class="fa fa-users fa-fw"></i> People</a>

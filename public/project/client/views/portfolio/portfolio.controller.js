@@ -8,16 +8,21 @@
         .module('PortManApp')
         .controller('PortfolioController', PortfolioController);
 
-    function PortfolioController($rootScope, PortfolioService) {
+    function PortfolioController($rootScope, $routeParams, PortfolioService) {
 
         var vm = this;
+        vm.userId = $routeParams.userId;
+        vm.isSelf = $rootScope.user._id === vm.userId;
+        if (vm.isSelf) {
+            vm.userId = $rootScope.user._id;
+        }
 
         vm.userStocks = [];
         showAllStocksForUser();
 
         function showAllStocksForUser() {
             var firstProgress = true;
-            PortfolioService.getPortfolio($rootScope.user._id)
+            PortfolioService.getPortfolio(vm.userId)
                 .then(function(portfolio) {
                     vm.userStocks = portfolio;
                     delete vm.selectedStock;

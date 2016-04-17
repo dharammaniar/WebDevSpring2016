@@ -5,7 +5,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-3" ng-show="model.isSelf">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-clock-o fa-fw"></i> Add / Edit
@@ -47,7 +47,7 @@
                 <div  id="{{currentStock._id}}" class="panel panel-default loading">
                     <div class="panel-heading">
                         <i class="fa fa-money fa-fw"></i> <a href="#/stock/{{currentStock.code}}">{{currentStock.code}} : {{currentStock.stockIndex}}</a>
-                        <div class="pull-right">
+                        <div class="pull-right" ng-show="model.isSelf">
                             <div class="btn-group">
                                 <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Actions<span class="caret"></span></button>
                                 <ul class="dropdown-menu pull-right" role="menu">
