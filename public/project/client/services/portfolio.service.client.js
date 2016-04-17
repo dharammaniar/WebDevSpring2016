@@ -40,26 +40,28 @@
                             invPrice: stock.invPrice,
                             quantity: stock.quantity,
                             invDate: moment(stock.invDate).format('MM/DD/YYYY'),
-                            invTotal: Number(stock.invPrice) * Number(stock.quantity)
+                            invTotalNumber: Number(stock.invPrice) * Number(stock.quantity),
+                            stockIndex: 0.0
                         };
+                        userStocks.push(portfolioStock);
                         $http({
                             method: 'GET',
                             url: 'https://www.quandl.com/api/v3/datasets/WIKI/' + stock.code + '.json?auth_token=bbt3K2NScvyFC4f-trat'
                         }).then(function successCallback(response) {
                             portfolioStock.stockIndex = response.data.dataset.data[0][4];
-                            portfolioStock.currentTotal = Number(response.data.dataset.data[0][4]) * Number(stock.quantity);
-                            if (portfolioStock.invTotal <= portfolioStock.currentTotal) {
-                                portfolioStock.profit = portfolioStock.currentTotal - portfolioStock.invTotal;
-                                portfolioStock.profitPercentage = numeral(portfolioStock.profit/portfolioStock.invTotal).format('0.00%');
-                                portfolioStock.profit = numeral(portfolioStock.profit).format('$0,0.00');
+                            portfolioStock.currentTotalNumber = Number(response.data.dataset.data[0][4]) * Number(stock.quantity);
+                            if (portfolioStock.invTotalNumber <= portfolioStock.currentTotalNumber) {
+                                portfolioStock.profitNumber = portfolioStock.currentTotalNumber - portfolioStock.invTotalNumber;
+                                portfolioStock.profitPercentage = numeral(portfolioStock.profitNumber/portfolioStock.invTotalNumber).format('0.00%');
+                                portfolioStock.profit = numeral(portfolioStock.profitNumber).format('$0,0.00');
                             } else {
-                                portfolioStock.loss = portfolioStock.invTotal - portfolioStock.currentTotal;
-                                portfolioStock.lossPercentage = numeral(portfolioStock.loss/portfolioStock.invTotal).format('0.00%');
-                                portfolioStock.loss = numeral(portfolioStock.loss).format('$0,0.00');
+                                portfolioStock.lossNumber = portfolioStock.invTotalNumber - portfolioStock.currentTotalNumber;
+                                portfolioStock.lossPercentage = numeral(portfolioStock.lossNumber/portfolioStock.invTotalNumber).format('0.00%');
+                                portfolioStock.loss = numeral(portfolioStock.lossNumber).format('$0,0.00');
                             }
 
-                            portfolioStock.invTotal = numeral(portfolioStock.invTotal).format('$0,0.00');
-                            portfolioStock.currentTotal = numeral(portfolioStock.currentTotal).format('$0,0.00');
+                            portfolioStock.invTotal = numeral(portfolioStock.invTotalNumber).format('$0,0.00');
+                            portfolioStock.currentTotal = numeral(portfolioStock.currentTotalNumber).format('$0,0.00');
 
                             userStocks.push(portfolioStock);
 
@@ -74,6 +76,8 @@
                             deferred.reject(response);
                         });
                     });
+                    deferred.notify(userStocks);
+                    userStocks = [];
                 });
 
             return deferred.promise;

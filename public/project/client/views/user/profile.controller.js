@@ -7,13 +7,41 @@
         .module('PortManApp')
         .controller('ProfileController', ProfileController);
 
-    function ProfileController($rootScope, $location, UserService) {
+    function ProfileController($rootScope, $location, UserService, PortfolioService) {
         var vm = this;
+        vm.showSuccessAlert = false;
         vm.user = $rootScope.user;
 
+        init();
+        
+        function init() {
+            vm.invTotal = 0;
+            vm.currentTotal = 0;
+            PortfolioService.getPortfolio(vm.user._id)
+                .then(function(portfolio) {
+                    _.forEach(portfolio, function(stock) {
+                        vm.invTotal += stock.invTotalNumber;
+                        vm.currentTotal += stock.currentTotalNumber;
+                    });
+                    if (vm.currentTotal >= vm.invTotal) {
+                        vm.profit = vm.currentTotal - vm.invTotal;
+                        vm.profitPercentage = numeral(vm.profit/vm.invTotal).format('0.00%');
+                        vm.profit = numeral(vm.profit).format('$0,0.00');
+                    } else {
+                        vm.loss = vm.invTotal - vm.currentTotal;
+                        vm.lossPercentage = numeral(vm.loss/vm.invTotal).format('0.00%');
+                        vm.loss = numeral(vm.loss).format('$0,0.00');
+                    }
+                    vm.invTotal = numeral(vm.invTotal).format('$0,0.00');
+                    vm.currentTotal = numeral(vm.currentTotal).format('$0,0.00');
+                    $('#portfolioPanel').removeClass('loading');
+                }, function(err) {
+                    console.log(err);
+                });
+        }
+        
         // Event Handler Declaration
         vm.update = update;
-        vm.showSuccessAlert = false;
 
         // Event Handler Implementation
         function update(user) {

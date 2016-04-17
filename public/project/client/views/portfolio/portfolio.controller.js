@@ -16,6 +16,7 @@
         showAllStocksForUser();
 
         function showAllStocksForUser() {
+            var firstProgress = true;
             PortfolioService.getPortfolio($rootScope.user._id)
                 .then(function(portfolio) {
                     vm.userStocks = portfolio;
@@ -27,10 +28,22 @@
                         };
                         delete $rootScope['addToPortfolioCode'];
                     }
+                    _.forEach(portfolio, function(stock) {
+                        $('#' + stock._id).removeClass('loading');
+                    })
                 }, function(err) {
                     console.log(err);
                 }, function(progress) {
-                    vm.userStocks = progress;
+                    if (firstProgress) {
+                        vm.userStocks = progress;
+                        firstProgress = false;
+                    } else {
+                        _.forEach(progress, function(stock) {
+                            if (stock.invTotal) {
+                                $('#' + stock._id).removeClass('loading');
+                            }
+                        })
+                    }
                 });
         }
 

@@ -8,7 +8,7 @@
         <div class="col-lg-6">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <i class="fa fa-clock-o fa-fw"></i> Edit Profile
+                    <i class="fa fa-user-secret"></i> Edit Profile
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal">
@@ -70,6 +70,67 @@
                         <div class="alert alert-success col-xs-12 col-sm-10 col-sm-offset-2" ng-show="model.showSuccessAlert">
                             <strong>Updated!</strong>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div id="portfolioPanel" class="panel panel-default loading">
+                <div class="panel-heading">
+                    <i class="fa fa-money"></i> <a href="#/portfolio">Portfolio</a>
+                </div>
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <tr>
+                                <td>
+                                    <b>Investment Total</b>
+                                </td>
+                                <td>
+                                    <b>{{model.invTotal}}</b>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <b>Current Total</b>
+                                </td>
+                                <td>
+                                    <b>{{model.currentTotal}}</b>
+                                </td>
+                            </tr>
+                            <tr ng-show="model.profit">
+                                <td>
+                                    <b>Profit</b>
+                                </td>
+                                <td class="profit">
+                                    <b><i class="fa fa-thumbs-o-up"></i>{{model.profit}}</b>
+                                </td>
+                            </tr>
+                            <tr ng-show="model.profit">
+                                <td>
+                                    <b>Profit Percentage</b>
+                                </td>
+                                <td class="profit">
+                                    <b><i class="fa fa-thumbs-o-up"></i>{{model.profitPercentage}}</b>
+                                </td>
+                            </tr>
+                            <tr ng-show="model.loss">
+                                <td>
+                                    <b>Loss</b>
+                                </td>
+                                <td class="loss">
+                                    <b><i class="fa fa-thumbs-o-down"></i>{{model.loss}}</b>
+                                </td>
+                            </tr>
+                            <tr ng-show="model.loss">
+                                <td>
+                                    <b>Loss Percentage</b>
+                                </td>
+                                <td class="loss">
+                                    <b><i class="fa fa-thumbs-o-down"></i>{{model.lossPercentage}}</b>
+                                </td>
+                            </tr>
+                        </table>
                     </div>
                 </div>
             </div>
