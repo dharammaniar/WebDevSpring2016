@@ -1,5 +1,5 @@
 'use strict';
 
 (function(){
-    angular.module('PortManApp', ['ngRoute', 'textAngular'])
+    angular.module('PortManApp', ['ngRoute', 'textAngular', 'autocomplete'])
 })();

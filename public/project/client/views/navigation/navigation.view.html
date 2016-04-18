@@ -36,7 +36,7 @@
             <ul class="nav" id="side-menu">
                 <li class="sidebar-search">
                     <form class="input-group custom-search-form" ng-submit="model.findStock(model.stock)">
-                        <input type="text" class="form-control" ng-model="model.stock" placeholder="Search...">
+                        <autocomplete data="model.allStocks" on-type="model.updateStocks" on-select="model.findStock" ng-model="model.stock" attr-input-class="form-control" click-activation="true" attr-placeholder="Search...">
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="submit">
                                 <i class="fa fa-search"></i>
