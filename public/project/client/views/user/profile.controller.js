@@ -7,7 +7,7 @@
         .module('PortManApp')
         .controller('ProfileController', ProfileController);
 
-    function ProfileController($rootScope, $location, $routeParams, UserService, PortfolioService) {
+    function ProfileController($rootScope, $location, $routeParams, UserService, PortfolioService, CommentService) {
         var vm = this;
         vm.showSuccessAlert = false;
         vm.user = $rootScope.user;
@@ -28,6 +28,7 @@
         }
 
         init();
+        showAllCommentsForUser();
         
         function init() {
             vm.invTotal = 0;
@@ -53,6 +54,42 @@
                 }, function(err) {
                     console.log(err);
                 });
+        }
+
+        function showAllCommentsForUser() {
+            vm.userComments = [];
+            CommentService.findCommentsByUserId(vm.userId)
+                .then(
+                    function(response) {
+                        var comments = response.data,
+                            userComments = [],
+                            processedComments = [];
+                        _.forEach(comments, function(comment) {
+                            UserService.findById(comment.userId)
+                                .then(function(response) {
+                                    var user = response.data;
+                                    processedComments.push(comment);
+                                    _.extend(comment, {
+                                        userFirstName: user.firstName,
+                                        userLastName: user.lastName,
+                                        timestamp: moment(comment.timestamp).format('MM/DD/YYYY HH:mm:SS')
+                                    });
+                                    if (user._id !== vm.userId) {
+                                        userComments.push(comment);
+                                    }
+                                    if (processedComments.length === comments.length) {
+                                        vm.userComments = _.sortBy(userComments, 'timestamp');
+                                        $('#commentsPanel').removeClass('loading');
+                                    }
+                                }, function(err) {
+                                    console.log(err);
+                                });
+                        });
+                    },
+                    function(err) {
+                        console.log(err);
+                    }
+                );
         }
         
         // Event Handler Declaration

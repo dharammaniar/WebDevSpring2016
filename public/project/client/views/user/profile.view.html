@@ -77,7 +77,7 @@
         <div class="col-lg-6">
             <div id="portfolioPanel" class="panel panel-default loading">
                 <div class="panel-heading">
-                    <i class="fa fa-money"></i> <a href="#/portfolio/{{model.user._id}}">Portfolio</a>
+                    <i class="fa fa-money"></i> <a href="#/portfolio/{{model.user._id}}">Portfolio Summary</a>
                 </div>
                 <div class="panel-body">
                     <div class="table-responsive">
@@ -132,6 +132,30 @@
                             </tr>
                         </table>
                     </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div id="commentsPanel" class="panel panel-default loading">
+                <div class="panel-heading">
+                    <i class="fa fa-comments fa-fw"></i> <a href="#/portfolio/{{model.user._id}}">Comments on portfolio</a>
+                </div>
+                <div class="panel-body">
+                    <ul class="chat">
+                        <li class="left clearfix" ng-repeat="comment in model.userComments">
+                            <div class="clearfix">
+                                <div class="header">
+                                    <strong class="primary-font">{{comment.userFirstName}} {{comment.userLastName}}</strong>
+                                    <small class="pull-right text-muted">
+                                        <i class="fa fa-clock-o fa-fw"></i> {{comment.timestamp}}
+                                    </small>
+                                </div>
+                                <p>
+                                    {{comment.text}}
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
