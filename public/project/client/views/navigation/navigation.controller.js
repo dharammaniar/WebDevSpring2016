@@ -14,6 +14,8 @@
         vm.findStock = findStock;
         vm.logout = logout;
 
+        $('#side-menu').metisMenu();
+
         function logout() {
             $rootScope.user = null;
             UserService.logout()

@@ -66,7 +66,7 @@
             ).then(function successCallback(response) {
                 if (response.status === 200) {
                     $rootScope.user = user;
-                    $location.path('/profile');
+                    $location.path('/profile/' + $rootScope.user._id);
                     vm.showSuccessAlert = true;
                 }
             });

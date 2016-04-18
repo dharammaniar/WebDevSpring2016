@@ -74,6 +74,46 @@
                         loggedin: checkLoggedin
                     }
                 })
+                .when('/blog/:blogId', {
+                    templateUrl:'views/blog/blog.view.html',
+                    controller: 'BlogController',
+                    controllerAs: 'model',
+                    resolve: {
+                        loggedin: checkLoggedin
+                    }
+                })
+                .when('/blogs', {
+                    templateUrl:'views/blog/blogs.view.html',
+                    controller: 'BlogsController',
+                    controllerAs: 'model',
+                    resolve: {
+                        loggedin: checkLoggedin
+                    }
+                })
+                .when('/blogs/:userId', {
+                    templateUrl:'views/blog/blogs.view.html',
+                    controller: 'BlogsController',
+                    controllerAs: 'model',
+                    resolve: {
+                        loggedin: checkLoggedin
+                    }
+                })
+                .when('/createBlog', {
+                    templateUrl:'views/blog/createBlog.view.html',
+                    controller: 'CreateBlogController',
+                    controllerAs: 'model',
+                    resolve: {
+                        loggedin: checkLoggedin
+                    }
+                })
+                .when('/editBlog/:blogId', {
+                    templateUrl:'views/blog/editBlog.view.html',
+                    controller: 'EditBlogController',
+                    controllerAs: 'model',
+                    resolve: {
+                        loggedin: checkLoggedin
+                    }
+                })
                 .otherwise({
                     redirectsTo: '/'
                 });

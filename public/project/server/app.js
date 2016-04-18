@@ -17,4 +17,7 @@ module.exports = function(app) {
     var commentModel = require('./models/comments.model')(userModel, stockModel);
     require('./services/portfolioComments.service.server')(app, commentModel);
     require('./services/stockMessages.service.server')(app, commentModel);
+
+    var blogModel = require('./models/blog.model')();
+    require('./services/blog.service.server')(app, blogModel);
 };

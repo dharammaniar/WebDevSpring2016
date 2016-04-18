@@ -163,6 +163,20 @@
                 <li ng-show="user">
                     <a href="#/people"><i class="fa fa-users fa-fw"></i> People</a>
                 </li>
+                <li ng-show="user">
+                    <a href="#"><i class="fa fa-rss fa-fw"></i> Blogs<span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse" aria-expanded="false">
+                        <li ng-show="(user.type === 'analyst')">
+                            <a href="#/createBlog"><i class="fa fa-plus" aria-hidden="true"></i> Create Blog</a>
+                        </li>
+                        <li ng-show="(user.type === 'analyst')">
+                            <a href="#/blogs/{{user._id}}"><i class="fa fa-sticky-note-o" aria-hidden="true"></i> My blogs</a>
+                        </li>
+                        <li>
+                            <a href="#/blogs"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> All blogs</a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>

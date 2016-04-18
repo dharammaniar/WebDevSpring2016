@@ -54,3 +54,16 @@
         padding-top: 0px;
     }
 }
+
+.fixed-panel {
+    min-height: 200px;
+    max-height: 200px;
+}
+.view-blog {
+    position: absolute;
+    bottom: 70px;
+}
+.blog-text {
+    overflow: hidden;
+    max-height: 150px;
+}

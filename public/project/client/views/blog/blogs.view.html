@@ -1,0 +1,37 @@
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Blogs</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4" ng-repeat="blog in model.blogs">
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <a href="#/blog/{{blog._id}}"><b>{{blog.title}}</b></a>
+                    <div class="pull-right" ng-show="model.isMyBlogs">
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="true">Actions<span class="caret"></span></button>
+                            <ul class="dropdown-menu pull-right" role="menu">
+                                <li><a href ng-click="model.editBlog(blog)"><i class="fa fa-pencil fa-fw"></i> Edit</a>
+                                </li>
+                                <li><a href ng-click="model.deleteBlog(blog)"><i class="fa fa-remove fa-fw"></i> Delete</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-body fixed-panel">
+                    <div class="blog-text" ng-bind-html="model.deliberatelyTrustDangerousSnippet(blog.text)"></div>
+                    <div class="view-blog"><a href="#/blog/{{blog._id}}"><b>View Full Blog</b></a></div>
+                </div>
+                <div class="panel-footer">
+                    Created By: <a href="#/profile/{{blog.createdBy._id}}">{{blog.createdBy.firstName}} {{blog.createdBy.lastName}}</a>
+                    <div class="pull-right">
+                        <i class="fa fa-calendar" aria-hidden="true"></i> {{blog.timestamp}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

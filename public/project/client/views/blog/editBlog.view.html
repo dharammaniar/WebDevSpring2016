@@ -1,0 +1,23 @@
+<div id="page-wrapper">
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">Edit Blog</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <input type="text" class="form-control" ng-model="model.blog.title" placeholder="Enter Title Here...">
+                </div>
+                <div class="panel-body">
+                    <div text-angular ng-model="model.blog.text"></div>
+                </div>
+                <div class="panel-footer">
+                    <button class="btn btn-success" ng-click="model.saveBlog(model.blog)">Save</button>
+                    <button class="btn btn-danger" ng-click="model.cancel()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
