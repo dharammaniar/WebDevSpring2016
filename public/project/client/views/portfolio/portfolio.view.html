@@ -14,7 +14,8 @@
                     <div class="row">
                         <form class="form-horizontal">
                         <div class="col-lg-2 nowrap">
-                            <b>Stock:</b><input type="text" ng-model="model.selectedStock.code" placeholder="Stock" class="form-control"/>
+                            <b>Stock:</b><!--<input type="text" ng-model="model.selectedStock.code" placeholder="Stock" class="form-control"/>-->
+                            <autocomplete data="model.allStocks" on-type="model.updateStocks" on-select="model.findStock" ng-model="model.selectedStock.code" attr-input-class="form-control" click-activation="true" attr-placeholder="Search..."></autocomplete>
                         </div>
                         <div class="col-lg-2 nowrap">
                             <b>Investment Price:</b><input type="text" ng-model="model.selectedStock.invPrice" placeholder="Price" class="form-control"/>

@@ -8,7 +8,7 @@
         .module('PortManApp')
         .controller('PortfolioController', PortfolioController);
 
-    function PortfolioController($rootScope, $routeParams, PortfolioService, CommentService, UserService) {
+    function PortfolioController($rootScope, $routeParams, PortfolioService, CommentService, UserService, StockService) {
 
         var vm = this;
         vm.userId = $routeParams.userId;
@@ -17,10 +17,51 @@
             vm.userId = $rootScope.user._id;
         }
 
+        vm.updateStocks = updateStocks;
+        vm.findStock = findStock;
+
         vm.userStocks = [];
         showAllStocksForUser();
 
         showAllCommentsForUser();
+
+        var allStocks = [''];
+        vm.allStocks = [''];
+        getAllStocks();
+
+        function getAllStocks() {
+            StockService.getAllStocks()
+                .then(
+                    function(response) {
+                        var stocks = response.data;
+                        _.forEach(stocks, function(stock) {
+                            allStocks.push(stock.code + ' : ' + stock.company);
+                        });
+                    },
+                    function(err) {
+                        console.log(err);
+                    }
+                );
+        }
+        function updateStocks(searchTerm) {
+            if (searchTerm.length > 0) {
+                vm.allStocks = _.filter(allStocks, function (stock) {
+                    return stock.toLowerCase().indexOf(searchTerm.toLowerCase()) >= 0;
+                })
+            }
+        }
+
+        function findStock(stock) {
+            if (stock.indexOf(':') >= 1) {
+                if (vm.selectedStock) {
+                    vm.selectedStock.code = stock.split(':')[0].trim();
+                } else {
+                    vm.selectedStock = {
+                        code: stock.split(':')[0].trim()
+                    }
+                }
+            }
+        }
 
         function showAllStocksForUser() {
             var firstProgress = true;
