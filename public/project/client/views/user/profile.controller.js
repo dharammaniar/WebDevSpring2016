@@ -115,13 +115,15 @@
         }
         
         function updateProfilePic() {
-            UserService.updateProfilePicture(
-                $rootScope.user._id,
-                vm.fileModel
-            ).then(function successCallback(response) {
-                $rootScope.user.profilePicUrl = response.data;
-                vm.showProfilePicSuccessAlert = true;
-            });
+            if (vm.fileModel) {
+                UserService.updateProfilePicture(
+                    $rootScope.user._id,
+                    vm.fileModel
+                ).then(function successCallback(response) {
+                    $rootScope.user.profilePicUrl = response.data;
+                    vm.showProfilePicSuccessAlert = true;
+                });
+            }
         }
     }
 })();
