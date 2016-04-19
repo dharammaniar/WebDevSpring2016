@@ -14,6 +14,7 @@ module.exports = function () {
         firstName: String,
         lastName: String,
         email: String,
+        profilePicUrl: String,
         type: {
             type: String,
             default: 'investor',

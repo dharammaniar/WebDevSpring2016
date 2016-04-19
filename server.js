@@ -48,8 +48,20 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
+/*Multer Storage Config*/
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, './public/uploads/')
+    },
+    filename: function (req, file, cb) {
+        var datetimestamp = Date.now();
+        cb(null, datetimestamp + '.' + file.originalname.split('.')[file.originalname.split('.').length - 1])
+    }
+});
+var upload = multer({storage: storage});
+
 require('./public/assignment/server/app')(app, db, uuid);
-require('./public/project/server/app')(app);
+require('./public/project/server/app')(app, upload);
 require('./public/projectOld/server/app')(_, app, uuid);
 
 app.listen(port, ipaddress);

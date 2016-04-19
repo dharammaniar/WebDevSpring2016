@@ -3,13 +3,13 @@
  */
 'use strict';
 
-module.exports = function(app) {
+module.exports = function(app, upload) {
 
     var stockModel = require('./models/stock.model.js')();
     require('./services/stock.service.server.js')(app, stockModel);
 
     var userModel = require('./models/user.model')();
-    require('./services/user.service.server')(app, userModel);
+    require('./services/user.service.server')(app, userModel, upload);
 
     var portfolioModel = require('./models/portfolioStocks.model')(userModel);
     require('./services/portfolioStocks.service.server')(app, portfolioModel);

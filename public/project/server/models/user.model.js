@@ -66,6 +66,24 @@ module.exports = function() {
         return deferred.promise;
     }
 
+    function updateProfilePic(id, profilePic) {
+        var deferred = q.defer();
+        ProjectUser.update(
+            {_id: id},
+            {$set: {
+                profilePicUrl: profilePic
+            }},
+            function (err, stats) {
+                if (!err) {
+                    deferred.resolve(stats);
+                } else {
+                    deferred.reject(err);
+                }
+            }
+        );
+        return deferred.promise;
+    }
+
     function findUserByUsername(username) {
         return ProjectUser.findOne({
             username: username
@@ -83,6 +101,7 @@ module.exports = function() {
         create: create,
         findById: findById,
         update: update,
+        updateProfilePic: updateProfilePic,
         findUserByUsername: findUserByUsername,
         findUserByCredentials: findUserByCredentials,
         getMongooseModel: getMongooseModel,

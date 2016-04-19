@@ -17,6 +17,15 @@
             return $http.put('/api/project/user/' + userId, user);
         }
 
+        function updateProfilePicture(userId, file) {
+            var fd = new FormData();
+            fd.append('file', file);
+            return $http.post('/api/project/user/profilePic/'+userId, fd, {
+                transformRequest: angular.identity,
+                headers: {'Content-Type': undefined}
+            });
+        }
+
         function logout() {
             return $http.post('/api/project/logout');
         }
@@ -44,7 +53,8 @@
             login: login,
             register: register,
             findAllUsers: findAllUsers,
-            findById: findById
+            findById: findById,
+            updateProfilePicture: updateProfilePicture
         };
     }
 })();

@@ -94,6 +94,7 @@
         
         // Event Handler Declaration
         vm.update = update;
+        vm.updateProfilePic = updateProfilePic;
 
         // Event Handler Implementation
         function update(user) {
@@ -106,6 +107,16 @@
                     $location.path('/profile/' + $rootScope.user._id);
                     vm.showSuccessAlert = true;
                 }
+            });
+        }
+        
+        function updateProfilePic() {
+            UserService.updateProfilePicture(
+                $rootScope.user._id,
+                vm.fileModel
+            ).then(function successCallback(response) {
+                $rootScope.user.profilePicUrl = response.data;
+                vm.showProfilePicSuccessAlert = true;
             });
         }
     }
