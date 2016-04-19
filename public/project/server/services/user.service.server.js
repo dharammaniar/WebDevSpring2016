@@ -177,10 +177,6 @@ module.exports = function(app, model, upload) {
     }
 
     function updateUser(req, res) {
-        var user = req.body;
-        _.extend(user, {
-            profilePicUrl: req.file.path
-        });
         model
             .update(req.params.id, req.body)
             .then(
