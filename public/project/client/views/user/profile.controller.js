@@ -85,6 +85,10 @@
                                     console.log(err);
                                 });
                         });
+                        if (comments.length === 0) {
+                            vm.userComments = [];
+                            $('#commentsPanel').removeClass('loading');
+                        }
                     },
                     function(err) {
                         console.log(err);

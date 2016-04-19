@@ -60,8 +60,8 @@
 }
 
 .portfolio-stock {
-    min-height: 280px;
-    max-height: 280px;
+    min-height: 300px;
+    /*max-height: 280px;*/
 }
 
 .messageboard {

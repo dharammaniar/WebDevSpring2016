@@ -171,7 +171,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-6">
+        <div ng-show="(model.userComments.length > 0)" class="col-lg-6">
             <div id="commentsPanel" class="panel panel-default loading">
                 <div class="panel-heading">
                     <i class="fa fa-comments fa-fw"></i> <a href="#/portfolio/{{model.user._id}}">Comments on portfolio</a>
