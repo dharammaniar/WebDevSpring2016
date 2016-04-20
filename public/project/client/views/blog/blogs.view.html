@@ -4,6 +4,10 @@
             <h1 class="page-header">Blogs</h1>
         </div>
     </div>
+    <div class="row" ng-hide="model.isMyBlogs">
+        <button id="filterBlogs" class="form-control btn btn-primary" ng-click="model.filterBlogs()"><i class="fa fa-filter" aria-hidden="true"></i> Filter Blogs by Analysts I follow</button>
+    </div>
+    <br>
     <div class="row">
         <div class="col-lg-4" ng-repeat="blog in model.blogs">
             <div class="panel panel-default">

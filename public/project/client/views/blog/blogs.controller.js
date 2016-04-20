@@ -7,12 +7,15 @@
         .module('PortManApp')
         .controller('BlogsController', BlogsController);
 
-    function BlogsController($location, $routeParams, $sce, BlogService, UserService) {
+    function BlogsController($location, $routeParams, $sce, $rootScope, BlogService, UserService) {
         var vm = this;
         vm.blogs = [];
+        vm.isFilterActive = false;
 
         vm.editBlog = editBlog;
         vm.deleteBlog = deleteBlog;
+
+        vm.filterBlogs = filterBlogs;
 
         vm.deliberatelyTrustDangerousSnippet = function(text) {
             return $sce.trustAsHtml(text);
@@ -24,6 +27,23 @@
         } else {
             vm.isMyBlogs = false;
             showAllBlogs();
+        }
+
+        function filterBlogs(){
+            if(vm.isFilterActive) {
+                vm.isFilterActive = false;
+                vm.blogs = vm.allBlogs;
+                $('#filterBlogs').removeClass('btn-success');
+                $('#filterBlogs').addClass('btn-primary');
+            } else {
+                vm.isFilterActive = true;
+                vm.allBlogs = vm.blogs;
+                vm.blogs = _.filter(vm.allBlogs, function(blog) {
+                    return (_.indexOf($rootScope.user.followedUsers, blog.userId) >= 0);
+                });
+                $('#filterBlogs').removeClass('btn-primary');
+                $('#filterBlogs').addClass('btn-success');
+            }
         }
 
         function showBlogsForUser(userId) {
@@ -69,7 +89,6 @@
                             blogs.push(blog);
                             if (blogs.length === input.length) {
                                 vm.blogs = blogs;
-                                console.log(blogs);
                             }
                         },
                         function(err) {

@@ -18,8 +18,6 @@
 
         function init() {
 
-            vm.investorsIFollow = [];
-            vm.investorsToFollow = [];
             vm.analystsIFollow = [];
             vm.analystsToFollow = [];
 
@@ -43,13 +41,6 @@
                         vm.analystsIFollow.push(user);
                     } else {
                         vm.analystsToFollow.push(user);
-                    }
-                }
-                if (user.type === 'investor') {
-                    if (self.followedUsers.indexOf(user._id) > -1) {
-                        vm.investorsIFollow.push(user);
-                    } else {
-                        vm.investorsToFollow.push(user);
                     }
                 }
             });
