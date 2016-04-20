@@ -2,13 +2,18 @@
  * @author dharam
  */
 'use strict';
-
-(function() {
+(function () {
     angular
         .module('PortManApp')
         .factory('StockService', StockService);
 
     function StockService($http) {
+
+        return {
+            getAllStocks: getAllStocks,
+            findMatchingStocks: findMatchingStocks,
+            getStockByCode: getStockByCode
+        };
 
         function getAllStocks() {
             return $http.get('/api/project/stock');
@@ -21,11 +26,5 @@
         function getStockByCode(code) {
             return $http.get('/api/project/stock?code=' + code);
         }
-
-        return {
-            getAllStocks: getAllStocks,
-            findMatchingStocks: findMatchingStocks,
-            getStockByCode: getStockByCode
-        };
     }
 })();

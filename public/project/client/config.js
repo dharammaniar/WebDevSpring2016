@@ -2,11 +2,10 @@
  * @author dharam
  */
 'use strict';
-
-(function(){
+(function () {
     angular
         .module('PortManApp')
-        .config(function($routeProvider) {
+        .config(function ($routeProvider) {
             $routeProvider
                 .when('/', {
                     templateUrl: 'views/home/home.view.html',
@@ -75,7 +74,7 @@
                     }
                 })
                 .when('/blog/:blogId', {
-                    templateUrl:'views/blog/blog.view.html',
+                    templateUrl: 'views/blog/blog.view.html',
                     controller: 'BlogController',
                     controllerAs: 'model',
                     resolve: {
@@ -83,7 +82,7 @@
                     }
                 })
                 .when('/blogs', {
-                    templateUrl:'views/blog/blogs.view.html',
+                    templateUrl: 'views/blog/blogs.view.html',
                     controller: 'BlogsController',
                     controllerAs: 'model',
                     resolve: {
@@ -91,7 +90,7 @@
                     }
                 })
                 .when('/blogs/:userId', {
-                    templateUrl:'views/blog/blogs.view.html',
+                    templateUrl: 'views/blog/blogs.view.html',
                     controller: 'BlogsController',
                     controllerAs: 'model',
                     resolve: {
@@ -99,7 +98,7 @@
                     }
                 })
                 .when('/createBlog', {
-                    templateUrl:'views/blog/createBlog.view.html',
+                    templateUrl: 'views/blog/createBlog.view.html',
                     controller: 'CreateBlogController',
                     controllerAs: 'model',
                     resolve: {
@@ -107,7 +106,7 @@
                     }
                 })
                 .when('/editBlog/:blogId', {
-                    templateUrl:'views/blog/editBlog.view.html',
+                    templateUrl: 'views/blog/editBlog.view.html',
                     controller: 'EditBlogController',
                     controllerAs: 'model',
                     resolve: {
@@ -119,21 +118,18 @@
                 });
         });
 
-    var checkLoggedin = function($q, $timeout, $http, $location, $rootScope) {
+    var checkLoggedin = function ($q, $timeout, $http, $location, $rootScope) {
         var deferred = $q.defer();
 
-        $http.get('/api/project/loggedin').success(function(user)
-        {
+        $http.get('/api/project/loggedin').success(function (user) {
             $rootScope.errorMessage = null;
             // User is Authenticated
-            if (user !== '0')
-            {
+            if (user !== '0') {
                 $rootScope.user = user;
                 deferred.resolve();
             }
             // User is Not Authenticated
-            else
-            {
+            else {
                 $rootScope.error = 'You need to log in.';
                 deferred.reject();
                 $location.url('/');
@@ -143,14 +139,13 @@
         return deferred.promise;
     };
 
-    var getLoggedInUser = function($q, $timeout, $http, $location, $rootScope) {
+    var getLoggedInUser = function ($q, $timeout, $http, $location, $rootScope) {
         var deferred = $q.defer();
 
-        $http.get('/api/project/loggedin').success(function(user)
-        {
+        $http.get('/api/project/loggedin').success(function (user) {
             $rootScope.errorMessage = null;
             // User is Authenticated
-            if (user !== '0'){
+            if (user !== '0') {
                 $rootScope.user = user;
             }
             deferred.resolve();

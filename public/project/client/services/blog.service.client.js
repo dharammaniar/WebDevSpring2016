@@ -2,12 +2,20 @@
  * @author dharam
  */
 'use strict';
-(function() {
+(function () {
     angular
         .module('PortManApp')
         .factory('BlogService', BlogService);
 
     function BlogService($http) {
+        return {
+            findBlogById: findBlogById,
+            findAllBlogs: findAllBlogs,
+            findAllBlogsForUser: findAllBlogsForUser,
+            deleteBlog: deleteBlog,
+            createBlog: createBlog,
+            updateBlog: updateBlog
+        };
 
         function findBlogById(blogId) {
             return $http.get('/api/project/blog/' + blogId);
@@ -32,14 +40,5 @@
         function updateBlog(blogId, blog) {
             return $http.put('/api/project/blog/' + blogId, blog);
         }
-
-        return {
-            findBlogById: findBlogById,
-            findAllBlogs: findAllBlogs,
-            findAllBlogsForUser: findAllBlogsForUser,
-            deleteBlog: deleteBlog,
-            createBlog: createBlog,
-            updateBlog: updateBlog
-        };
     }
 })();

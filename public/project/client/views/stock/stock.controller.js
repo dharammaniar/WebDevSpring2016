@@ -2,7 +2,7 @@
  * @author dharam
  */
 'use strict';
-(function(){
+(function () {
     angular
         .module('PortManApp')
         .controller('StockController', StockController);
@@ -20,50 +20,12 @@
         vm.low = '0.0';
         vm.volume = '0';
 
+        vm.deliberatelyTrustDangerousSnippet = deliberatelyTrustDangerousSnippet;
+        vm.addToPortfolio = addToPortfolio;
+        vm.goToMessageBoard = goToMessageBoard;
+        vm.sendRecommendation = sendRecommendation;
+
         init();
-        fetchNews();
-
-        vm.deliberatelyTrustDangerousSnippet = function(text) {
-            return $sce.trustAsHtml(text);
-        };
-
-        vm.addToPortfolio = function() {
-            $rootScope.addToPortfolioCode = vm.stockCode;
-            $location.path('/portfolio/'+$rootScope.user._id);
-        };
-
-        vm.goToMessageBoard = function() {
-            $location.path('/stock/' + vm.stockCode + '/messageboard');
-        };
-        
-        vm.sendRecommendation = function(recommendation) {
-            var reco = {
-                code: vm.stockCode,
-                action: recommendation.action,
-                target: recommendation.target,
-                by: $rootScope.user._id
-            };
-
-            RecommendationService.addRecommendationToUserRecommendations(recommendation.user, reco)
-                .then(
-                    function(response) {
-                        console.log(response);
-                        $('#sendRecommendation').removeClass('btn-primary');
-                        $('#sendRecommendation').addClass('btn-success');
-                        $('#sendRecommendation').html('<i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Sent');
-
-                        setTimeout(function(){
-                            $('#sendRecommendation').removeClass('btn-success');
-                            $('#sendRecommendation').addClass('btn-primary');
-                            $('#sendRecommendation').html('<i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Send');
-                        }, 2000);
-                    },
-                    function(err) {
-                        console.log(err);
-                    }
-                );
-            
-        };
 
         function init() {
 
@@ -71,15 +33,15 @@
                 vm.users = [];
                 UserService.findAllUsers()
                     .then(
-                        function(response) {
-                            vm.users = _.filter(response.data, function(user) {
+                        function (response) {
+                            vm.users = _.filter(response.data, function (user) {
                                 if (user._id === $rootScope.user._id) {
                                     return false;
                                 }
                                 return user.type !== 'analyst';
                             });
                         },
-                        function(err) {
+                        function (err) {
                             console.log(err);
                         }
                     );
@@ -87,7 +49,7 @@
 
             StockService.getStockByCode(vm.stockCode)
                 .then(
-                    function(response) {
+                    function (response) {
                         vm.stock = response.data;
                     }
                 );
@@ -105,7 +67,7 @@
                 var differenceValue = (response.data.dataset.data[0][1] - response.data.dataset.data[1][1]).toFixed(2);
                 vm.difference = differenceValue;
 
-                var percentage = ((differenceValue/response.data.dataset.data[1][1])*100).toFixed(2);
+                var percentage = ((differenceValue / response.data.dataset.data[1][1]) * 100).toFixed(2);
                 vm.percentage = percentage + '%';
 
 
@@ -113,7 +75,7 @@
                 var volumeData = [];
                 if ($rootScope.user && $rootScope.user.type === 'analyst') {
 
-                    _.forEach(response.data.dataset.data, function(day) {
+                    _.forEach(response.data.dataset.data, function (day) {
                         chartData.push([
                             new Date(day[0]).getTime(),
                             day[1],
@@ -177,7 +139,7 @@
                 }
 
                 chartData = [];
-                
+
                 _.forEach(response.data.dataset.data, function (day) {
                     chartData.push([
                         new Date(day[0]).getTime(),
@@ -206,6 +168,49 @@
             }, function errorCallback(response) {
                 console.log(response);
             });
+            fetchNews();
+        }
+
+        function deliberatelyTrustDangerousSnippet(text) {
+            return $sce.trustAsHtml(text);
+        }
+
+        function addToPortfolio() {
+            $rootScope.addToPortfolioCode = vm.stockCode;
+            $location.path('/portfolio/' + $rootScope.user._id);
+        }
+
+        function goToMessageBoard() {
+            $location.path('/stock/' + vm.stockCode + '/messageboard');
+        }
+
+
+        function sendRecommendation(recommendation) {
+            var reco = {
+                code: vm.stockCode,
+                action: recommendation.action,
+                target: recommendation.target,
+                by: $rootScope.user._id
+            };
+
+            RecommendationService.addRecommendationToUserRecommendations(recommendation.user, reco)
+                .then(
+                    function (response) {
+                        console.log(response);
+                        $('#sendRecommendation').removeClass('btn-primary');
+                        $('#sendRecommendation').addClass('btn-success');
+                        $('#sendRecommendation').html('<i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Sent');
+
+                        setTimeout(function () {
+                            $('#sendRecommendation').removeClass('btn-success');
+                            $('#sendRecommendation').addClass('btn-primary');
+                            $('#sendRecommendation').html('<i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Send');
+                        }, 2000);
+                    },
+                    function (err) {
+                        console.log(err);
+                    }
+                );
 
         }
 
@@ -213,8 +218,8 @@
             $http.jsonp('https://ajax.googleapis.com/ajax/services/search/news?v=2.0&callback=JSON_CALLBACK&q=' + vm.stockCode)
                 .then(function successCallback(response) {
 
-                    if(response.data.responseStatus == 503) {
-                        setTimeout(function(){
+                    if (response.data.responseStatus == 503) {
+                        setTimeout(function () {
                             fetchNews();
                         }, 3000);
                     } else {

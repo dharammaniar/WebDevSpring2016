@@ -2,7 +2,7 @@
  * @author dharam
  */
 'use strict';
-(function(){
+(function () {
     angular
         .module('PortManApp')
         .controller('BlogController', BlogController);
@@ -11,18 +11,24 @@
         var vm = this;
         var blogId = $routeParams.blogId;
 
-        vm.deliberatelyTrustDangerousSnippet = function(text) {
-            return $sce.trustAsHtml(text);
-        };
+        vm.deliberatelyTrustDangerousSnippet = deliberatelyTrustDangerousSnippet;
 
-        BlogService.findBlogById(blogId)
-            .then(
-                function(response) {
-                    vm.blog = response.data;
-                },
-                function(err) {
-                    console.log(err);
-                }
-            );
+        function init() {
+            BlogService.findBlogById(blogId)
+                .then(
+                    function (response) {
+                        vm.blog = response.data;
+                    },
+                    function (err) {
+                        console.log(err);
+                    }
+                );
+        }
+
+        init();
+
+        function deliberatelyTrustDangerousSnippet(text) {
+            return $sce.trustAsHtml(text);
+        }
     }
 })();

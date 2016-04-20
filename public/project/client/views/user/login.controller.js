@@ -2,7 +2,7 @@
  * @author dharam
  */
 'use strict';
-(function() {
+(function () {
     angular
         .module('PortManApp')
         .controller('LoginController', LoginController);
@@ -23,7 +23,7 @@
             $('#form-username').removeClass('has-error');
             $('#form-password').removeClass('has-error');
 
-            if(!user) {
+            if (!user) {
                 $('#form-username').addClass('has-error');
                 $('#form-password').addClass('has-error');
                 isValidated = false;
@@ -44,10 +44,10 @@
             UserService.login({
                 username: user.username,
                 password: user.password
-            }).then(function(response) {
+            }).then(function (response) {
                 $rootScope.user = response.data;
-                $location.path('/profile/'+response.data._id);
-            }, function(err) {
+                $location.path('/profile/' + response.data._id);
+            }, function (err) {
                 vm.invalidLogin = true;
             });
         }

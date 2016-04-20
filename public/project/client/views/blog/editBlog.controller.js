@@ -2,32 +2,31 @@
  * @author dharam
  */
 'use strict';
-(function(){
+(function () {
     angular
         .module('PortManApp')
         .controller('EditBlogController', EditBlogController);
 
     function EditBlogController($location, $rootScope, $routeParams, BlogService) {
         var vm = this;
-
         var blogId = $routeParams.blogId;
 
-        init();
+        vm.saveBlog = saveBlog;
+        vm.cancel = cancel;
 
         function init() {
             BlogService.findBlogById(blogId)
                 .then(
-                    function(response) {
+                    function (response) {
                         vm.blog = response.data;
                     },
-                    function(err) {
+                    function (err) {
                         console.log(err);
                     }
                 );
         }
 
-        vm.saveBlog = saveBlog;
-        vm.cancel = cancel;
+        init();
 
         function saveBlog(blog) {
             _.extend(blog, {
@@ -35,10 +34,10 @@
             });
             BlogService.updateBlog(blogId, blog)
                 .then(
-                    function(response) {
-                        $location.path('/blog/'+blogId);
+                    function (response) {
+                        $location.path('/blog/' + blogId);
                     },
-                    function(err) {
+                    function (err) {
                         console.log(err);
                     }
                 );

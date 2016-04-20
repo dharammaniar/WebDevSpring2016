@@ -1,9 +1,12 @@
+/**
+ * @author dharam
+ */
 'use strict';
-
-(function(){
+(function () {
     angular
         .module('PortManApp')
         .controller('MainController', MainController);
 
-    function MainController() {}
+    function MainController() {
+    }
 })();

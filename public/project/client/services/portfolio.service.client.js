@@ -1,23 +1,33 @@
 /**
  * @author dharam
  */
-(function() {
+'use strict';
+(function () {
     angular
         .module('PortManApp')
         .factory('PortfolioService', PortfolioService);
 
     function PortfolioService($http, $q) {
 
+        return {
+            findPortfolioByUserId: findPortfolioByUserId,
+            findPortfolioStockByStockIdAndUserId: findPortfolioStockByStockIdAndUserId,
+            deletePortfolioStockByIdAndUserId: deletePortfolioStockByIdAndUserId,
+            addStockToUserPortfolio: addStockToUserPortfolio,
+            updatePortfolioStockInUser: updatePortfolioStockInUser,
+            getPortfolio: getPortfolio
+        };
+
         function findPortfolioByUserId(userId) {
             return $http.get('/api/project/user/' + userId + '/portfolio');
         }
 
         function findPortfolioStockByStockIdAndUserId(userId, stockId) {
-            return $http.get('/api/project/user/'+userId+'/portfolio/'+stockId);
+            return $http.get('/api/project/user/' + userId + '/portfolio/' + stockId);
         }
 
         function deletePortfolioStockByIdAndUserId(userId, stockId) {
-            return $http.delete('/api/project/user/'+userId+'/portfolio/'+stockId);
+            return $http.delete('/api/project/user/' + userId + '/portfolio/' + stockId);
         }
 
         function addStockToUserPortfolio(userId, stock) {
@@ -25,15 +35,15 @@
         }
 
         function updatePortfolioStockInUser(userId, stockId, stock) {
-            return $http.put('/api/project/user/'+userId+'/portfolio/'+stockId, stock);
+            return $http.put('/api/project/user/' + userId + '/portfolio/' + stockId, stock);
         }
 
         function getPortfolio(userId) {
             var deferred = $q.defer();
             findPortfolioByUserId(userId)
-                .then(function(portfolio){
+                .then(function (portfolio) {
                     var userStocks = [];
-                    _.forEach(portfolio.data, function(stock) {
+                    _.forEach(portfolio.data, function (stock) {
                         var portfolioStock = {
                             _id: stock._id,
                             code: stock.code,
@@ -52,11 +62,11 @@
                             portfolioStock.currentTotalNumber = Number(response.data.dataset.data[0][4]) * Number(stock.quantity);
                             if (portfolioStock.invTotalNumber <= portfolioStock.currentTotalNumber) {
                                 portfolioStock.profitNumber = portfolioStock.currentTotalNumber - portfolioStock.invTotalNumber;
-                                portfolioStock.profitPercentage = numeral(portfolioStock.profitNumber/portfolioStock.invTotalNumber).format('0.00%');
+                                portfolioStock.profitPercentage = numeral(portfolioStock.profitNumber / portfolioStock.invTotalNumber).format('0.00%');
                                 portfolioStock.profit = numeral(portfolioStock.profitNumber).format('$0,0.00');
                             } else {
                                 portfolioStock.lossNumber = portfolioStock.invTotalNumber - portfolioStock.currentTotalNumber;
-                                portfolioStock.lossPercentage = numeral(portfolioStock.lossNumber/portfolioStock.invTotalNumber).format('0.00%');
+                                portfolioStock.lossPercentage = numeral(portfolioStock.lossNumber / portfolioStock.invTotalNumber).format('0.00%');
                                 portfolioStock.loss = numeral(portfolioStock.lossNumber).format('$0,0.00');
                             }
 
@@ -86,14 +96,5 @@
 
             return deferred.promise;
         }
-
-        return {
-            findPortfolioByUserId: findPortfolioByUserId,
-            findPortfolioStockByStockIdAndUserId: findPortfolioStockByStockIdAndUserId,
-            deletePortfolioStockByIdAndUserId: deletePortfolioStockByIdAndUserId,
-            addStockToUserPortfolio: addStockToUserPortfolio,
-            updatePortfolioStockInUser: updatePortfolioStockInUser,
-            getPortfolio: getPortfolio
-        };
     }
 })();

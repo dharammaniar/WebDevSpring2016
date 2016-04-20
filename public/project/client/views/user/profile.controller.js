@@ -2,7 +2,7 @@
  * @author dharam
  */
 'use strict';
-(function(){
+(function () {
     angular
         .module('PortManApp')
         .controller('ProfileController', ProfileController);
@@ -14,60 +14,64 @@
 
         vm.userId = $routeParams.userId;
         vm.isSelf = true;
-        if (vm.user._id !== vm.userId) {
-            vm.isSelf = false;
-            UserService.findById(vm.userId)
-                .then(
-                    function(response) {
-                        vm.user = response.data;
-                    },
-                    function(err) {
-                        console.log(err);
-                    }
-                );
-        }
+
+        // Event Handler Declaration
+        vm.update = update;
+        vm.updateProfilePic = updateProfilePic;
 
         init();
-        showAllCommentsForUser();
-        showAllRecommendationsForUser();
-        
         function init() {
+            if (vm.user._id !== vm.userId) {
+                vm.isSelf = false;
+                UserService.findById(vm.userId)
+                    .then(
+                        function (response) {
+                            vm.user = response.data;
+                        },
+                        function (err) {
+                            console.log(err);
+                        }
+                    );
+            }
             vm.invTotal = 0;
             vm.currentTotal = 0;
             PortfolioService.getPortfolio(vm.userId)
-                .then(function(portfolio) {
-                    _.forEach(portfolio, function(stock) {
+                .then(function (portfolio) {
+                    _.forEach(portfolio, function (stock) {
                         vm.invTotal += stock.invTotalNumber;
                         vm.currentTotal += stock.currentTotalNumber;
                     });
                     if (vm.currentTotal >= vm.invTotal) {
                         vm.profit = vm.currentTotal - vm.invTotal;
-                        vm.profitPercentage = numeral(vm.profit/vm.invTotal).format('0.00%');
+                        vm.profitPercentage = numeral(vm.profit / vm.invTotal).format('0.00%');
                         vm.profit = numeral(vm.profit).format('$0,0.00');
                     } else {
                         vm.loss = vm.invTotal - vm.currentTotal;
-                        vm.lossPercentage = numeral(vm.loss/vm.invTotal).format('0.00%');
+                        vm.lossPercentage = numeral(vm.loss / vm.invTotal).format('0.00%');
                         vm.loss = numeral(vm.loss).format('$0,0.00');
                     }
                     vm.invTotal = numeral(vm.invTotal).format('$0,0.00');
                     vm.currentTotal = numeral(vm.currentTotal).format('$0,0.00');
                     $('#portfolioPanel').removeClass('loading');
-                }, function(err) {
+                }, function (err) {
                     console.log(err);
                 });
+
+            showAllCommentsForUser();
+            showAllRecommendationsForUser();
         }
 
         function showAllCommentsForUser() {
             vm.userComments = [];
             CommentService.findCommentsByUserId(vm.userId)
                 .then(
-                    function(response) {
+                    function (response) {
                         var comments = response.data,
                             userComments = [],
                             processedComments = [];
-                        _.forEach(comments, function(comment) {
+                        _.forEach(comments, function (comment) {
                             UserService.findById(comment.userId)
-                                .then(function(response) {
+                                .then(function (response) {
                                     var user = response.data;
                                     processedComments.push(comment);
                                     _.extend(comment, {
@@ -82,7 +86,7 @@
                                         vm.userComments = _.sortBy(userComments, 'timestamp');
                                         $('#commentsPanel').removeClass('loading');
                                     }
-                                }, function(err) {
+                                }, function (err) {
                                     console.log(err);
                                 });
                         });
@@ -91,7 +95,7 @@
                             $('#commentsPanel').removeClass('loading');
                         }
                     },
-                    function(err) {
+                    function (err) {
                         console.log(err);
                     }
                 );
@@ -101,12 +105,12 @@
             vm.userRecommendations = [];
             RecommendationService.findRecommendationsByUserId(vm.userId)
                 .then(
-                    function(response) {
+                    function (response) {
                         var recommendations = response.data,
                             userRecommendations = [];
-                        _.forEach(recommendations, function(recommendation) {
+                        _.forEach(recommendations, function (recommendation) {
                             UserService.findById(recommendation.by)
-                                .then(function(response) {
+                                .then(function (response) {
                                     var user = response.data;
                                     _.extend(recommendation, {
                                         userFirstName: user.firstName,
@@ -119,7 +123,7 @@
                                         vm.userRecommendations = userRecommendations;
                                         $('#recommendationPanel').removeClass('loading');
                                     }
-                                }, function(err) {
+                                }, function (err) {
                                     console.log(err);
                                 });
                         });
@@ -133,12 +137,7 @@
                     }
                 );
         }
-        
-        // Event Handler Declaration
-        vm.update = update;
-        vm.updateProfilePic = updateProfilePic;
 
-        // Event Handler Implementation
         function update(user) {
             UserService.updateUser(
                 $rootScope.user._id,
@@ -151,7 +150,7 @@
                 }
             });
         }
-        
+
         function updateProfilePic() {
             if (vm.fileModel) {
                 UserService.updateProfilePicture(

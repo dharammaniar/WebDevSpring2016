@@ -2,7 +2,7 @@
  * @author dharam
  */
 'use strict';
-(function(){
+(function () {
     angular
         .module('PortManApp')
         .controller('CreateBlogController', CreateBlogController);
@@ -19,10 +19,10 @@
             });
             BlogService.createBlog(blog)
                 .then(
-                    function(response) {
-                        $location.path('/blog/'+response.data._id);
+                    function (response) {
+                        $location.path('/blog/' + response.data._id);
                     },
-                    function(err) {
+                    function (err) {
                         console.log(err);
                     }
                 );

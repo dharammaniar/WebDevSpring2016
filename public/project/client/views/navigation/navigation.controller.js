@@ -2,36 +2,38 @@
  * @author dharam
  */
 'use strict';
-
-(function(){
+(function () {
     angular
         .module('PortManApp')
         .controller('NavigationController', NavigationController);
 
     function NavigationController($rootScope, $location, $route, UserService, StockService) {
         var vm = this;
+        var allStocks = [''];
 
-        $('#side-menu').metisMenu();
+        vm.allStocks = [''];
 
         vm.findStock = findStock;
         vm.logout = logout;
-
         vm.updateStocks = updateStocks;
 
-        var allStocks = [''];
-        vm.allStocks = [''];
-        getAllStocks();
+        function init() {
+            $('#side-menu').metisMenu();
+            getAllStocks();
+        }
+
+        init();
 
         function getAllStocks() {
             StockService.getAllStocks()
                 .then(
-                    function(response) {
+                    function (response) {
                         var stocks = response.data;
-                        _.forEach(stocks, function(stock) {
+                        _.forEach(stocks, function (stock) {
                             allStocks.push(stock.code + ' : ' + stock.company);
                         });
                     },
-                    function(err) {
+                    function (err) {
                         console.log(err);
                     }
                 );
@@ -48,14 +50,14 @@
         function logout() {
             $rootScope.user = null;
             UserService.logout()
-                .then(function(response){
+                .then(function (response) {
                     if (response.status == 200) {
                         $location.path('/');
                     }
-                }, function(err) {
+                }, function (err) {
                     console.log(err);
                 });
-            
+
         }
 
         function findStock(searchTerm) {
@@ -74,6 +76,5 @@
                 }
             }
         }
-
     }
 })();

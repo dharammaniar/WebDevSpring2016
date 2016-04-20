@@ -1,3 +1,6 @@
+/**
+ * @author dharam
+ */
 'use strict';
 
 (function () {
@@ -8,15 +11,13 @@
     function SearchResultController($rootScope, StockService) {
         var vm = this;
 
-        init();
-
         function init() {
             vm.searchTerm = $rootScope.searchTerm;
             StockService.findMatchingStocks(vm.searchTerm)
-                .then(function(searchResult) {
+                .then(function (searchResult) {
                     var stocksResult = [];
 
-                    _.forEach(searchResult.data, function(stock) {
+                    _.forEach(searchResult.data, function (stock) {
                         stocksResult.push({
                             name: stock.code + ' : ' + stock.company,
                             url: '#/stock/' + stock.code
@@ -26,5 +27,7 @@
                     vm.stocks = stocksResult;
                 });
         }
+
+        init();
     }
 }());

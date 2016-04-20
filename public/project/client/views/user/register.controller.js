@@ -2,7 +2,7 @@
  * @author dharam
  */
 'use strict';
-(function(){
+(function () {
     angular
         .module('PortManApp')
         .controller('RegisterController', RegisterController);
@@ -23,7 +23,7 @@
             $('#form-password').removeClass('has-error');
             $('#form-email').removeClass('has-error');
 
-            if(!user) {
+            if (!user) {
                 $('#form-firstName').addClass('has-error');
                 $('#form-lastName').addClass('has-error');
                 $('#form-username').addClass('has-error');
@@ -61,7 +61,7 @@
                 firstName: user.firstName,
                 lastName: user.lastName,
                 email: user.email
-            }).then(function(response) {
+            }).then(function (response) {
                 if (response.data === 'Username Exists') {
                     $('#form-username').addClass('has-error');
                     vm.usernameExists = true;
@@ -69,7 +69,7 @@
                     $rootScope.user = response.data;
                     $location.path('/profile/' + response.data._id);
                 }
-            }, function(err) {
+            }, function (err) {
                 console.log(err);
             });
         }

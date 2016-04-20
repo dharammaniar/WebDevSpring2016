@@ -2,7 +2,7 @@
  * @author dharam
  */
 'use strict';
-(function(){
+(function () {
     angular
         .module('PortManApp')
         .controller('HomeController', HomeController);
@@ -18,12 +18,7 @@
         vm.low = '0.0';
         vm.totalMarketValue = '0';
 
-        init();
-        fetchNews();
-
-        vm.deliberatelyTrustDangerousSnippet = function(text) {
-            return $sce.trustAsHtml(text);
-        };
+        vm.deliberatelyTrustDangerousSnippet = deliberatelyTrustDangerousSnippet;
 
         function init() {
             $http({
@@ -39,11 +34,11 @@
                 var differenceValue = (response.data.dataset.data[0][1] - response.data.dataset.data[1][1]).toFixed(2);
                 vm.difference = differenceValue;
 
-                var percentage = ((differenceValue/response.data.dataset.data[1][1])*100).toFixed(2);
+                var percentage = ((differenceValue / response.data.dataset.data[1][1]) * 100).toFixed(2);
                 vm.percentage = percentage + '%';
 
                 var chartData = [];
-                _.forEach(response.data.dataset.data, function(day) {
+                _.forEach(response.data.dataset.data, function (day) {
                     chartData.push([
                         new Date(day[0]).getTime(),
                         day[1]
@@ -71,15 +66,21 @@
             }, function errorCallback(response) {
                 console.log(response);
             });
+            fetchNews();
+        }
 
+        init();
+
+        function deliberatelyTrustDangerousSnippet(text) {
+            return $sce.trustAsHtml(text);
         }
 
         function fetchNews() {
             $http.jsonp('https://ajax.googleapis.com/ajax/services/search/news?v=2.0&topic=b&callback=JSON_CALLBACK')
                 .then(function successCallback(response) {
 
-                    if(response.data.responseStatus == 503) {
-                        setTimeout(function(){
+                    if (response.data.responseStatus == 503) {
+                        setTimeout(function () {
                             fetchNews();
                         }, 3000);
                     } else {

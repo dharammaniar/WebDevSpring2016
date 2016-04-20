@@ -2,47 +2,54 @@
  * @author dharam
  */
 'use strict';
-
-(function (){
+(function () {
     angular
         .module('PortManApp')
         .controller('PortfolioController', PortfolioController);
 
     function PortfolioController($rootScope, $routeParams, PortfolioService, CommentService, UserService, StockService) {
-
         var vm = this;
-        vm.userId = $routeParams.userId;
-        vm.isSelf = $rootScope.user._id === vm.userId;
-        if (vm.isSelf) {
-            vm.userId = $rootScope.user._id;
-        }
+        var allStocks = [''];
 
+        // Event Handler Declaration
+        vm.addStock = addStock;
+        vm.updateStock = updateStock;
+        vm.deleteStock = deleteStock;
+        vm.selectStock = selectStock;
+        vm.addComment = addComment;
         vm.updateStocks = updateStocks;
         vm.findStock = findStock;
 
-        vm.userStocks = [];
-        showAllStocksForUser();
+        function init() {
+            vm.userId = $routeParams.userId;
+            vm.isSelf = $rootScope.user._id === vm.userId;
+            if (vm.isSelf) {
+                vm.userId = $rootScope.user._id;
+            }
+            vm.userStocks = [];
+            showAllStocksForUser();
+            showAllCommentsForUser();
+            vm.allStocks = [''];
+            getAllStocks();
+        }
 
-        showAllCommentsForUser();
-
-        var allStocks = [''];
-        vm.allStocks = [''];
-        getAllStocks();
+        init();
 
         function getAllStocks() {
             StockService.getAllStocks()
                 .then(
-                    function(response) {
+                    function (response) {
                         var stocks = response.data;
-                        _.forEach(stocks, function(stock) {
+                        _.forEach(stocks, function (stock) {
                             allStocks.push(stock.code + ' : ' + stock.company);
                         });
                     },
-                    function(err) {
+                    function (err) {
                         console.log(err);
                     }
                 );
         }
+
         function updateStocks(searchTerm) {
             if (searchTerm.length > 0) {
                 vm.allStocks = _.filter(allStocks, function (stock) {
@@ -66,7 +73,7 @@
         function showAllStocksForUser() {
             var firstProgress = true;
             PortfolioService.getPortfolio(vm.userId)
-                .then(function(portfolio) {
+                .then(function (portfolio) {
                     vm.userStocks = portfolio;
                     delete vm.selectedStock;
                     delete vm.selectedStockIndex;
@@ -76,17 +83,17 @@
                         };
                         delete $rootScope['addToPortfolioCode'];
                     }
-                    _.forEach(portfolio, function(stock) {
+                    _.forEach(portfolio, function (stock) {
                         $('#' + stock._id).removeClass('loading');
                     })
-                }, function(err) {
+                }, function (err) {
                     console.log(err);
-                }, function(progress) {
+                }, function (progress) {
                     if (firstProgress) {
                         vm.userStocks = progress;
                         firstProgress = false;
                     } else {
-                        _.forEach(progress, function(stock) {
+                        _.forEach(progress, function (stock) {
                             if (stock.invTotal) {
                                 $('#' + stock._id).removeClass('loading');
                             }
@@ -99,12 +106,12 @@
             vm.userComments = [];
             CommentService.findCommentsByUserId(vm.userId)
                 .then(
-                    function(response) {
+                    function (response) {
                         var comments = response.data,
                             userComments = [];
-                        _.forEach(comments, function(comment) {
+                        _.forEach(comments, function (comment) {
                             UserService.findById(comment.userId)
-                                .then(function(response) {
+                                .then(function (response) {
                                     var user = response.data;
                                     _.extend(comment, {
                                         userFirstName: user.firstName,
@@ -115,12 +122,12 @@
                                     if (userComments.length === comments.length) {
                                         vm.userComments = _.sortBy(userComments, 'timestamp');
                                     }
-                                }, function(err) {
+                                }, function (err) {
                                     console.log(err);
                                 });
                         });
                     },
-                    function(err) {
+                    function (err) {
                         console.log(err);
                     }
                 );
@@ -132,19 +139,11 @@
             };
         }
 
-        // Event Handler Declaration
-        vm.addStock = addStock;
-        vm.updateStock = updateStock;
-        vm.deleteStock = deleteStock;
-        vm.selectStock = selectStock;
-        vm.addComment = addComment;
-
-        //Event Handler Implementation
         function addStock(stock) {
             if (stock.code && stock.invPrice && stock.quantity && stock.invDate) {
                 PortfolioService.addStockToUserPortfolio($rootScope.user._id, stock)
                     .then(
-                        function(response){
+                        function (response) {
                             if (response.status == 200) {
                                 showAllStocksForUser();
                             }
@@ -158,7 +157,7 @@
         function updateStock(stock) {
             PortfolioService.updatePortfolioStockInUser($rootScope.user._id, stock._id, stock)
                 .then(
-                    function(response){
+                    function (response) {
                         if (response.status == 200) {
                             showAllStocksForUser();
                         }
@@ -171,7 +170,7 @@
         function deleteStock(stock) {
             PortfolioService.deletePortfolioStockByIdAndUserId($rootScope.user._id, stock._id)
                 .then(
-                    function(response) {
+                    function (response) {
                         if (response.status == 200) {
                             showAllStocksForUser();
                         }
@@ -199,9 +198,9 @@
                 timestamp: Date.now
             });
             CommentService.addCommentToUserComments(vm.userId, comment)
-                .then(function(response) {
+                .then(function (response) {
                     showAllCommentsForUser();
-                }, function(err) {
+                }, function (err) {
                     console.log(err);
                 });
         }

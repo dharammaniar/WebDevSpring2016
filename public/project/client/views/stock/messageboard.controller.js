@@ -2,7 +2,7 @@
  * @author dharam
  */
 'use strict';
-(function(){
+(function () {
     angular
         .module('PortManApp')
         .controller('MessageBoardController', MessageBoardController);
@@ -20,12 +20,12 @@
         vm.low = '0.0';
         vm.volume = '0';
 
-        init();
+        vm.addMessage = addMessage;
 
         function init() {
             StockService.getStockByCode(vm.stockCode)
                 .then(
-                    function(response) {
+                    function (response) {
                         vm.stock = response.data;
                     }
                 );
@@ -43,25 +43,26 @@
                 var differenceValue = (response.data.dataset.data[0][1] - response.data.dataset.data[1][1]).toFixed(2);
                 vm.difference = differenceValue;
 
-                var percentage = ((differenceValue/response.data.dataset.data[1][1])*100).toFixed(2);
+                var percentage = ((differenceValue / response.data.dataset.data[1][1]) * 100).toFixed(2);
                 vm.percentage = percentage + '%';
             }, function errorCallback(response) {
                 console.log(response);
             });
+            showAllMessagesForStock();
         }
 
-        showAllMessagesForStock();
+        init();
 
         function showAllMessagesForStock() {
             vm.stockMessages = [];
             MessageService.findMessagesByStockCode(vm.stockCode)
                 .then(
-                    function(response) {
+                    function (response) {
                         var messages = response.data,
                             stockMessages = [];
-                        _.forEach(messages, function(message) {
+                        _.forEach(messages, function (message) {
                             UserService.findById(message.userId)
-                                .then(function(response) {
+                                .then(function (response) {
                                     var user = response.data;
                                     _.extend(message, {
                                         userFirstName: user.firstName,
@@ -72,18 +73,16 @@
                                     if (stockMessages.length === messages.length) {
                                         vm.stockMessages = _.sortBy(stockMessages, 'timestamp');
                                     }
-                                }, function(err) {
+                                }, function (err) {
                                     console.log(err);
                                 });
                         });
                     },
-                    function(err) {
+                    function (err) {
                         console.log(err);
                     }
                 );
         }
-
-        vm.addMessage = addMessage;
 
         function addMessage(message) {
             _.extend(message, {
@@ -91,9 +90,9 @@
                 timestamp: Date.now
             });
             MessageService.addMessageToStockMessages(vm.stockCode, message)
-                .then(function(response) {
+                .then(function (response) {
                     showAllMessagesForStock();
-                }, function(err) {
+                }, function (err) {
                     console.log(err);
                 });
         }

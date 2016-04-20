@@ -2,7 +2,7 @@
  * @author dharam
  */
 'use strict';
-(function(){
+(function () {
     angular
         .module('PortManApp')
         .controller('PeopleController', PeopleController);
@@ -14,25 +14,24 @@
         vm.follow = follow;
         vm.unfollow = unfollow;
 
-        init();
-
         function init() {
-
             vm.analystsIFollow = [];
             vm.analystsToFollow = [];
 
             UserService.findAllUsers()
                 .then(
-                    function(users) {
+                    function (users) {
                         processFollowsForUser(users);
-                    }, function(err) {
+                    }, function (err) {
                         console.log(err);
                     }
                 );
         }
 
+        init();
+
         function processFollowsForUser(users) {
-            _.forEach(users.data, function(user) {
+            _.forEach(users.data, function (user) {
                 if (user._id === self._id) {
                     return;
                 }
@@ -50,10 +49,10 @@
             self.followedUsers.push(user._id);
             UserService.updateUser(self._id, self)
                 .then(
-                    function(response) {
+                    function (response) {
                         init();
                     },
-                    function(error) {
+                    function (error) {
                         console.log(error);
                     }
                 );
@@ -63,10 +62,10 @@
             _.pull(self.followedUsers, user._id);
             UserService.updateUser(self._id, self)
                 .then(
-                    function(response) {
+                    function (response) {
                         init();
                     },
-                    function(error) {
+                    function (error) {
                         console.log(error);
                     }
                 );

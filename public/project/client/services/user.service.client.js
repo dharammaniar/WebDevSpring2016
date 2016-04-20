@@ -2,15 +2,26 @@
  * @author dharam
  */
 'use strict';
-(function() {
+(function () {
     angular
         .module('PortManApp')
         .factory('UserService', UserService);
 
     function UserService($http) {
 
+        return {
+            findUserByUsername: findUserByUsername,
+            updateUser: updateUser,
+            logout: logout,
+            login: login,
+            register: register,
+            findAllUsers: findAllUsers,
+            findById: findById,
+            updateProfilePicture: updateProfilePicture
+        };
+
         function findUserByUsername(username) {
-            return $http.get('/api/project/user?username='+username);
+            return $http.get('/api/project/user?username=' + username);
         }
 
         function updateUser(userId, user) {
@@ -20,7 +31,7 @@
         function updateProfilePicture(userId, file) {
             var fd = new FormData();
             fd.append('file', file);
-            return $http.post('/api/project/user/profilePic/'+userId, fd, {
+            return $http.post('/api/project/user/profilePic/' + userId, fd, {
                 transformRequest: angular.identity,
                 headers: {'Content-Type': undefined}
             });
@@ -45,16 +56,5 @@
         function findById(userId) {
             return $http.get('/api/project/user/' + userId);
         }
-
-        return {
-            findUserByUsername: findUserByUsername,
-            updateUser: updateUser,
-            logout: logout,
-            login: login,
-            register: register,
-            findAllUsers: findAllUsers,
-            findById: findById,
-            updateProfilePicture: updateProfilePicture
-        };
     }
 })();
