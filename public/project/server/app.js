@@ -20,4 +20,7 @@ module.exports = function(app, upload) {
 
     var blogModel = require('./models/blog.model')();
     require('./services/blog.service.server')(app, blogModel);
+
+    var recommendationModel = require('./models/recommendation.model')(userModel);
+    require('./services/recommendations.service.server')(app, recommendationModel);
 };

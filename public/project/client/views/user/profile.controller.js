@@ -7,7 +7,7 @@
         .module('PortManApp')
         .controller('ProfileController', ProfileController);
 
-    function ProfileController($rootScope, $location, $routeParams, UserService, PortfolioService, CommentService) {
+    function ProfileController($rootScope, $location, $routeParams, UserService, PortfolioService, CommentService, RecommendationService) {
         var vm = this;
         vm.showSuccessAlert = false;
         vm.user = $rootScope.user;
@@ -29,6 +29,7 @@
 
         init();
         showAllCommentsForUser();
+        showAllRecommendationsForUser();
         
         function init() {
             vm.invTotal = 0;
@@ -91,6 +92,43 @@
                         }
                     },
                     function(err) {
+                        console.log(err);
+                    }
+                );
+        }
+
+        function showAllRecommendationsForUser() {
+            vm.userRecommendations = [];
+            RecommendationService.findRecommendationsByUserId(vm.userId)
+                .then(
+                    function(response) {
+                        var recommendations = response.data,
+                            userRecommendations = [];
+                        _.forEach(recommendations, function(recommendation) {
+                            UserService.findById(recommendation.by)
+                                .then(function(response) {
+                                    var user = response.data;
+                                    _.extend(recommendation, {
+                                        userFirstName: user.firstName,
+                                        userLastName: user.lastName,
+                                        userId: user._id,
+                                        target: numeral(recommendation.target).format('$0,0.00')
+                                    });
+                                    userRecommendations.push(recommendation);
+                                    if (userRecommendations.length === recommendations.length) {
+                                        vm.userRecommendations = userRecommendations;
+                                        $('#recommendationPanel').removeClass('loading');
+                                    }
+                                }, function(err) {
+                                    console.log(err);
+                                });
+                        });
+                        if (recommendations.length === 0) {
+                            vm.userRecommendations = [];
+                            $('#recommendationPanel').removeClass('loading');
+                        }
+                    },
+                    function (err) {
                         console.log(err);
                     }
                 );

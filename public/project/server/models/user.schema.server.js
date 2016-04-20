@@ -7,6 +7,7 @@ module.exports = function () {
 
     var PortfolioStocksSchema = require('./portfolioStocks.schema.server')(mongoose);
     var CommentsSchema = require('./comments.schema.server')(mongoose);
+    var RecommendationSchema = require('./recommendation.schema.server')(mongoose);
 
     return mongoose.Schema({
         username: String,
@@ -22,6 +23,7 @@ module.exports = function () {
         },
         followedUsers: [String],
         portfolioStocks: [PortfolioStocksSchema],
-        portfolioComments: [CommentsSchema]
+        portfolioComments: [CommentsSchema],
+        recommendations: [RecommendationSchema]
     }, {collection: 'projectUser'});
 };

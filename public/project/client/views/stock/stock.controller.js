@@ -7,7 +7,7 @@
         .module('PortManApp')
         .controller('StockController', StockController);
 
-    function StockController($http, $sce, $routeParams, $rootScope, $location, StockService) {
+    function StockController($http, $sce, $routeParams, $rootScope, $location, StockService, UserService, RecommendationService) {
         var vm = this;
 
         vm.stockCode = $routeParams.code;
@@ -35,8 +35,56 @@
         vm.goToMessageBoard = function() {
             $location.path('/stock/' + vm.stockCode + '/messageboard');
         };
+        
+        vm.sendRecommendation = function(recommendation) {
+            var reco = {
+                code: vm.stockCode,
+                action: recommendation.action,
+                target: recommendation.target,
+                by: $rootScope.user._id
+            };
+
+            RecommendationService.addRecommendationToUserRecommendations(recommendation.user, reco)
+                .then(
+                    function(response) {
+                        console.log(response);
+                        $('#sendRecommendation').removeClass('btn-primary');
+                        $('#sendRecommendation').addClass('btn-success');
+                        $('#sendRecommendation').html('<i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Sent');
+
+                        setTimeout(function(){
+                            $('#sendRecommendation').removeClass('btn-success');
+                            $('#sendRecommendation').addClass('btn-primary');
+                            $('#sendRecommendation').html('<i class="fa fa-thumbs-o-up" aria-hidden="true"></i> Send');
+                        }, 2000);
+                    },
+                    function(err) {
+                        console.log(err);
+                    }
+                );
+            
+        };
 
         function init() {
+
+            if ($rootScope.user) {
+                vm.users = [];
+                UserService.findAllUsers()
+                    .then(
+                        function(response) {
+                            vm.users = _.filter(response.data, function(user) {
+                                if (user._id === $rootScope.user._id) {
+                                    return false;
+                                }
+                                return user.type !== 'analyst';
+                            });
+                        },
+                        function(err) {
+                            console.log(err);
+                        }
+                    );
+            }
+
             StockService.getStockByCode(vm.stockCode)
                 .then(
                     function(response) {

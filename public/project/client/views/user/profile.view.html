@@ -75,7 +75,7 @@
             </div>
         </div>
 
-        <div class="col-lg-6">
+        <div class="col-lg-6" ng-show="model.isSelf">
             <div id="profilePicPanel" class="panel panel-default">
                 <div class="panel-heading">
                     <i class="fa fa-user"></i> Profile Picture
@@ -109,7 +109,8 @@
                 </div>
             </div>
         </div>
-
+    </div>
+    <div class="row">
         <div class="col-lg-6">
             <div id="portfolioPanel" class="panel panel-default loading">
                 <div class="panel-heading">
@@ -171,6 +172,26 @@
                 </div>
             </div>
         </div>
+
+        <div ng-show="(model.userRecommendations.length > 0)" class="col-lg-6">
+            <div id="recommendationPanel" class="panel panel-default loading">
+                <div class="panel-heading">
+                    <i class="fa fa-database" aria-hidden="true"></i> Stock Recommendations
+                </div>
+                <div class="panel-body">
+                    <ul class="chat">
+                        <li class="left clearfix" ng-repeat="recommendation in model.userRecommendations">
+                            <div class="clearfix">
+                                <p>
+                                    <a href="#/profile/{{recommendation.userId}}">{{recommendation.userFirstName}} {{recommendation.userLastName}}</a> recommends to {{recommendation.action}} <a href="#/stock/{{recommendation.code}}">{{recommendation.code}}</a> for a target price of {{recommendation.target}}
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
         <div ng-show="(model.userComments.length > 0)" class="col-lg-6">
             <div id="commentsPanel" class="panel panel-default loading">
                 <div class="panel-heading">
