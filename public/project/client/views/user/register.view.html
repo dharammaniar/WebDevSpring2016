@@ -8,6 +8,20 @@
                 </div>
                 <div class="panel-body">
                     <form class="form-horizontal">
+                        <div id="form-firstName" class="form-group">
+                            <label for="registerFirstName" class="col-md-2 control-label">First Name: </label>
+                            <div class="col-md-10">
+                                <input type="text" ng-model="model.user.firstName" class="form-control" id="registerFirstName" placeholder="First Name">
+                            </div>
+                        </div>
+
+                        <div id="form-lastName" class="form-group">
+                            <label for="registerLastName" class="col-md-2 control-label">Last Name: </label>
+                            <div class="col-md-10">
+                                <input type="text" ng-model="model.user.lastName" class="form-control" id="registerLastName" placeholder="Last Name">
+                            </div>
+                        </div>
+
                         <div id="form-username" class="form-group">
                             <label for="registerUsername" class="col-md-2 control-label">Username: </label>
                             <div class="col-md-10">
@@ -32,6 +46,16 @@
                         <div class="row">
                             <div class="col-xs-12 col-sm-10 col-sm-offset-2">
                                 <button ng-click="model.register(model.user)" class="btn btn-primary col-xs-12"> Register </button>
+                            </div>
+                        </div>
+
+                        <br>
+
+                        <div class="row" ng-show="model.usernameExists">
+                            <div class="col-md-10 col-md-offset-2">
+                                <div class="alert alert-danger">
+                                    Username already exists !
+                                </div>
                             </div>
                         </div>
                     </form>

@@ -17,16 +17,28 @@
         function register(user) {
             var isValidated = true;
 
+            $('#form-firstName').removeClass('has-error');
+            $('#form-lastName').removeClass('has-error');
             $('#form-username').removeClass('has-error');
             $('#form-password').removeClass('has-error');
             $('#form-email').removeClass('has-error');
 
             if(!user) {
+                $('#form-firstName').addClass('has-error');
+                $('#form-lastName').addClass('has-error');
                 $('#form-username').addClass('has-error');
                 $('#form-password').addClass('has-error');
                 $('#form-email').addClass('has-error');
                 isValidated = false;
             } else {
+                if (!user.firstName || (user.firstName === '')) {
+                    $('#form-firstName').addClass('has-error');
+                    isValidated = false;
+                }
+                if (!user.lastName || (user.lastName === '')) {
+                    $('#form-lastName').addClass('has-error');
+                    isValidated = false;
+                }
                 if (!user.username || (user.username === '')) {
                     $('#form-username').addClass('has-error');
                     isValidated = false;
@@ -46,10 +58,19 @@
             UserService.register({
                 username: user.username,
                 password: user.password,
+                firstName: user.firstName,
+                lastName: user.lastName,
                 email: user.email
-            }).then(function successCallback(response) {
-                $rootScope.user = response.data;
-                $location.path('/profile/'+response.data._id);
+            }).then(function(response) {
+                if (response.data === 'Username Exists') {
+                    $('#form-username').addClass('has-error');
+                    vm.usernameExists = true;
+                } else {
+                    $rootScope.user = response.data;
+                    $location.path('/profile/' + response.data._id);
+                }
+            }, function(err) {
+                console.log(err);
             });
         }
     }

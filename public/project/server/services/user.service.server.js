@@ -95,7 +95,7 @@ module.exports = function(app, model, upload) {
             .then(
                 function(user){
                     if(user) {
-                        res.json(null);
+                        res.json("Username Exists");
                     } else {
                         return model.create(userToCreate);
                     }
