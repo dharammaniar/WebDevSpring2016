@@ -108,8 +108,77 @@
                 var percentage = ((differenceValue/response.data.dataset.data[1][1])*100).toFixed(2);
                 vm.percentage = percentage + '%';
 
+
                 var chartData = [];
-                _.forEach(response.data.dataset.data, function(day) {
+                var volumeData = [];
+                if ($rootScope.user && $rootScope.user.type === 'analyst') {
+
+                    _.forEach(response.data.dataset.data, function(day) {
+                        chartData.push([
+                            new Date(day[0]).getTime(),
+                            day[1],
+                            day[2],
+                            day[3],
+                            day[4]
+                        ]);
+                        volumeData.push([
+                            new Date(day[0]).getTime(),
+                            day[5]
+                        ])
+                    });
+
+                    _.reverse(chartData);
+                    _.reverse(volumeData);
+
+                    $('#advancedChartContainer').highcharts('StockChart', {
+                        rangeSelector: {
+                            selected: 1
+                        },
+                        title: {
+                            text: vm.stockCode
+                        },
+                        yAxis: [{
+                            labels: {
+                                align: 'right',
+                                x: -3
+                            },
+                            title: {
+                                text: 'OHLC'
+                            },
+                            height: '60%',
+                            lineWidth: 2
+                        }, {
+                            labels: {
+                                align: 'right',
+                                x: -3
+                            },
+                            title: {
+                                text: 'Volume'
+                            },
+                            top: '65%',
+                            height: '35%',
+                            offset: 0,
+                            lineWidth: 2
+                        }],
+                        series: [{
+                            type: 'candlestick',
+                            name: vm.stockCode,
+                            data: chartData,
+                            tooltip: {
+                                valueDecimals: 2
+                            }
+                        }, {
+                            type: 'column',
+                            name: 'Volume',
+                            data: volumeData,
+                            yAxis: 1
+                        }]
+                    });
+                }
+
+                chartData = [];
+                
+                _.forEach(response.data.dataset.data, function (day) {
                     chartData.push([
                         new Date(day[0]).getTime(),
                         day[1]
@@ -118,7 +187,7 @@
 
                 _.reverse(chartData);
 
-                $('#stockContainer').highcharts('StockChart', {
+                $('#basicChartContainer').highcharts('StockChart', {
                     rangeSelector: {
                         selected: 1
                     },

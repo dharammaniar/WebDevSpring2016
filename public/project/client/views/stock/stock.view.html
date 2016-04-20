@@ -124,11 +124,25 @@
                         <i class="fa fa-bar-chart-o fa-fw"></i> Basic Chart
                     </div>
                     <div class="panel-body">
-                        <div id="stockContainer"></div>
+                        <div id="basicChartContainer"></div>
                     </div>
                 </div>
             </div>
         </div>
+
+        <div class="row" ng-show="(user && user.type === 'analyst')">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <i class="fa fa-bar-chart-o fa-fw"></i> Advanced Chart
+                    </div>
+                    <div class="panel-body">
+                        <div id="advancedChartContainer"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
