@@ -200,6 +200,7 @@
             });
             CommentService.addCommentToUserComments(vm.userId, comment)
                 .then(function (response) {
+                    $('#btn-input').val('');
                     showAllCommentsForUser();
                 }, function (err) {
                     console.log(err);

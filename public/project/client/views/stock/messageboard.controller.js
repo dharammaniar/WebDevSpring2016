@@ -92,6 +92,7 @@
             });
             MessageService.addMessageToStockMessages(vm.stockCode, message)
                 .then(function (response) {
+                    $('#btn-input').val('');
                     showAllMessagesForStock();
                 }, function (err) {
                     console.log(err);
