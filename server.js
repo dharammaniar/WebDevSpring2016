@@ -39,7 +39,7 @@ app.use(cookieParser());
 
 // configure session support
 app.use(session({
-    secret: 'maniardharam',
+    secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: true
 }));
