@@ -15,7 +15,10 @@ module.exports = function () {
         firstName: String,
         lastName: String,
         email: String,
-        profilePicUrl: String,
+        profilePicUrl: {
+            type: String,
+            default: '\\uploads\\default_profile.jpg'
+        },
         type: {
             type: String,
             default: 'investor',
