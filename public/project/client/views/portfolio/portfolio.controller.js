@@ -116,6 +116,7 @@
                                     _.extend(comment, {
                                         userFirstName: user.firstName,
                                         userLastName: user.lastName,
+                                        userId: user._id,
                                         timestamp: moment(comment.timestamp).format('MM/DD/YYYY HH:mm:SS')
                                     });
                                     userComments.push(comment);

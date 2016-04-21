@@ -111,7 +111,7 @@
                         <li class="left clearfix" ng-repeat="comment in model.userComments">
                             <div class="clearfix">
                                 <div class="header">
-                                    <strong class="primary-font">{{comment.userFirstName}} {{comment.userLastName}}</strong>
+                                    <strong class="primary-font"><a href="#/profile/{{comment.userId}}">{{comment.userFirstName}} {{comment.userLastName}}</a></strong>
                                     <small class="pull-right text-muted">
                                         <i class="fa fa-clock-o fa-fw"></i> {{comment.timestamp}}
                                     </small>

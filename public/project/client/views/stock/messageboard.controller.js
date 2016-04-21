@@ -67,6 +67,7 @@
                                     _.extend(message, {
                                         userFirstName: user.firstName,
                                         userLastName: user.lastName,
+                                        userId: user._id,
                                         timestamp: moment(message.timestamp).format('MM/DD/YYYY HH:mm:SS')
                                     });
                                     stockMessages.push(message);
