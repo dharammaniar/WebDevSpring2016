@@ -10,7 +10,7 @@ var bcrypt = require("bcrypt-nodejs");
 
 module.exports = function(app, model, upload) {
 
-    /*app.get('/api/project/user/:id', getUserById);
+    app.get('/api/project/user/:id', getUserById);
     app.get('/api/project/user', getUser);
     app.put('/api/project/user/:id', updateUser);
     app.post('/api/project/user/profilePic/:id', upload.single('file'), updateProfilePic);
@@ -199,6 +199,6 @@ module.exports = function(app, model, upload) {
                     res.status(400).send(err);
                 }
             )
-    }*/
+    }
 
 };

@@ -9,7 +9,7 @@ var bcrypt = require("bcrypt-nodejs");
 
 module.exports = function(app, model) {
 
-    var auth = authorized;
+    /*var auth = authorized;
     app.post  ('/api/assignment/login', passport.authenticate('local'), login);
     app.post  ('/api/assignment/logout',         logout);
     app.post  ('/api/assignment/register',       register);
@@ -254,5 +254,5 @@ module.exports = function(app, model) {
         } else {
             next();
         }
-    }
+    }*/
 };
