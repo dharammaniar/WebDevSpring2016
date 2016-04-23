@@ -13,7 +13,7 @@
 
         // Event Handler Implementation
         function register(user) {
-            UserService.createUser({
+            UserService.register({
                 username: user.username,
                 password: user.password,
                 emails: user.emails.split(',')

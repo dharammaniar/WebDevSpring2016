@@ -14,10 +14,10 @@
 
         // Event Handler Implementation
         function login(user) {
-            UserService.findUserByCredentials(
-                user.username,
-                user.password
-            ).then(function successCallback(response) {
+            UserService.login({
+                username: user.username,
+                password: user.password
+            }).then(function successCallback(response) {
                 $rootScope.user = response.data;
                 $location.path('/profile');
             });

@@ -70,6 +70,7 @@ module.exports = function() {
                 }
             }
         );
+        return deferred.promise;
     }
 
     function findUserByUsername(username) {

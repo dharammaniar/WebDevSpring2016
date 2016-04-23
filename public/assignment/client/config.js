@@ -33,8 +33,9 @@
                 .when("/admin", {
                     templateUrl: "views/admin/admin.view.html",
                     resolve: {
-                        verifyUserIsLoggedIn: verifyUserIsLoggedIn
+                        verifyUserIsLoggedInAndAdmin: verifyUserIsLoggedInAndAdmin
                     },
+                    controller: 'AdminController',
                     controllerAs: 'model'
                 })
                 .when("/forms", {
@@ -60,15 +61,37 @@
 
     function verifyUserIsLoggedIn(UserService, $q, $location, $rootScope) {
         var deferred = $q.defer();
-        UserService.findLoggedInUser()
+        UserService.loggedin()
             .then(function (response){
-                var currentUser = response.data;
-                if(currentUser) {
-                    $rootScope.user = currentUser;
-                    deferred.resolve();
-                } else {
+                if (response.data === '0') {
+                    delete $rootScope.user;
                     deferred.reject();
                     $location.url("/");
+                } else {
+                    $rootScope.user = response.data;
+                    deferred.resolve();
+                }
+            });
+        return deferred.promise;
+    }
+
+    function verifyUserIsLoggedInAndAdmin(UserService, $q, $location, $rootScope) {
+        var deferred = $q.defer();
+        UserService.loggedin()
+            .then(function (response){
+                if (response.data === '0') {
+                    delete $rootScope.user;
+                    deferred.reject();
+                    $location.url("/");
+                } else {
+                    var user = response.data;
+                    $rootScope.user = response.data;
+                    if (user.roles.indexOf('admin') === -1) {
+                        deferred.reject();
+                        $location.url("/");
+                    } else {
+                        deferred.resolve();
+                    }
                 }
             });
         return deferred.promise;
@@ -76,10 +99,15 @@
 
     function getLoggedInUser(UserService, $q, $rootScope) {
         var deferred = $q.defer();
-        UserService.findLoggedInUser()
+        UserService.loggedin()
             .then(function (response){
-                $rootScope.user = response.data;
-                deferred.resolve();
+                if (response.data === '0') {
+                    delete $rootScope.user;
+                    deferred.resolve();
+                } else {
+                    $rootScope.user = response.data;
+                    deferred.resolve();
+                }
             });
         return deferred.promise;
     }

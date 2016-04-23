@@ -14,7 +14,7 @@
 
         function logout() {
             $rootScope.user = null;
-            UserService.deleteUserSession();
+            UserService.logout();
             $location.path('/');
         }
     }

@@ -34,17 +34,15 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(multer());
 
-// configure cookie parser - needed for oauth
-app.use(cookieParser());
-
 // configure session support
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    resave: false,
+    resave: true,
     saveUninitialized: true
 }));
 
 // initialize passport and session support
+app.use(cookieParser());
 app.use(passport.initialize());
 app.use(passport.session());
 
